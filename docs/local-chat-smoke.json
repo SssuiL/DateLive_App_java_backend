@@ -1,0 +1,20 @@
+{
+  "checks": [
+    "friend_conversation",
+    "conversation_page",
+    "per_user_settings",
+    "send_text",
+    "idempotent_retry",
+    "unread_counter",
+    "reply_preview",
+    "history_cursor",
+    "mark_read",
+    "read_receipts",
+    "muted_notification",
+    "logout"
+  ],
+  "note": "Two synthetic Java accounts only. WebSocket and real push are not implemented. No account deadline changed and no erasure forced.",
+  "checked_at": "2026-09-15T16:00:53.6413075Z",
+  "result": "passed",
+  "target": "http://127.0.0.1:8200"
+}

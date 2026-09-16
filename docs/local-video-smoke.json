@@ -1,0 +1,25 @@
+{
+  "checks": [
+    "h264_aac_upload_and_transcode",
+    "pending_send_rejected",
+    "admin_chat_filters",
+    "manual_approval",
+    "video_send_server_duration",
+    "websocket_video_delivery",
+    "ack",
+    "idempotent_retry",
+    "private_mp4_playback",
+    "private_png_thumbnail",
+    "byte_range_206",
+    "thumbnail_revocation",
+    "personal_hide_revokes_old_url",
+    "other_member_access_preserved",
+    "recall_masks_attachment_and_revokes_url",
+    "media_deletion"
+  ],
+  "note": "Synthetic video and accounts only; independent Java database. MP4, thumbnail and byte-range HTTP verified; real moderation, Flutter device playback and asynchronous workers remain pending.",
+  "result": "passed",
+  "checked_at": "2026-09-16T01:10:00.1058814Z",
+  "schema": "V13",
+  "target": "http://127.0.0.1:8200"
+}

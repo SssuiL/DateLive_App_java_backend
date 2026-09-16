@@ -1,0 +1,22 @@
+{
+  "result": "passed",
+  "checks": [
+    "aac_lc_upload_and_decode",
+    "pending_send_rejected",
+    "admin_chat_filters",
+    "manual_approval",
+    "voice_send_server_duration",
+    "websocket_voice_delivery",
+    "ack",
+    "idempotent_retry",
+    "private_wav_playback",
+    "personal_hide_revokes_old_url",
+    "other_member_access_preserved",
+    "recall_masks_attachment_and_revokes_url",
+    "media_deletion"
+  ],
+  "schema": "V12",
+  "note": "Synthetic AAC tone and accounts only; independent Java database. Server-decoded WAV playback verified; no real speech moderation, Flutter changes, video/GIF support or forced account erasure.",
+  "target": "http://127.0.0.1:8200",
+  "checked_at": "2026-09-16T00:45:38.0262819Z"
+}

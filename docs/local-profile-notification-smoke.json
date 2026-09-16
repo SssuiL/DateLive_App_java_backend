@@ -1,0 +1,18 @@
+{
+  "target": "http://127.0.0.1:8200",
+  "checks": [
+    "profile_defaults",
+    "profile_patch",
+    "nickname_sync",
+    "tag_deduplication",
+    "notification_defaults",
+    "notification_patch",
+    "empty_events",
+    "unread_count",
+    "read_all_empty",
+    "logout"
+  ],
+  "checked_at": "2026-09-15T09:57:54.9764805Z",
+  "note": "One synthetic local account. Media permissions and non-empty notifications tested in isolated integration tests, not this smoke.",
+  "result": "passed"
+}

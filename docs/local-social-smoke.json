@@ -1,0 +1,20 @@
+{
+  "result": "passed",
+  "checks": [
+    "public_directory",
+    "request",
+    "idempotent_request",
+    "notification_event",
+    "unread_count",
+    "accept",
+    "friend_profile",
+    "bidirectional_block",
+    "unblock",
+    "delete_friend",
+    "read_notification",
+    "logout"
+  ],
+  "target": "http://127.0.0.1:8200",
+  "checked_at": "2026-09-15T15:50:11.1538049Z",
+  "note": "Two synthetic accounts only. No account deadline modified, no erasure forced. Conversation retained after deleting friendship, matching legacy behavior. Push delivery is not implemented."
+}

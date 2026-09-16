@@ -1,0 +1,22 @@
+{
+  "result": "passed",
+  "note": "Synthetic PNG and accounts only; independent Java database. No real moderation provider, cloud storage, Flutter changes, voice/video/GIF support or forced account erasure.",
+  "schema": "V11",
+  "checked_at": "2026-09-16T00:28:33.6093274Z",
+  "checks": [
+    "chat_image_upload",
+    "pending_send_rejected",
+    "admin_chat_filters",
+    "manual_approval",
+    "image_send",
+    "websocket_image_delivery",
+    "ack",
+    "idempotent_retry",
+    "receiver_private_download",
+    "personal_hide_revokes_old_url",
+    "other_member_access_preserved",
+    "recall_masks_attachment_and_revokes_url",
+    "media_deletion"
+  ],
+  "target": "http://127.0.0.1:8200"
+}

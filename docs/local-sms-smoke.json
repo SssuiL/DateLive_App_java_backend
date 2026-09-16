@@ -1,0 +1,19 @@
+{
+  "result": "passed",
+  "verified_registration_with_local_dispatch_ms": 264.73,
+  "sms_provider": "development",
+  "checks": [
+    "sms_register",
+    "sms_login",
+    "push_register_list_disable",
+    "revoke_other_sessions",
+    "password_reset",
+    "old_access_rejected",
+    "new_password_login",
+    "logout"
+  ],
+  "checked_at": "2026-09-15T09:51:36.7230586Z",
+  "target": "http://127.0.0.1:8200",
+  "real_sms_sent": false,
+  "note": "One local synthetic account; no real provider, mobile or load test."
+}

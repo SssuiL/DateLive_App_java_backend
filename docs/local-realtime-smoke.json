@@ -1,0 +1,19 @@
+{
+  "checked_at": "2026-09-15T16:29:33.8098715Z",
+  "result": "passed",
+  "checks": [
+    "authenticated_websocket",
+    "automatic_outbox_publication",
+    "message_created",
+    "not_delivered_before_ack",
+    "disconnect_replay_same_id",
+    "ack_checkpoint",
+    "persisted_delivery_receipt",
+    "ack_does_not_mark_read",
+    "notification_unread_sync",
+    "heartbeat_ping"
+  ],
+  "note": "Synthetic accounts in the independent Java database. Real push providers and Flutter integration are not exercised. Automatic account erasure remains enabled; no deadlines changed.",
+  "target": "http://127.0.0.1:8200",
+  "schema": "V10"
+}

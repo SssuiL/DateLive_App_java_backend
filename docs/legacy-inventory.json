@@ -1,0 +1,2701 @@
+{
+  "summary": {
+    "legacy_commit": "8f63d6dd46162d777867165df963d8c6efc2093b",
+    "http_routes": 276,
+    "websocket_routes": 3,
+    "tables": 71,
+    "test_files": 67,
+    "test_definitions": 357,
+    "migration_files": 74,
+    "scheduled_loops": 7
+  },
+  "limitations": [
+    "Static source inventory, not runtime OpenAPI or production verification.",
+    "Test definitions exclude parameterized expansion; tests were not executed by this tool.",
+    "Gateway-only health routes, generated docs routes, response schemas and event payloads require separate contract capture.",
+    "Scheduled loops exclude the separate media worker and externally launched operations scripts."
+  ],
+  "routes": [
+    {
+      "method": "POST",
+      "path": "/admin/auth/bootstrap",
+      "source": "app/api/admin.py:55",
+      "handler": "bootstrap_admin",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/auth/login",
+      "source": "app/api/admin.py:60",
+      "handler": "login_admin",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/auth/me",
+      "source": "app/api/admin.py:65",
+      "handler": "get_admin_me",
+      "status": "pending"
+    },
+    {
+      "method": "PATCH",
+      "path": "/admin/auth/password",
+      "source": "app/api/admin.py:76",
+      "handler": "update_own_admin_password",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/admin-users",
+      "source": "app/api/admin.py:85",
+      "handler": "list_admin_accounts",
+      "status": "pending"
+    },
+    {
+      "method": "PATCH",
+      "path": "/admin/admin-users/{admin_id}/status",
+      "source": "app/api/admin.py:96",
+      "handler": "update_admin_account_status",
+      "status": "pending"
+    },
+    {
+      "method": "PATCH",
+      "path": "/admin/admin-users/{admin_id}/password",
+      "source": "app/api/admin.py:106",
+      "handler": "update_admin_password",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/operation-logs",
+      "source": "app/api/admin.py:116",
+      "handler": "list_admin_operation_logs",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/test/friendships",
+      "source": "app/api/admin.py:135",
+      "handler": "create_test_friendship",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/users",
+      "source": "app/api/admin.py:144",
+      "handler": "list_users",
+      "status": "pending"
+    },
+    {
+      "method": "PATCH",
+      "path": "/admin/users/{user_id}/status",
+      "source": "app/api/admin.py:154",
+      "handler": "update_user_status",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/users/{user_id}/erasure-preview",
+      "source": "app/api/admin.py:167",
+      "handler": "preview_user_account_erasure",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/reports",
+      "source": "app/api/admin.py:177",
+      "handler": "list_reports",
+      "status": "pending"
+    },
+    {
+      "method": "PATCH",
+      "path": "/admin/reports/{report_id}/status",
+      "source": "app/api/admin.py:193",
+      "handler": "update_report_status",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/notifications/events",
+      "source": "app/api/admin.py:203",
+      "handler": "list_notification_events",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/notifications/deliveries",
+      "source": "app/api/admin.py:222",
+      "handler": "list_push_deliveries",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/notifications/deliveries/retry-due",
+      "source": "app/api/admin.py:245",
+      "handler": "retry_due_push_deliveries",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/messages/dispatch-jobs",
+      "source": "app/api/admin.py:261",
+      "handler": "list_message_dispatch_jobs",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/messages/dispatch-jobs/{job_id}/retry",
+      "source": "app/api/admin.py:282",
+      "handler": "retry_message_dispatch_job",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/live/events/dispatch-health",
+      "source": "app/api/admin.py:296",
+      "handler": "get_live_event_dispatch_health",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/live/events/dispatch-jobs",
+      "source": "app/api/admin.py:307",
+      "handler": "list_live_event_dispatch_jobs",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/live/events/dispatch-jobs/{job_id}/retry",
+      "source": "app/api/admin.py:326",
+      "handler": "retry_live_event_dispatch_job",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/live/rooms",
+      "source": "app/api/admin.py:335",
+      "handler": "list_live_rooms",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/live/hosts/{host_user_id}/overview",
+      "source": "app/api/admin.py:344",
+      "handler": "get_live_host_overview",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/live/settlements",
+      "source": "app/api/admin.py:354",
+      "handler": "list_live_settlements",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/live/settlements/{settlement_id}/approve",
+      "source": "app/api/admin.py:363",
+      "handler": "approve_live_settlement",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/live/settlements/{settlement_id}/reject",
+      "source": "app/api/admin.py:372",
+      "handler": "reject_live_settlement",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/live/settlements/{settlement_id}/mark-paid",
+      "source": "app/api/admin.py:382",
+      "handler": "mark_live_settlement_paid",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/live/rooms/{room_id}/close",
+      "source": "app/api/admin.py:397",
+      "handler": "close_live_room",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/live/rooms/{room_id}/participants",
+      "source": "app/api/admin.py:407",
+      "handler": "list_live_room_participants",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/live/rooms/{room_id}/gifts",
+      "source": "app/api/admin.py:416",
+      "handler": "list_live_room_gifts",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/live/rooms/{room_id}/participants/{user_id}/{action}",
+      "source": "app/api/admin.py:425",
+      "handler": "moderate_live_room_participant",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/auth-events",
+      "source": "app/api/admin_auth_events.py:15",
+      "handler": "list_auth_events",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/billing/transactions",
+      "source": "app/api/admin_billing.py:19",
+      "handler": "list_billing_transactions",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/billing/accounts",
+      "source": "app/api/admin_billing.py:41",
+      "handler": "list_coin_accounts",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/billing/gifts/{gift_id}/refund",
+      "source": "app/api/admin_billing.py:58",
+      "handler": "refund_live_gift",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/admin-console",
+      "source": "app/api/admin_console.py:9",
+      "handler": "admin_console",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/gift-risk/events",
+      "source": "app/api/admin_gift_risk.py:20",
+      "handler": "list_events",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/gift-risk/events/{event_id}/resolve",
+      "source": "app/api/admin_gift_risk.py:38",
+      "handler": "resolve_event",
+      "status": "pending"
+    },
+    {
+      "method": "PATCH",
+      "path": "/admin/gift-risk/users/{user_id}/age-status",
+      "source": "app/api/admin_gift_risk.py:58",
+      "handler": "update_user_age_status",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/live-gifts",
+      "source": "app/api/admin_gifts.py:15",
+      "handler": "list_gifts",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/live-gifts",
+      "source": "app/api/admin_gifts.py:23",
+      "handler": "create_gift",
+      "status": "pending"
+    },
+    {
+      "method": "PATCH",
+      "path": "/admin/live-gifts/{gift_id}",
+      "source": "app/api/admin_gifts.py:43",
+      "handler": "update_gift",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/live-gifts/{gift_id}/assets/{asset_type}",
+      "source": "app/api/admin_gifts.py:64",
+      "handler": "upload_gift_asset",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/host-verification/applications",
+      "source": "app/api/admin_host_verification.py:20",
+      "handler": "list_host_verification_applications",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/host-verification/applications/{application_id}/resolve",
+      "source": "app/api/admin_host_verification.py:30",
+      "handler": "resolve_host_verification_application",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/host-verification/qualifications/{user_id}/suspend",
+      "source": "app/api/admin_host_verification.py:40",
+      "handler": "suspend_host_permission",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/host-verification/qualifications/{user_id}/restore",
+      "source": "app/api/admin_host_verification.py:50",
+      "handler": "restore_host_permission",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/live-moderation/reports/{report_id}/escalate",
+      "source": "app/api/admin_live_moderation.py:25",
+      "handler": "escalate_live_report",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/live-moderation/appeals",
+      "source": "app/api/admin_live_moderation.py:34",
+      "handler": "list_appeals",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/live-moderation/appeals/{appeal_id}/resolve",
+      "source": "app/api/admin_live_moderation.py:48",
+      "handler": "resolve_appeal",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/live-moderation/rooms/{room_id}/sample",
+      "source": "app/api/admin_live_moderation.py:58",
+      "handler": "create_room_sample",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/live-moderation/tasks",
+      "source": "app/api/admin_live_moderation.py:67",
+      "handler": "list_tasks",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/live-moderation/incidents",
+      "source": "app/api/admin_live_moderation.py:80",
+      "handler": "list_incidents",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/live-moderation/incidents/{incident_id}/resolve",
+      "source": "app/api/admin_live_moderation.py:93",
+      "handler": "resolve_incident",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/live-moderation/tasks/{task_id}/simulate-result",
+      "source": "app/api/admin_live_moderation.py:103",
+      "handler": "simulate_machine_result",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/live-preflight",
+      "source": "app/api/admin_live_preflight.py:15",
+      "handler": "list_live_preflights",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/live-provider-events/callbacks",
+      "source": "app/api/admin_live_provider_events.py:21",
+      "handler": "list_callback_events",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/live-provider-events/transitions",
+      "source": "app/api/admin_live_provider_events.py:41",
+      "handler": "list_state_transitions",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/live-provider-events/rooms/{room_id}/simulate",
+      "source": "app/api/admin_live_provider_events.py:60",
+      "handler": "simulate_callback_event",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/moderation/storage-deletions",
+      "source": "app/api/admin_moderation.py:21",
+      "handler": "storage_deletions",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/moderation/media",
+      "source": "app/api/admin_moderation.py:35",
+      "handler": "list_media",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/moderation/media/pending",
+      "source": "app/api/admin_moderation.py:59",
+      "handler": "list_pending_media",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/moderation/media/{media_id}",
+      "source": "app/api/admin_moderation.py:67",
+      "handler": "get_media",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/moderation/media/{media_id}/preview-url",
+      "source": "app/api/admin_moderation.py:76",
+      "handler": "create_media_preview_url",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/moderation/media-jobs",
+      "source": "app/api/admin_moderation.py:102",
+      "handler": "list_media_jobs",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/moderation/media-jobs/{job_id}/retry",
+      "source": "app/api/admin_moderation.py:116",
+      "handler": "retry_media_job",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/moderation/media-security-scans",
+      "source": "app/api/admin_moderation.py:136",
+      "handler": "list_media_security_scans",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/moderation/media/{media_id}/approve",
+      "source": "app/api/admin_moderation.py:152",
+      "handler": "approve_media",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/moderation/media/{media_id}/reject",
+      "source": "app/api/admin_moderation.py:162",
+      "handler": "reject_media",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/moderation/reviews",
+      "source": "app/api/admin_moderation.py:172",
+      "handler": "list_reviews",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/payments/orders",
+      "source": "app/api/admin_payments.py:15",
+      "handler": "list_payment_orders",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/payments/callback-events",
+      "source": "app/api/admin_payments.py:35",
+      "handler": "list_payment_callback_events",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/auth/register",
+      "source": "app/api/auth.py:47",
+      "handler": "register",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/auth/register/verify",
+      "source": "app/api/auth.py:116",
+      "handler": "verified_register",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/auth/login",
+      "source": "app/api/auth.py:151",
+      "handler": "login",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/auth/sms/send",
+      "source": "app/api/auth.py:182",
+      "handler": "send_sms_code",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/auth/sms/login",
+      "source": "app/api/auth.py:213",
+      "handler": "sms_login",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/auth/password/reset",
+      "source": "app/api/auth.py:244",
+      "handler": "password_reset",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/auth/social/providers",
+      "source": "app/api/auth.py:274",
+      "handler": "social_providers",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/auth/social/{provider}/login",
+      "source": "app/api/auth.py:279",
+      "handler": "social_login",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/auth/refresh",
+      "source": "app/api/auth.py:301",
+      "handler": "refresh",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/auth/logout",
+      "source": "app/api/auth.py:315",
+      "handler": "logout",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/auth/sessions",
+      "source": "app/api/auth.py:320",
+      "handler": "sessions",
+      "status": "pending"
+    },
+    {
+      "method": "DELETE",
+      "path": "/auth/sessions/{session_id}",
+      "source": "app/api/auth.py:329",
+      "handler": "revoke_session",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/auth/sessions/revoke-others",
+      "source": "app/api/auth.py:349",
+      "handler": "revoke_other_sessions",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/auth/me",
+      "source": "app/api/auth.py:370",
+      "handler": "me",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/auth/me/membership",
+      "source": "app/api/auth.py:375",
+      "handler": "my_membership",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/auth/account/deactivate",
+      "source": "app/api/auth.py:380",
+      "handler": "deactivate_account",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/auth/account/restore",
+      "source": "app/api/auth.py:385",
+      "handler": "restore_account",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/call-settings/me",
+      "source": "app/api/call_settings.py:13",
+      "handler": "my_call_setting",
+      "status": "pending"
+    },
+    {
+      "method": "PATCH",
+      "path": "/call-settings/me",
+      "source": "app/api/call_settings.py:18",
+      "handler": "update_my_call_setting",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/call-settings/users/{user_id}",
+      "source": "app/api/call_settings.py:23",
+      "handler": "user_call_setting",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/calls/",
+      "source": "app/api/calls.py:13",
+      "handler": "start_call",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/calls/",
+      "source": "app/api/calls.py:18",
+      "handler": "list_calls",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/calls/{call_id}",
+      "source": "app/api/calls.py:23",
+      "handler": "get_call",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/calls/{call_id}/end",
+      "source": "app/api/calls.py:28",
+      "handler": "end_call",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/client/android-release",
+      "source": "app/api/client_release.py:10",
+      "handler": "android_release",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/conversations/",
+      "source": "app/api/conversations.py:29",
+      "handler": "list_conversations",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/conversations/page",
+      "source": "app/api/conversations.py:34",
+      "handler": "list_conversation_page",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/conversations/{conversation_id}",
+      "source": "app/api/conversations.py:49",
+      "handler": "get_conversation",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/conversations/{conversation_id}/messages",
+      "source": "app/api/conversations.py:54",
+      "handler": "list_messages",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/conversations/{conversation_id}/messages/page",
+      "source": "app/api/conversations.py:59",
+      "handler": "list_message_page",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/conversations/{conversation_id}/messages",
+      "source": "app/api/conversations.py:76",
+      "handler": "send_message",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/conversations/{conversation_id}/messages/{message_id}/recall",
+      "source": "app/api/conversations.py:101",
+      "handler": "recall_message",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/conversations/{conversation_id}/messages/search",
+      "source": "app/api/conversations.py:130",
+      "handler": "search_messages",
+      "status": "pending"
+    },
+    {
+      "method": "DELETE",
+      "path": "/conversations/{conversation_id}/messages/{message_id}",
+      "source": "app/api/conversations.py:151",
+      "handler": "hide_message",
+      "status": "pending"
+    },
+    {
+      "method": "DELETE",
+      "path": "/conversations/{conversation_id}/messages",
+      "source": "app/api/conversations.py:156",
+      "handler": "clear_messages",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/conversations/{conversation_id}/read",
+      "source": "app/api/conversations.py:161",
+      "handler": "mark_read",
+      "status": "pending"
+    },
+    {
+      "method": "PATCH",
+      "path": "/conversations/{conversation_id}/settings",
+      "source": "app/api/conversations.py:179",
+      "handler": "update_settings",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/explore/candidates",
+      "source": "app/api/explore.py:13",
+      "handler": "candidates",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/explore/liked-profiles",
+      "source": "app/api/explore.py:18",
+      "handler": "liked_profiles",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/explore/exposures/{target_user_id}",
+      "source": "app/api/explore.py:23",
+      "handler": "expose",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/explore/likes/{target_user_id}",
+      "source": "app/api/explore.py:28",
+      "handler": "like",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/explore/super-likes/{target_user_id}",
+      "source": "app/api/explore.py:33",
+      "handler": "super_like",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/explore/skips/{target_user_id}",
+      "source": "app/api/explore.py:38",
+      "handler": "skip",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/explore/undo",
+      "source": "app/api/explore.py:43",
+      "handler": "undo",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/explore/blocks/{target_user_id}",
+      "source": "app/api/explore.py:48",
+      "handler": "block_from_explore",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/friends/requests",
+      "source": "app/api/friends.py:13",
+      "handler": "create_request",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/friends/requests",
+      "source": "app/api/friends.py:18",
+      "handler": "list_requests",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/friends/requests/{request_id}/accept",
+      "source": "app/api/friends.py:23",
+      "handler": "accept_request",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/friends/requests/{request_id}/reject",
+      "source": "app/api/friends.py:28",
+      "handler": "reject_request",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/friends/",
+      "source": "app/api/friends.py:33",
+      "handler": "list_friends",
+      "status": "pending"
+    },
+    {
+      "method": "DELETE",
+      "path": "/friends/{target_user_id}",
+      "source": "app/api/friends.py:38",
+      "handler": "delete_friend",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/groups/",
+      "source": "app/api/groups.py:23",
+      "handler": "create_group",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/groups/",
+      "source": "app/api/groups.py:28",
+      "handler": "my_groups",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/groups/search",
+      "source": "app/api/groups.py:33",
+      "handler": "search_groups",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/groups/{group_id}",
+      "source": "app/api/groups.py:38",
+      "handler": "get_group",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/groups/{group_id}/invite",
+      "source": "app/api/groups.py:43",
+      "handler": "invite",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/groups/{group_id}/join-requests",
+      "source": "app/api/groups.py:48",
+      "handler": "join_request",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/groups/join-by-link-code",
+      "source": "app/api/groups.py:53",
+      "handler": "join_by_link_code",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/groups/{group_id}/members",
+      "source": "app/api/groups.py:61",
+      "handler": "members",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/groups/{group_id}/join-requests",
+      "source": "app/api/groups.py:66",
+      "handler": "list_join_requests",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/groups/{group_id}/join-requests/{request_id}/approve",
+      "source": "app/api/groups.py:71",
+      "handler": "approve_join_request",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/groups/{group_id}/join-requests/{request_id}/reject",
+      "source": "app/api/groups.py:76",
+      "handler": "reject_join_request",
+      "status": "pending"
+    },
+    {
+      "method": "PATCH",
+      "path": "/groups/{group_id}/members/{user_id}/role",
+      "source": "app/api/groups.py:81",
+      "handler": "update_member_role",
+      "status": "pending"
+    },
+    {
+      "method": "DELETE",
+      "path": "/groups/{group_id}/members/{user_id}",
+      "source": "app/api/groups.py:86",
+      "handler": "remove_member",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/groups/{group_id}/leave",
+      "source": "app/api/groups.py:91",
+      "handler": "leave_group",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/groups/{group_id}/transfer-owner",
+      "source": "app/api/groups.py:96",
+      "handler": "transfer_owner",
+      "status": "pending"
+    },
+    {
+      "method": "DELETE",
+      "path": "/groups/{group_id}",
+      "source": "app/api/groups.py:101",
+      "handler": "dissolve_group",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/health",
+      "source": "app/api/health.py:22",
+      "handler": "health_check",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/health/ready",
+      "source": "app/api/health.py:27",
+      "handler": "readiness_check",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/health/capabilities",
+      "source": "app/api/health.py:64",
+      "handler": "service_capabilities",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/health/outbox",
+      "source": "app/api/health.py:69",
+      "handler": "live_event_outbox_health",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/health/realtime",
+      "source": "app/api/health.py:76",
+      "handler": "realtime_health",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/health/performance",
+      "source": "app/api/health.py:85",
+      "handler": "performance_health",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/live/categories",
+      "source": "app/api/live.py:22",
+      "handler": "categories",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/live/gifts",
+      "source": "app/api/live.py:27",
+      "handler": "gift_catalog",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/live/gift-safety/me",
+      "source": "app/api/live.py:32",
+      "handler": "get_my_gift_safety",
+      "status": "pending"
+    },
+    {
+      "method": "PATCH",
+      "path": "/live/gift-safety/me",
+      "source": "app/api/live.py:42",
+      "handler": "update_my_gift_safety",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/live/following",
+      "source": "app/api/live.py:53",
+      "handler": "list_followed_hosts",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/live/hosts/me/access",
+      "source": "app/api/live.py:58",
+      "handler": "get_my_host_access",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/live/hosts/me/overview",
+      "source": "app/api/live.py:66",
+      "handler": "get_my_host_overview",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/live/income/summary",
+      "source": "app/api/live.py:81",
+      "handler": "get_my_live_income_summary",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/live/income/records",
+      "source": "app/api/live.py:89",
+      "handler": "get_my_live_income_records",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/live/settlements",
+      "source": "app/api/live.py:98",
+      "handler": "get_my_live_settlements",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/live/settlements",
+      "source": "app/api/live.py:106",
+      "handler": "create_my_live_settlement",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/live/hosts/{host_user_id}/follow",
+      "source": "app/api/live.py:114",
+      "handler": "get_host_follow_status",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/live/hosts/{host_user_id}/follow",
+      "source": "app/api/live.py:119",
+      "handler": "follow_host",
+      "status": "pending"
+    },
+    {
+      "method": "DELETE",
+      "path": "/live/hosts/{host_user_id}/follow",
+      "source": "app/api/live.py:124",
+      "handler": "unfollow_host",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/live/schedules",
+      "source": "app/api/live.py:129",
+      "handler": "list_schedules",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/live/schedules",
+      "source": "app/api/live.py:139",
+      "handler": "create_schedule",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/live/schedules/{schedule_id}/reservations",
+      "source": "app/api/live.py:144",
+      "handler": "reserve_schedule",
+      "status": "pending"
+    },
+    {
+      "method": "DELETE",
+      "path": "/live/schedules/{schedule_id}/reservations/me",
+      "source": "app/api/live.py:149",
+      "handler": "cancel_schedule_reservation",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/live/schedules/{schedule_id}/start",
+      "source": "app/api/live.py:154",
+      "handler": "start_schedule",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/live/schedules/{schedule_id}/cancel",
+      "source": "app/api/live.py:167",
+      "handler": "cancel_schedule",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/live/rooms",
+      "source": "app/api/live.py:172",
+      "handler": "create_room",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/live/rooms/{room_id}/start",
+      "source": "app/api/live.py:177",
+      "handler": "start_room",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/live/rooms/{room_id}/stream-session",
+      "source": "app/api/live.py:190",
+      "handler": "get_stream_session",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/live/rooms/{room_id}/end",
+      "source": "app/api/live.py:195",
+      "handler": "end_room",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/live/rooms",
+      "source": "app/api/live.py:200",
+      "handler": "list_rooms",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/live/rooms/{room_id}",
+      "source": "app/api/live.py:205",
+      "handler": "get_room",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/live/rooms/{room_id}/participants/me",
+      "source": "app/api/live.py:210",
+      "handler": "join_room",
+      "status": "pending"
+    },
+    {
+      "method": "DELETE",
+      "path": "/live/rooms/{room_id}/participants/me",
+      "source": "app/api/live.py:215",
+      "handler": "leave_room",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/live/rooms/{room_id}/messages",
+      "source": "app/api/live.py:231",
+      "handler": "list_room_messages",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/live/rooms/{room_id}/messages",
+      "source": "app/api/live.py:236",
+      "handler": "send_room_message",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/live/rooms/{room_id}/likes",
+      "source": "app/api/live.py:266",
+      "handler": "like_room",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/live/rooms/{room_id}/gifts",
+      "source": "app/api/live.py:283",
+      "handler": "list_room_gifts",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/live/rooms/{room_id}/gift-ranking",
+      "source": "app/api/live.py:288",
+      "handler": "get_gift_ranking",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/live/rooms/{room_id}/gift-confirmations",
+      "source": "app/api/live.py:301",
+      "handler": "create_gift_confirmation",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/live/rooms/{room_id}/gifts",
+      "source": "app/api/live.py:313",
+      "handler": "send_live_gift",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/live/rooms/{room_id}/watch-events",
+      "source": "app/api/live.py:336",
+      "handler": "watch_event",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/live/rooms/{room_id}/cohost-requests",
+      "source": "app/api/live_cohost.py:26",
+      "handler": "request_cohost",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/live/rooms/{room_id}/cohost-requests/me",
+      "source": "app/api/live_cohost.py:38",
+      "handler": "get_my_cohost_request",
+      "status": "pending"
+    },
+    {
+      "method": "DELETE",
+      "path": "/live/rooms/{room_id}/cohost-requests/me",
+      "source": "app/api/live_cohost.py:47",
+      "handler": "cancel_my_cohost_request",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/live/rooms/{room_id}/cohost-requests",
+      "source": "app/api/live_cohost.py:58",
+      "handler": "list_cohost_requests",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/live/rooms/{room_id}/cohost-requests/{request_id}/accept",
+      "source": "app/api/live_cohost.py:71",
+      "handler": "accept_cohost_request",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/live/rooms/{room_id}/cohost-requests/{request_id}/reject",
+      "source": "app/api/live_cohost.py:86",
+      "handler": "reject_cohost_request",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/live/rooms/{room_id}/cohost/end",
+      "source": "app/api/live_cohost.py:98",
+      "handler": "end_cohost",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/live/rooms/{room_id}/governance",
+      "source": "app/api/live_governance.py:27",
+      "handler": "get_governance",
+      "status": "pending"
+    },
+    {
+      "method": "PATCH",
+      "path": "/live/rooms/{room_id}/governance",
+      "source": "app/api/live_governance.py:32",
+      "handler": "update_governance",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/live/rooms/{room_id}/participants",
+      "source": "app/api/live_governance.py:39",
+      "handler": "list_participants",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/live/rooms/{room_id}/participants/{user_id}/manager",
+      "source": "app/api/live_governance.py:44",
+      "handler": "assign_manager",
+      "status": "pending"
+    },
+    {
+      "method": "DELETE",
+      "path": "/live/rooms/{room_id}/participants/{user_id}/manager",
+      "source": "app/api/live_governance.py:51",
+      "handler": "remove_manager",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/live/rooms/{room_id}/participants/{user_id}/mute",
+      "source": "app/api/live_governance.py:58",
+      "handler": "mute_participant",
+      "status": "pending"
+    },
+    {
+      "method": "DELETE",
+      "path": "/live/rooms/{room_id}/participants/{user_id}/mute",
+      "source": "app/api/live_governance.py:65",
+      "handler": "unmute_participant",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/live/rooms/{room_id}/participants/{user_id}/kick",
+      "source": "app/api/live_governance.py:72",
+      "handler": "kick_participant",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/live/rooms/{room_id}/governance-logs",
+      "source": "app/api/live_governance.py:80",
+      "handler": "list_governance_logs",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/live/host-verification/me",
+      "source": "app/api/live_host_verification.py:14",
+      "handler": "get_my_host_verification",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/live/host-verification/applications",
+      "source": "app/api/live_host_verification.py:22",
+      "handler": "submit_host_verification",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/live/network-probe",
+      "source": "app/api/live_preflight.py:15",
+      "handler": "network_probe",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/live/rooms/{room_id}/preflight",
+      "source": "app/api/live_preflight.py:26",
+      "handler": "preflight_room",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/live/schedules/{schedule_id}/preflight",
+      "source": "app/api/live_preflight.py:36",
+      "handler": "preflight_schedule",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/callbacks/live/{provider_name}",
+      "source": "app/api/live_provider_callbacks.py:47",
+      "handler": "receive_live_callback",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/live/rooms/{room_id}/provider-events/simulate",
+      "source": "app/api/live_provider_callbacks.py:91",
+      "handler": "simulate_provider_event",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/live/rooms/{room_id}/stream/recover",
+      "source": "app/api/live_provider_callbacks.py:116",
+      "handler": "recover_live_stream",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/live/rooms/{room_id}/stream-credentials/push",
+      "source": "app/api/live_stream_credentials.py:20",
+      "handler": "issue_push_credential",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/live/rooms/{room_id}/stream-credentials/play",
+      "source": "app/api/live_stream_credentials.py:32",
+      "handler": "issue_play_credential",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/live/rooms/{room_id}/stream-credentials/me",
+      "source": "app/api/live_stream_credentials.py:44",
+      "handler": "list_my_credentials",
+      "status": "pending"
+    },
+    {
+      "method": "DELETE",
+      "path": "/live/rooms/{room_id}/stream-credentials/{credential_id}",
+      "source": "app/api/live_stream_credentials.py:56",
+      "handler": "revoke_credential",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/live/stream-credentials/{credential_id}/validate",
+      "source": "app/api/live_stream_credentials.py:71",
+      "handler": "validate_mock_credential",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/matches/",
+      "source": "app/api/matches.py:13",
+      "handler": "list_matches",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/matches/{match_id}",
+      "source": "app/api/matches.py:18",
+      "handler": "get_match",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/media/upload",
+      "source": "app/api/media.py:14",
+      "handler": "upload_media",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/media/me",
+      "source": "app/api/media.py:34",
+      "handler": "my_media",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/media/{media_id}/access-url",
+      "source": "app/api/media.py:46",
+      "handler": "create_media_access_url",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/media/access/{token}",
+      "source": "app/api/media.py:56",
+      "handler": "read_private_media",
+      "status": "pending"
+    },
+    {
+      "method": "DELETE",
+      "path": "/media/{media_id}",
+      "source": "app/api/media.py:69",
+      "handler": "delete_my_media",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/notifications/devices",
+      "source": "app/api/notifications.py:22",
+      "handler": "register_device",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/notifications/devices",
+      "source": "app/api/notifications.py:31",
+      "handler": "list_devices",
+      "status": "pending"
+    },
+    {
+      "method": "DELETE",
+      "path": "/notifications/devices/{device_id}",
+      "source": "app/api/notifications.py:36",
+      "handler": "disable_device",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/notifications/preferences",
+      "source": "app/api/notifications.py:41",
+      "handler": "get_preferences",
+      "status": "pending"
+    },
+    {
+      "method": "PATCH",
+      "path": "/notifications/preferences",
+      "source": "app/api/notifications.py:46",
+      "handler": "update_preferences",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/notifications/events",
+      "source": "app/api/notifications.py:55",
+      "handler": "list_events",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/notifications/unread-count",
+      "source": "app/api/notifications.py:60",
+      "handler": "unread_count",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/notifications/events/{event_id}/read",
+      "source": "app/api/notifications.py:65",
+      "handler": "mark_event_read",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/notifications/events/read-all",
+      "source": "app/api/notifications.py:70",
+      "handler": "mark_all_events_read",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/callbacks/payments/{provider_name}",
+      "source": "app/api/payment_callbacks.py:18",
+      "handler": "receive_payment_callback",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/payments/packages",
+      "source": "app/api/payments.py:20",
+      "handler": "get_coin_packages",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/payments/orders",
+      "source": "app/api/payments.py:25",
+      "handler": "create_order",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/payments/orders",
+      "source": "app/api/payments.py:34",
+      "handler": "get_my_orders",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/payments/orders/{order_id}",
+      "source": "app/api/payments.py:42",
+      "handler": "get_order",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/payments/orders/{order_id}/mock/complete",
+      "source": "app/api/payments.py:54",
+      "handler": "complete_mock_order",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/posts/",
+      "source": "app/api/posts.py:23",
+      "handler": "create_post",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/posts/feed",
+      "source": "app/api/posts.py:28",
+      "handler": "feed",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/posts/feed/page",
+      "source": "app/api/posts.py:33",
+      "handler": "feed_page",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/posts/user/{user_id}",
+      "source": "app/api/posts.py:43",
+      "handler": "user_posts",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/posts/{post_id}",
+      "source": "app/api/posts.py:48",
+      "handler": "get_post",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/posts/{post_id}/likes",
+      "source": "app/api/posts.py:53",
+      "handler": "like_post",
+      "status": "pending"
+    },
+    {
+      "method": "DELETE",
+      "path": "/posts/{post_id}/likes",
+      "source": "app/api/posts.py:58",
+      "handler": "unlike_post",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/posts/{post_id}/media/{media_asset_id}/reactions",
+      "source": "app/api/posts.py:66",
+      "handler": "media_reactions",
+      "status": "pending"
+    },
+    {
+      "method": "PUT",
+      "path": "/posts/{post_id}/media/{media_asset_id}/reaction",
+      "source": "app/api/posts.py:79",
+      "handler": "set_media_reaction",
+      "status": "pending"
+    },
+    {
+      "method": "DELETE",
+      "path": "/posts/{post_id}/media/{media_asset_id}/reaction",
+      "source": "app/api/posts.py:99",
+      "handler": "delete_media_reaction",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/posts/{post_id}/media/{media_asset_id}/download",
+      "source": "app/api/posts.py:112",
+      "handler": "media_download",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/posts/{post_id}/comments",
+      "source": "app/api/posts.py:122",
+      "handler": "comments",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/posts/{post_id}/comments/page",
+      "source": "app/api/posts.py:127",
+      "handler": "comment_page",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/posts/{post_id}/comments/{comment_id}/replies",
+      "source": "app/api/posts.py:146",
+      "handler": "comment_replies",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/posts/{post_id}/comments",
+      "source": "app/api/posts.py:165",
+      "handler": "create_comment",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/posts/{post_id}/comments/{comment_id}/likes",
+      "source": "app/api/posts.py:170",
+      "handler": "like_comment",
+      "status": "pending"
+    },
+    {
+      "method": "DELETE",
+      "path": "/posts/{post_id}/comments/{comment_id}/likes",
+      "source": "app/api/posts.py:175",
+      "handler": "unlike_comment",
+      "status": "pending"
+    },
+    {
+      "method": "DELETE",
+      "path": "/posts/{post_id}/comments/{comment_id}",
+      "source": "app/api/posts.py:180",
+      "handler": "delete_comment",
+      "status": "pending"
+    },
+    {
+      "method": "DELETE",
+      "path": "/posts/{post_id}",
+      "source": "app/api/posts.py:186",
+      "handler": "delete_post",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/profiles/me",
+      "source": "app/api/profiles.py:14",
+      "handler": "get_my_profile",
+      "status": "pending"
+    },
+    {
+      "method": "PATCH",
+      "path": "/profiles/me",
+      "source": "app/api/profiles.py:21",
+      "handler": "update_my_profile",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/profiles/{user_id}",
+      "source": "app/api/profiles.py:26",
+      "handler": "get_profile",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/safety/reports",
+      "source": "app/api/safety.py:18",
+      "handler": "create_report",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/safety/live-moderation/incidents/{incident_id}/appeals",
+      "source": "app/api/safety.py:26",
+      "handler": "create_live_moderation_appeal",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/safety/live-moderation/appeals/me",
+      "source": "app/api/safety.py:36",
+      "handler": "list_my_live_moderation_appeals",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/safety/live-moderation/incidents/me",
+      "source": "app/api/safety.py:44",
+      "handler": "list_my_live_moderation_incidents",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/safety/blocks",
+      "source": "app/api/safety.py:52",
+      "handler": "create_block",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/safety/blocks",
+      "source": "app/api/safety.py:57",
+      "handler": "list_blocks",
+      "status": "pending"
+    },
+    {
+      "method": "DELETE",
+      "path": "/safety/blocks/{block_id}",
+      "source": "app/api/safety.py:62",
+      "handler": "delete_block",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/storage/{object_key:path}",
+      "source": "app/api/storage_assets.py:7",
+      "handler": "read_storage_object",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/uploads/{object_key:path}",
+      "source": "app/api/storage_assets.py:7",
+      "handler": "read_storage_object",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/support/feedback",
+      "source": "app/api/support.py:14",
+      "handler": "create",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/support/feedback/me",
+      "source": "app/api/support.py:19",
+      "handler": "mine",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/support/feedback",
+      "source": "app/api/support.py:25",
+      "handler": "all_feedback",
+      "status": "pending"
+    },
+    {
+      "method": "PATCH",
+      "path": "/admin/support/feedback/{ticket_id}",
+      "source": "app/api/support.py:32",
+      "handler": "update",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/users/",
+      "source": "app/api/users.py:14",
+      "handler": "search_users",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/users/{user_id}",
+      "source": "app/api/users.py:24",
+      "handler": "get_user",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/wallet/me",
+      "source": "app/api/wallet.py:17",
+      "handler": "my_wallet",
+      "status": "pending"
+    },
+    {
+      "method": "POST",
+      "path": "/wallet/recharge/dev",
+      "source": "app/api/wallet.py:22",
+      "handler": "dev_recharge",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/wallet/transactions",
+      "source": "app/api/wallet.py:27",
+      "handler": "transactions",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/wallet/ledger",
+      "source": "app/api/wallet.py:32",
+      "handler": "ledger",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/wallet/summary",
+      "source": "app/api/wallet.py:47",
+      "handler": "consumption_summary",
+      "status": "pending"
+    },
+    {
+      "method": "GET",
+      "path": "/wallet/bills",
+      "source": "app/api/wallet.py:62",
+      "handler": "bills",
+      "status": "pending"
+    },
+    {
+      "method": "WEBSOCKET",
+      "path": "/ws/notifications",
+      "source": "app/api/websocket_messages.py:29",
+      "handler": "notification_events",
+      "status": "pending"
+    },
+    {
+      "method": "WEBSOCKET",
+      "path": "/ws/live/{room_id}",
+      "source": "app/api/websocket_messages.py:86",
+      "handler": "live_room_events",
+      "status": "pending"
+    },
+    {
+      "method": "WEBSOCKET",
+      "path": "/ws/messages",
+      "source": "app/api/websocket_messages.py:126",
+      "handler": "message_events",
+      "status": "pending"
+    }
+  ],
+  "tables": [
+    {
+      "table": "users",
+      "model": "User",
+      "source": "app/models/domain.py:20",
+      "owner": "pending"
+    },
+    {
+      "table": "user_profiles",
+      "model": "UserProfile",
+      "source": "app/models/domain.py:38",
+      "owner": "pending"
+    },
+    {
+      "table": "refresh_tokens",
+      "model": "RefreshToken",
+      "source": "app/models/domain.py:60",
+      "owner": "pending"
+    },
+    {
+      "table": "push_devices",
+      "model": "PushDevice",
+      "source": "app/models/domain.py:77",
+      "owner": "pending"
+    },
+    {
+      "table": "notification_preferences",
+      "model": "NotificationPreference",
+      "source": "app/models/domain.py:93",
+      "owner": "pending"
+    },
+    {
+      "table": "notification_events",
+      "model": "NotificationEvent",
+      "source": "app/models/domain.py:111",
+      "owner": "pending"
+    },
+    {
+      "table": "account_erasure_records",
+      "model": "AccountErasureRecord",
+      "source": "app/models/domain.py:136",
+      "owner": "pending"
+    },
+    {
+      "table": "storage_deletion_jobs",
+      "model": "StorageDeletionJob",
+      "source": "app/models/domain.py:151",
+      "owner": "pending"
+    },
+    {
+      "table": "push_delivery_attempts",
+      "model": "PushDeliveryAttempt",
+      "source": "app/models/domain.py:167",
+      "owner": "pending"
+    },
+    {
+      "table": "auth_verification_codes",
+      "model": "AuthVerificationCode",
+      "source": "app/models/domain.py:202",
+      "owner": "pending"
+    },
+    {
+      "table": "auth_security_events",
+      "model": "AuthSecurityEvent",
+      "source": "app/models/domain.py:221",
+      "owner": "pending"
+    },
+    {
+      "table": "admin_users",
+      "model": "AdminUser",
+      "source": "app/models/domain.py:248",
+      "owner": "pending"
+    },
+    {
+      "table": "admin_operation_logs",
+      "model": "AdminOperationLog",
+      "source": "app/models/domain.py:262",
+      "owner": "pending"
+    },
+    {
+      "table": "posts",
+      "model": "Post",
+      "source": "app/models/domain.py:274",
+      "owner": "pending"
+    },
+    {
+      "table": "post_likes",
+      "model": "PostLike",
+      "source": "app/models/domain.py:291",
+      "owner": "pending"
+    },
+    {
+      "table": "post_comments",
+      "model": "PostComment",
+      "source": "app/models/domain.py:301",
+      "owner": "pending"
+    },
+    {
+      "table": "post_comment_likes",
+      "model": "PostCommentLike",
+      "source": "app/models/domain.py:327",
+      "owner": "pending"
+    },
+    {
+      "table": "post_media_reactions",
+      "model": "PostMediaReaction",
+      "source": "app/models/domain.py:345",
+      "owner": "pending"
+    },
+    {
+      "table": "live_rooms",
+      "model": "LiveRoom",
+      "source": "app/models/domain.py:370",
+      "owner": "pending"
+    },
+    {
+      "table": "live_host_qualifications",
+      "model": "LiveHostQualification",
+      "source": "app/models/domain.py:398",
+      "owner": "pending"
+    },
+    {
+      "table": "live_host_verification_applications",
+      "model": "LiveHostVerificationApplication",
+      "source": "app/models/domain.py:412",
+      "owner": "pending"
+    },
+    {
+      "table": "live_room_participants",
+      "model": "LiveRoomParticipant",
+      "source": "app/models/domain.py:435",
+      "owner": "pending"
+    },
+    {
+      "table": "live_room_governance_logs",
+      "model": "LiveRoomGovernanceLog",
+      "source": "app/models/domain.py:451",
+      "owner": "pending"
+    },
+    {
+      "table": "live_provider_callback_events",
+      "model": "LiveProviderCallbackEvent",
+      "source": "app/models/domain.py:464",
+      "owner": "pending"
+    },
+    {
+      "table": "live_stream_state_transitions",
+      "model": "LiveStreamStateTransition",
+      "source": "app/models/domain.py:486",
+      "owner": "pending"
+    },
+    {
+      "table": "live_stream_credentials",
+      "model": "LiveStreamCredential",
+      "source": "app/models/domain.py:503",
+      "owner": "pending"
+    },
+    {
+      "table": "live_start_preflights",
+      "model": "LiveStartPreflight",
+      "source": "app/models/domain.py:521",
+      "owner": "pending"
+    },
+    {
+      "table": "live_moderation_tasks",
+      "model": "LiveModerationTask",
+      "source": "app/models/domain.py:548",
+      "owner": "pending"
+    },
+    {
+      "table": "live_moderation_incidents",
+      "model": "LiveModerationIncident",
+      "source": "app/models/domain.py:569",
+      "owner": "pending"
+    },
+    {
+      "table": "live_cohost_requests",
+      "model": "LiveCohostRequest",
+      "source": "app/models/domain.py:588",
+      "owner": "pending"
+    },
+    {
+      "table": "live_host_follows",
+      "model": "LiveHostFollow",
+      "source": "app/models/domain.py:602",
+      "owner": "pending"
+    },
+    {
+      "table": "live_schedules",
+      "model": "LiveSchedule",
+      "source": "app/models/domain.py:612",
+      "owner": "pending"
+    },
+    {
+      "table": "live_schedule_reservations",
+      "model": "LiveScheduleReservation",
+      "source": "app/models/domain.py:628",
+      "owner": "pending"
+    },
+    {
+      "table": "live_room_messages",
+      "model": "LiveRoomMessage",
+      "source": "app/models/domain.py:638",
+      "owner": "pending"
+    },
+    {
+      "table": "live_gift_catalog_items",
+      "model": "LiveGiftCatalogItem",
+      "source": "app/models/domain.py:649",
+      "owner": "pending"
+    },
+    {
+      "table": "live_gift_records",
+      "model": "LiveGiftRecord",
+      "source": "app/models/domain.py:671",
+      "owner": "pending"
+    },
+    {
+      "table": "live_event_dispatch_jobs",
+      "model": "LiveEventDispatchJob",
+      "source": "app/models/domain.py:707",
+      "owner": "pending"
+    },
+    {
+      "table": "gift_safety_settings",
+      "model": "GiftSafetySetting",
+      "source": "app/models/domain.py:738",
+      "owner": "pending"
+    },
+    {
+      "table": "gift_risk_confirmations",
+      "model": "GiftRiskConfirmation",
+      "source": "app/models/domain.py:756",
+      "owner": "pending"
+    },
+    {
+      "table": "gift_risk_events",
+      "model": "GiftRiskEvent",
+      "source": "app/models/domain.py:770",
+      "owner": "pending"
+    },
+    {
+      "table": "live_host_settlements",
+      "model": "LiveHostSettlement",
+      "source": "app/models/domain.py:792",
+      "owner": "pending"
+    },
+    {
+      "table": "live_host_settlement_items",
+      "model": "LiveHostSettlementItem",
+      "source": "app/models/domain.py:807",
+      "owner": "pending"
+    },
+    {
+      "table": "watch_events",
+      "model": "WatchEvent",
+      "source": "app/models/domain.py:820",
+      "owner": "pending"
+    },
+    {
+      "table": "explore_actions",
+      "model": "ExploreAction",
+      "source": "app/models/domain.py:831",
+      "owner": "pending"
+    },
+    {
+      "table": "matches",
+      "model": "Match",
+      "source": "app/models/domain.py:841",
+      "owner": "pending"
+    },
+    {
+      "table": "friend_requests",
+      "model": "FriendRequest",
+      "source": "app/models/domain.py:852",
+      "owner": "pending"
+    },
+    {
+      "table": "friendships",
+      "model": "Friendship",
+      "source": "app/models/domain.py:863",
+      "owner": "pending"
+    },
+    {
+      "table": "conversations",
+      "model": "Conversation",
+      "source": "app/models/domain.py:873",
+      "owner": "pending"
+    },
+    {
+      "table": "conversation_member_states",
+      "model": "ConversationMemberState",
+      "source": "app/models/domain.py:896",
+      "owner": "pending"
+    },
+    {
+      "table": "messages",
+      "model": "Message",
+      "source": "app/models/domain.py:922",
+      "owner": "pending"
+    },
+    {
+      "table": "message_dispatch_jobs",
+      "model": "MessageDispatchJob",
+      "source": "app/models/domain.py:958",
+      "owner": "pending"
+    },
+    {
+      "table": "groups",
+      "model": "Group",
+      "source": "app/models/domain.py:989",
+      "owner": "pending"
+    },
+    {
+      "table": "group_members",
+      "model": "GroupMember",
+      "source": "app/models/domain.py:1008",
+      "owner": "pending"
+    },
+    {
+      "table": "group_join_requests",
+      "model": "GroupJoinRequest",
+      "source": "app/models/domain.py:1020",
+      "owner": "pending"
+    },
+    {
+      "table": "reports",
+      "model": "Report",
+      "source": "app/models/domain.py:1031",
+      "owner": "pending"
+    },
+    {
+      "table": "blocks",
+      "model": "Block",
+      "source": "app/models/domain.py:1052",
+      "owner": "pending"
+    },
+    {
+      "table": "wallets",
+      "model": "Wallet",
+      "source": "app/models/domain.py:1062",
+      "owner": "pending"
+    },
+    {
+      "table": "wallet_transactions",
+      "model": "WalletTransaction",
+      "source": "app/models/domain.py:1070",
+      "owner": "pending"
+    },
+    {
+      "table": "coin_accounts",
+      "model": "CoinAccount",
+      "source": "app/models/domain.py:1084",
+      "owner": "pending"
+    },
+    {
+      "table": "billing_transactions",
+      "model": "BillingTransaction",
+      "source": "app/models/domain.py:1105",
+      "owner": "pending"
+    },
+    {
+      "table": "coin_ledger_entries",
+      "model": "CoinLedgerEntry",
+      "source": "app/models/domain.py:1123",
+      "owner": "pending"
+    },
+    {
+      "table": "payment_orders",
+      "model": "PaymentOrder",
+      "source": "app/models/domain.py:1135",
+      "owner": "pending"
+    },
+    {
+      "table": "payment_callback_events",
+      "model": "PaymentCallbackEvent",
+      "source": "app/models/domain.py:1172",
+      "owner": "pending"
+    },
+    {
+      "table": "call_billing_settings",
+      "model": "CallBillingSetting",
+      "source": "app/models/domain.py:1202",
+      "owner": "pending"
+    },
+    {
+      "table": "call_sessions",
+      "model": "CallSession",
+      "source": "app/models/domain.py:1213",
+      "owner": "pending"
+    },
+    {
+      "table": "media_assets",
+      "model": "MediaAsset",
+      "source": "app/models/domain.py:1229",
+      "owner": "pending"
+    },
+    {
+      "table": "media_processing_jobs",
+      "model": "MediaProcessingJob",
+      "source": "app/models/domain.py:1268",
+      "owner": "pending"
+    },
+    {
+      "table": "media_security_scans",
+      "model": "MediaSecurityScan",
+      "source": "app/models/domain.py:1285",
+      "owner": "pending"
+    },
+    {
+      "table": "moderation_reviews",
+      "model": "ModerationReview",
+      "source": "app/models/domain.py:1306",
+      "owner": "pending"
+    },
+    {
+      "table": "live_moderation_appeals",
+      "model": "LiveModerationAppeal",
+      "source": "app/models/domain.py:1320",
+      "owner": "pending"
+    },
+    {
+      "table": "feedback_tickets",
+      "model": "FeedbackTicket",
+      "source": "app/models/support.py:9",
+      "owner": "pending"
+    }
+  ],
+  "tests": [
+    {
+      "file": "tests/test_account_erasure.py",
+      "test_definitions": 3
+    },
+    {
+      "file": "tests/test_admin_auth.py",
+      "test_definitions": 11
+    },
+    {
+      "file": "tests/test_admin_mvp.py",
+      "test_definitions": 5
+    },
+    {
+      "file": "tests/test_auth_closure.py",
+      "test_definitions": 6
+    },
+    {
+      "file": "tests/test_auth_security_events.py",
+      "test_definitions": 2
+    },
+    {
+      "file": "tests/test_billing_ledger.py",
+      "test_definitions": 6
+    },
+    {
+      "file": "tests/test_business_flow.py",
+      "test_definitions": 32
+    },
+    {
+      "file": "tests/test_clamav_provider.py",
+      "test_definitions": 5
+    },
+    {
+      "file": "tests/test_cloud_media_inventory.py",
+      "test_definitions": 3
+    },
+    {
+      "file": "tests/test_coin_consumption_closure.py",
+      "test_definitions": 6
+    },
+    {
+      "file": "tests/test_config.py",
+      "test_definitions": 8
+    },
+    {
+      "file": "tests/test_db_dependency.py",
+      "test_definitions": 1
+    },
+    {
+      "file": "tests/test_distributed_state.py",
+      "test_definitions": 3
+    },
+    {
+      "file": "tests/test_error_responses.py",
+      "test_definitions": 6
+    },
+    {
+      "file": "tests/test_health.py",
+      "test_definitions": 5
+    },
+    {
+      "file": "tests/test_legacy_media_audit.py",
+      "test_definitions": 3
+    },
+    {
+      "file": "tests/test_live_chat_admission.py",
+      "test_definitions": 4
+    },
+    {
+      "file": "tests/test_live_cohost.py",
+      "test_definitions": 2
+    },
+    {
+      "file": "tests/test_live_event_dispatch.py",
+      "test_definitions": 2
+    },
+    {
+      "file": "tests/test_live_event_stream.py",
+      "test_definitions": 4
+    },
+    {
+      "file": "tests/test_live_governance.py",
+      "test_definitions": 2
+    },
+    {
+      "file": "tests/test_live_host_access.py",
+      "test_definitions": 3
+    },
+    {
+      "file": "tests/test_live_host_verification.py",
+      "test_definitions": 5
+    },
+    {
+      "file": "tests/test_live_like_backpressure.py",
+      "test_definitions": 7
+    },
+    {
+      "file": "tests/test_live_moderation.py",
+      "test_definitions": 5
+    },
+    {
+      "file": "tests/test_live_preflight.py",
+      "test_definitions": 4
+    },
+    {
+      "file": "tests/test_live_provider_callbacks.py",
+      "test_definitions": 3
+    },
+    {
+      "file": "tests/test_live_provider_registry.py",
+      "test_definitions": 2
+    },
+    {
+      "file": "tests/test_live_reports_and_appeals.py",
+      "test_definitions": 3
+    },
+    {
+      "file": "tests/test_live_room_benchmark.py",
+      "test_definitions": 5
+    },
+    {
+      "file": "tests/test_live_room_mvp.py",
+      "test_definitions": 14
+    },
+    {
+      "file": "tests/test_live_settlement.py",
+      "test_definitions": 2
+    },
+    {
+      "file": "tests/test_live_state_machine.py",
+      "test_definitions": 7
+    },
+    {
+      "file": "tests/test_live_stream_credentials.py",
+      "test_definitions": 3
+    },
+    {
+      "file": "tests/test_malware_scanning.py",
+      "test_definitions": 2
+    },
+    {
+      "file": "tests/test_media_business_authorization.py",
+      "test_definitions": 15
+    },
+    {
+      "file": "tests/test_media_key_backfill.py",
+      "test_definitions": 13
+    },
+    {
+      "file": "tests/test_media_pipeline.py",
+      "test_definitions": 3
+    },
+    {
+      "file": "tests/test_media_scan_policy.py",
+      "test_definitions": 8
+    },
+    {
+      "file": "tests/test_media_test_bypass.py",
+      "test_definitions": 7
+    },
+    {
+      "file": "tests/test_message_dispatch.py",
+      "test_definitions": 1
+    },
+    {
+      "file": "tests/test_notification_signal.py",
+      "test_definitions": 2
+    },
+    {
+      "file": "tests/test_object_storage.py",
+      "test_definitions": 8
+    },
+    {
+      "file": "tests/test_payments.py",
+      "test_definitions": 8
+    },
+    {
+      "file": "tests/test_performance_metrics.py",
+      "test_definitions": 2
+    },
+    {
+      "file": "tests/test_postgres_security_audit.py",
+      "test_definitions": 11
+    },
+    {
+      "file": "tests/test_posts.py",
+      "test_definitions": 15
+    },
+    {
+      "file": "tests/test_profile_and_media.py",
+      "test_definitions": 9
+    },
+    {
+      "file": "tests/test_realtime_auth_cache.py",
+      "test_definitions": 1
+    },
+    {
+      "file": "tests/test_realtime_gateway.py",
+      "test_definitions": 1
+    },
+    {
+      "file": "tests/test_realtime_gateway_smoke.py",
+      "test_definitions": 1
+    },
+    {
+      "file": "tests/test_redis_integration.py",
+      "test_definitions": 1
+    },
+    {
+      "file": "tests/test_release_readiness.py",
+      "test_definitions": 2
+    },
+    {
+      "file": "tests/test_remote_scanner.py",
+      "test_definitions": 11
+    },
+    {
+      "file": "tests/test_scan_evidence_reconcile.py",
+      "test_definitions": 5
+    },
+    {
+      "file": "tests/test_security_audit.py",
+      "test_definitions": 11
+    },
+    {
+      "file": "tests/test_server_backup_verification.py",
+      "test_definitions": 5
+    },
+    {
+      "file": "tests/test_service_capabilities.py",
+      "test_definitions": 2
+    },
+    {
+      "file": "tests/test_sms_providers.py",
+      "test_definitions": 3
+    },
+    {
+      "file": "tests/test_storage_access_audit.py",
+      "test_definitions": 3
+    },
+    {
+      "file": "tests/test_storage_deletion_outbox.py",
+      "test_definitions": 9
+    },
+    {
+      "file": "tests/test_stream_server_backup.py",
+      "test_definitions": 4
+    },
+    {
+      "file": "tests/test_support.py",
+      "test_definitions": 6
+    },
+    {
+      "file": "tests/test_two_account_media_refresh.py",
+      "test_definitions": 1
+    },
+    {
+      "file": "tests/test_wallet_and_calls.py",
+      "test_definitions": 1
+    },
+    {
+      "file": "tests/test_websocket_auth.py",
+      "test_definitions": 2
+    },
+    {
+      "file": "tests/test_wechat_pay_provider.py",
+      "test_definitions": 2
+    }
+  ],
+  "scheduled_loops": [
+    {
+      "call": "_live_schedule_reminder_loop()",
+      "source": "app/main.py:167"
+    },
+    {
+      "call": "_live_stream_recovery_loop()",
+      "source": "app/main.py:168"
+    },
+    {
+      "call": "_live_moderation_loop()",
+      "source": "app/main.py:169"
+    },
+    {
+      "call": "_live_like_aggregation_loop()",
+      "source": "app/main.py:170"
+    },
+    {
+      "call": "message_dispatch_service.run_dispatch_loop()",
+      "source": "app/main.py:171"
+    },
+    {
+      "call": "live_event_dispatch_service.run_dispatch_loop()",
+      "source": "app/main.py:174"
+    },
+    {
+      "call": "_account_erasure_loop()",
+      "source": "app/main.py:177"
+    }
+  ]
+}

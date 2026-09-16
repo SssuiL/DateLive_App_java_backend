@@ -1,0 +1,11 @@
+.tools/
+target/
+.env
+.env.*
+!.env.example
+*.log
+.idea/
+*.iml
+.data/
+
+*.hprof

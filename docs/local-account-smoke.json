@@ -1,0 +1,17 @@
+{
+  "local_data_erased": false,
+  "checked_at": "2026-09-15T15:41:35.8067351Z",
+  "result": "passed",
+  "note": "Only a synthetic local account was requested/restored. Due erasure and file deletion tested exclusively in isolated Testcontainers tests.",
+  "target": "http://127.0.0.1:8200",
+  "checks": [
+    "request_deactivation",
+    "45_day_cooling_period",
+    "idempotent_request",
+    "owner_preview",
+    "pending_record",
+    "restore",
+    "profile_preserved",
+    "logout"
+  ]
+}

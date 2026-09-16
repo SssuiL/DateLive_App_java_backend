@@ -1,0 +1,19 @@
+name: manliao-java-dev
+services:
+  postgres:
+    image: postgres@sha256:742f40ea20b9ff2ff31db5458d127452988a2164df9e17441e191f3b72252193
+    environment:
+      POSTGRES_DB: manliao_java
+      POSTGRES_USER: manliao_java
+      POSTGRES_PASSWORD: ${JAVA_DATABASE_PASSWORD:?Use tools/start-local.ps1 or provide a development password}
+    ports:
+      - "127.0.0.1:15433:5432"
+    volumes:
+      - java-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U manliao_java -d manliao_java"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+volumes:
+  java-postgres-data:

@@ -1,0 +1,484 @@
+{
+  "updated_at": "2026-09-16",
+  "legacy_commit": "8f63d6dd46162d777867165df963d8c6efc2093b",
+  "scope": "Identity, profiles, notifications, managed media, admin, account lifecycle, social, private text/image/GIF/voice/video/file chat and static stickers; signed variants, thumbnails and single ranges; realtime delivery/ACK/replay/multi-device/presence; automatic erasure enabled; not complete migration",
+  "verified_tests": 199,
+  "routes": [
+    {
+      "method": "POST",
+      "path": "/auth/register",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "POST",
+      "path": "/auth/login",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "POST",
+      "path": "/auth/refresh",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "POST",
+      "path": "/auth/logout",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "GET",
+      "path": "/auth/me",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "GET",
+      "path": "/auth/sessions",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "DELETE",
+      "path": "/auth/sessions/{session_id}",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "POST",
+      "path": "/auth/sms/send",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "POST",
+      "path": "/auth/register/verify",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "POST",
+      "path": "/auth/sms/login",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "POST",
+      "path": "/auth/password/reset",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "POST",
+      "path": "/auth/sessions/revoke-others",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "POST",
+      "path": "/notifications/devices",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "GET",
+      "path": "/notifications/devices",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "DELETE",
+      "path": "/notifications/devices/{device_id}",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "GET",
+      "path": "/profiles/me",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "PATCH",
+      "path": "/profiles/me",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "GET",
+      "path": "/profiles/{user_id}",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "GET",
+      "path": "/notifications/preferences",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "PATCH",
+      "path": "/notifications/preferences",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "GET",
+      "path": "/notifications/events",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "GET",
+      "path": "/notifications/unread-count",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "POST",
+      "path": "/notifications/events/{event_id}/read",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "POST",
+      "path": "/notifications/events/read-all",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "POST",
+      "path": "/media/upload",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false,
+      "scope": "profile PNG/JPEG; private chat PNG/JPEG/GIF, AAC-LC voice, H.264/HEVC video and opaque files; signed cover/thumbnail and single Range; manual moderation only; no real malware scanning"
+    },
+    {
+      "method": "GET",
+      "path": "/media/me",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false,
+      "scope": "profile PNG/JPEG; private chat PNG/JPEG/GIF, AAC-LC voice, H.264/HEVC video and opaque files; signed cover/thumbnail and single Range; manual moderation only; no real malware scanning"
+    },
+    {
+      "method": "POST",
+      "path": "/media/{media_id}/access-url",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false,
+      "scope": "profile PNG/JPEG; private chat PNG/JPEG/GIF, AAC-LC voice, H.264/HEVC video and opaque files; signed cover/thumbnail and single Range; manual moderation only; no real malware scanning"
+    },
+    {
+      "method": "GET",
+      "path": "/media/access/{token}",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false,
+      "scope": "profile PNG/JPEG; private chat PNG/JPEG/GIF, AAC-LC voice, H.264/HEVC video and opaque files; signed cover/thumbnail and single Range; manual moderation only; no real malware scanning"
+    },
+    {
+      "method": "DELETE",
+      "path": "/media/{media_id}",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false,
+      "scope": "profile PNG/JPEG; private chat PNG/JPEG/GIF, AAC-LC voice, H.264/HEVC video and opaque files; signed cover/thumbnail and single Range; manual moderation only; no real malware scanning"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/auth/login",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "GET",
+      "path": "/admin/auth/me",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "PATCH",
+      "path": "/admin/auth/password",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "POST",
+      "path": "/admin/auth/logout",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "GET",
+      "path": "/admin/admin-users",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "POST",
+      "path": "/admin/admin-users",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "PATCH",
+      "path": "/admin/admin-users/{admin_id}/status",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "PATCH",
+      "path": "/admin/admin-users/{admin_id}/password",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "GET",
+      "path": "/admin/operation-logs",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "GET",
+      "path": "/admin/moderation/media",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "GET",
+      "path": "/admin/moderation/media/pending",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "GET",
+      "path": "/admin/moderation/media/{media_id}",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "POST",
+      "path": "/admin/moderation/media/{media_id}/preview-url",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "GET",
+      "path": "/admin/moderation/access/{token}",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "POST",
+      "path": "/admin/moderation/media/{media_id}/approve",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "POST",
+      "path": "/admin/moderation/media/{media_id}/reject",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "GET",
+      "path": "/admin/moderation/reviews",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "POST",
+      "path": "/auth/account/deactivate",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "POST",
+      "path": "/auth/account/restore",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "GET",
+      "path": "/admin/users/{user_id}/erasure-preview",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "GET",
+      "path": "/admin/users/{user_id}/erasure",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "GET",
+      "path": "/admin/moderation/storage-deletions",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "production_ready": false,
+      "path": "/users/",
+      "status": "implemented_and_integration_tested",
+      "method": "GET"
+    },
+    {
+      "production_ready": false,
+      "path": "/users/{user_id}",
+      "status": "implemented_and_integration_tested",
+      "method": "GET"
+    },
+    {
+      "production_ready": false,
+      "path": "/friends/requests",
+      "status": "implemented_and_integration_tested",
+      "method": "POST"
+    },
+    {
+      "production_ready": false,
+      "path": "/friends/requests",
+      "status": "implemented_and_integration_tested",
+      "method": "GET"
+    },
+    {
+      "production_ready": false,
+      "path": "/friends/requests/{request_id}/accept",
+      "status": "implemented_and_integration_tested",
+      "method": "POST"
+    },
+    {
+      "production_ready": false,
+      "path": "/friends/requests/{request_id}/reject",
+      "status": "implemented_and_integration_tested",
+      "method": "POST"
+    },
+    {
+      "production_ready": false,
+      "path": "/friends/",
+      "status": "implemented_and_integration_tested",
+      "method": "GET"
+    },
+    {
+      "production_ready": false,
+      "path": "/friends/{target_user_id}",
+      "status": "implemented_and_integration_tested",
+      "method": "DELETE"
+    },
+    {
+      "production_ready": false,
+      "path": "/safety/blocks",
+      "status": "implemented_and_integration_tested",
+      "method": "POST"
+    },
+    {
+      "production_ready": false,
+      "path": "/safety/blocks",
+      "status": "implemented_and_integration_tested",
+      "method": "GET"
+    },
+    {
+      "production_ready": false,
+      "path": "/safety/blocks/{block_id}",
+      "status": "implemented_and_integration_tested",
+      "method": "DELETE"
+    },
+    {
+      "path": "/conversations/",
+      "production_ready": false,
+      "method": "GET",
+      "status": "implemented_and_integration_tested"
+    },
+    {
+      "path": "/conversations/page",
+      "production_ready": false,
+      "method": "GET",
+      "status": "implemented_and_integration_tested"
+    },
+    {
+      "path": "/conversations/{conversation_id}",
+      "production_ready": false,
+      "method": "GET",
+      "status": "implemented_and_integration_tested"
+    },
+    {
+      "path": "/conversations/{conversation_id}/messages",
+      "production_ready": false,
+      "method": "GET",
+      "status": "implemented_and_integration_tested"
+    },
+    {
+      "path": "/conversations/{conversation_id}/messages/page",
+      "production_ready": false,
+      "method": "GET",
+      "status": "implemented_and_integration_tested"
+    },
+    {
+      "path": "/conversations/{conversation_id}/messages",
+      "production_ready": false,
+      "method": "POST",
+      "status": "implemented_and_integration_tested"
+    },
+    {
+      "path": "/conversations/{conversation_id}/read",
+      "production_ready": false,
+      "method": "POST",
+      "status": "implemented_and_integration_tested"
+    },
+    {
+      "path": "/conversations/{conversation_id}/settings",
+      "production_ready": false,
+      "method": "PATCH",
+      "status": "implemented_and_integration_tested"
+    },
+    {
+      "method": "POST",
+      "status": "implemented_and_integration_tested",
+      "path": "/conversations/{conversation_id}/messages/{message_id}/recall",
+      "production_ready": false
+    },
+    {
+      "method": "GET",
+      "status": "implemented_and_integration_tested",
+      "path": "/conversations/{conversation_id}/messages/search",
+      "production_ready": false
+    },
+    {
+      "method": "DELETE",
+      "status": "implemented_and_integration_tested",
+      "path": "/conversations/{conversation_id}/messages/{message_id}",
+      "production_ready": false
+    },
+    {
+      "method": "DELETE",
+      "status": "implemented_and_integration_tested",
+      "path": "/conversations/{conversation_id}/messages",
+      "production_ready": false
+    },
+    {
+      "path": "/ws/messages",
+      "production_ready": false,
+      "method": "WEBSOCKET",
+      "status": "implemented_and_integration_tested"
+    },
+    {
+      "path": "/ws/notifications",
+      "production_ready": false,
+      "method": "WEBSOCKET",
+      "status": "implemented_and_integration_tested"
+    }
+  ],
+  "remaining": "Flutter reliable/media protocol and device playback/save integration, event/draft retention policies, old-cursor resync, capacity testing, asynchronous media workers and resource isolation; other image derivatives; group and temporary chat, explore/posts, wallet/payment/gifts/settlements, live/calls, admin UI/MFA, real malware scanning/moderation/cloud storage/SMS/push and other audio codecs pending.",
+  "schema": "V1 identity through V14 chat GIF/files; no legacy data imported",
+  "deployment": "localhost only; no cloud or Flutter cutover",
+  "account_erasure_worker_enabled": true,
+  "video_smoke": "docs/local-video-smoke.json",
+  "approved_order": [
+    "media completion",
+    "group chat and explore/posts",
+    "wallet and payments",
+    "live and calls",
+    "full integration, performance and launch acceptance"
+  ],
+  "attachments_smoke": "docs/local-attachments-smoke.json",
+  "repository": "https://github.com/SssuiL/DateLive_App_java_backend.git",
+  "working_branch": "codex/java-backend-migration"
+}

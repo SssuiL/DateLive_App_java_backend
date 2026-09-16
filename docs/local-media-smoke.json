@@ -1,0 +1,18 @@
+{
+  "target": "http://127.0.0.1:8200",
+  "checked_at": "2026-09-15T10:05:12.5991464Z",
+  "note": "Synthetic local image and account; no real moderation provider or cloud storage. Review transitions tested through internal service in isolated tests.",
+  "checks": [
+    "multipart_upload",
+    "normalized_png",
+    "owner_preview",
+    "pending_profile_isolation",
+    "media_list",
+    "signed_access",
+    "delete",
+    "deleted_url_revoked",
+    "profile_reference_removed",
+    "logout"
+  ],
+  "result": "passed"
+}

@@ -1,0 +1,22 @@
+{
+  "checkedAt": "2026-09-15T09:33:08.7726766Z",
+  "baseUrl": "http://127.0.0.1:8200",
+  "scope": "10 sequential local registrations; not mobile, cloud or capacity testing",
+  "sampleCount": 10,
+  "registrationMs": [
+    209.91,
+    103.63,
+    105.72,
+    99.91,
+    100.67,
+    95.57,
+    95.19,
+    94.49,
+    99.74,
+    106.16
+  ],
+  "medianMs": 100.28999999999999,
+  "p95Ms": 209.91,
+  "maxMs": 209.91,
+  "loginRefreshLogout": "passed"
+}

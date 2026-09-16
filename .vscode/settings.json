@@ -1,0 +1,11 @@
+{
+  "jdk.jdkhome": "${workspaceFolder}/.tools/jdk/jdk-25.0.4.1+1",
+  "jdk.project.jdkhome": "${workspaceFolder}/.tools/jdk/jdk-25.0.4.1+1",
+  "files.exclude": {
+    ".tools": true
+  },
+  "search.exclude": {
+    ".tools": true,
+    "target": true
+  }
+}

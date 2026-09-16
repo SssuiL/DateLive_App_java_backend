@@ -1,0 +1,23 @@
+name: Java backend
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '25'
+      - name: Install audio decoder
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - name: Verify against isolated PostgreSQL
+        env:
+          JAVA_MEDIA_FFMPEG: /usr/bin/ffmpeg
+          JAVA_MEDIA_FFPROBE: /usr/bin/ffprobe
+        run: |
+          chmod +x mvnw
+          ./mvnw -B verify

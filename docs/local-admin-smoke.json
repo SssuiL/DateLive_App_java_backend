@@ -1,0 +1,21 @@
+{
+  "checked_at": "2026-09-15T10:15:07.5027518Z",
+  "note": "Synthetic account/image only. Temporary auditor disabled; owner credentials remain in ignored local configuration. No external moderation or production deployment.",
+  "result": "passed",
+  "checks": [
+    "owner_login",
+    "create_auditor",
+    "auditor_login",
+    "pending_list",
+    "admin_preview",
+    "approve",
+    "trusted_reviewer_identity",
+    "avatar_promotion",
+    "reject",
+    "audit_logs",
+    "disable_reviewer_revokes_preview",
+    "delete_fixture",
+    "logout"
+  ],
+  "target": "http://127.0.0.1:8200"
+}

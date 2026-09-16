@@ -1,0 +1,20 @@
+{
+  "checks": [
+    "animated_gif_upload_and_frames",
+    "opaque_file_byte_integrity",
+    "forced_download",
+    "pending_send_rejected",
+    "manual_review",
+    "gif_and_file_websocket",
+    "ack",
+    "idempotent_retry",
+    "range_206",
+    "hide_and_recall_revoke_links",
+    "media_deletion"
+  ],
+  "note": "Synthetic local data only. Real malware scanning, cloud storage, asynchronous workers and Flutter device integration remain pending.",
+  "checked_at": "2026-09-16T01:27:56.4558435Z",
+  "schema": "V14",
+  "result": "passed",
+  "target": "http://127.0.0.1:8200"
+}

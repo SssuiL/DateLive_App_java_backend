@@ -1,0 +1,20 @@
+{
+  "checked_at": "2026-09-15T16:11:59.0057077Z",
+  "target": "http://127.0.0.1:8200",
+  "note": "Two synthetic Java accounts. Real two-minute recall window used; no account deadlines changed, no erasure forced, no WebSocket or push delivery claimed.",
+  "result": "passed",
+  "checks": [
+    "literal_search",
+    "personal_hide",
+    "hidden_reply_preview",
+    "peer_history_retained",
+    "recall",
+    "idempotent_recall",
+    "recalled_reply_redaction",
+    "search_excludes_recalled",
+    "personal_clear",
+    "clear_preserves_peer",
+    "new_message_after_clear",
+    "logout"
+  ]
+}
