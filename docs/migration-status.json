@@ -1,8 +1,8 @@
 {
   "updated_at": "2026-09-17",
   "legacy_commit": "8f63d6dd46162d777867165df963d8c6efc2093b",
-  "scope": "Identity, profiles, notifications, managed media, admin, account lifecycle, social, private text/image/GIF/voice/video/file chat and static stickers; signed variants, image/video thumbnails, image display and legacy image backfill, single ranges; realtime delivery/ACK/replay/multi-device/presence; automatic erasure enabled; not complete migration",
-  "verified_tests": 214,
+  "scope": "Identity, profiles, notifications, managed media, admin, account lifecycle, social, private text/image/GIF/voice/video/file chat and static stickers; signed variants, image/video thumbnails, image display and legacy image backfill, single ranges; realtime delivery/ACK/replay/multi-device/presence; bounded durable opt-in async media processing and unreferenced draft reclamation; automatic erasure enabled; not complete migration",
+  "verified_tests": 232,
   "routes": [
     {
       "method": "POST",
@@ -153,7 +153,7 @@
       "path": "/media/upload",
       "status": "implemented_and_integration_tested",
       "production_ready": false,
-      "scope": "profile PNG/JPEG; private chat PNG/JPEG/GIF, AAC-LC voice, H.264/HEVC video and opaque files; signed cover/thumbnail/display and single Range; manual moderation only; no real malware scanning"
+      "scope": "profile PNG/JPEG; private chat PNG/JPEG/GIF, AAC-LC voice, H.264/HEVC video and opaque files; signed cover/thumbnail/display and single Range; manual moderation only; no real malware scanning; opt-in async=true durable bounded processing with status polling"
     },
     {
       "method": "GET",
@@ -464,10 +464,17 @@
       "production_ready": false,
       "method": "WEBSOCKET",
       "status": "implemented_and_integration_tested"
+    },
+    {
+      "method": "GET",
+      "path": "/media/{id}",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false,
+      "scope": "owner-only queued/ready/failed polling; excludes deleted media"
     }
   ],
-  "remaining": "Flutter reliable/media protocol and device playback/save integration, event/draft retention policies, old-cursor resync, capacity testing, asynchronous media workers and resource isolation; group and temporary chat, explore/posts, wallet/payment/gifts/settlements, live/calls, admin UI/MFA, real malware scanning/moderation/cloud storage/SMS/push and other audio codecs pending.",
-  "schema": "V1 identity through V15 image derivatives; no legacy data imported",
+  "remaining": "Flutter reliable/media/async polling protocol and device playback/save integration; event retention and old-cursor resync; capacity testing, independent media worker processes/leases, resource isolation and crash-temp maintenance; group and temporary chat, explore/posts, wallet/payment/gifts/settlements, live/calls, admin UI/MFA, real malware scanning/moderation/cloud storage/SMS/push and other audio codecs pending.",
+  "schema": "V1 identity through V16 durable media jobs/drafts; no legacy data imported",
   "deployment": "localhost only; no cloud or Flutter cutover",
   "account_erasure_worker_enabled": true,
   "video_smoke": "docs/local-video-smoke.json",
@@ -481,5 +488,8 @@
   "attachments_smoke": "docs/local-attachments-smoke.json",
   "repository": "https://github.com/SssuiL/DateLive_App_java_backend.git",
   "working_branch": "codex/java-backend-migration",
-  "derivatives_smoke": "docs/local-derivatives-smoke.json"
+  "derivatives_smoke": "docs/local-derivatives-smoke.json",
+  "media_jobs_smoke": "docs/local-media-jobs-smoke.json",
+  "media_jobs_worker_enabled": true,
+  "media_draft_retention_hours": 24
 }

@@ -1,0 +1,20 @@
+{
+  "schema": "V16",
+  "result": "passed",
+  "note": "Synthetic Java-local data. Draft expiry/reference races, quotas, rollback, retries, and erasure verified separately in isolated integration tests. No production capacity claim or Flutter cutover.",
+  "target": "http://127.0.0.1:8200",
+  "checks": [
+    "queued_without_download",
+    "owner_only_status",
+    "cancel_queued_task",
+    "actual_api_restart_recovery",
+    "image_and_video_processed",
+    "malformed_input_failed",
+    "review_and_message_send",
+    "thumbnail_decode",
+    "range_206",
+    "hide_revokes_access",
+    "bundle_deletion"
+  ],
+  "checked_at": "2026-09-17T07:34:47.0674229Z"
+}

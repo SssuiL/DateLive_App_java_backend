@@ -19,21 +19,28 @@ public class MediaService {
  public MediaService(JdbcTemplate db,TransactionTemplate tx,MediaStorage storage,MediaTokens tokens,DatabaseRows rows,com.manliao.backend.chat.ChatService chat,VoiceProcessor voice,VideoProcessor video) {
    this.db=db;this.tx=tx;this.storage=storage;this.tokens=tokens;this.rows=rows;this.chat=chat;this.voice=voice;this.video=video;
  }
- public Map<String,Object> upload(Principal user,String type,String source,String conversation,MultipartFile file) throws IOException {
+ void validateUpload(Principal user,String type,String source,String conversation,MultipartFile file) {
    if(!Set.of("image","voice","video","file").contains(type) || (!type.equals("image")&&!source.equals("chat")) || !Set.of("profile","chat").contains(source) ||
      (source.equals("profile")&&conversation!=null)||(source.equals("chat")&&(conversation==null||conversation.isBlank())))
      throw new ApiError(400,"MEDIA_TYPE_INVALID","支持资料图片或绑定会话的聊天图片/语音/视频/文件");
    if(source.equals("profile")&&"image/gif".equals(file.getContentType()))throw new ApiError(400,"MEDIA_TYPE_INVALID","GIF 目前仅支持聊天附件");
    if(source.equals("chat"))chat.get(user.userId(),conversation);
+ }
+ void lockUpload(Principal user,String source,String conversation){if(source.equals("chat"))chat.lockMediaUpload(user,conversation);else lockUser(user.userId());}
+ MediaStorage.Stored store(String id,String type,MultipartFile file)throws IOException{
+   return type.equals("voice")?storage.saveVoice(id,file,voice):type.equals("video")?storage.saveVideo(id,file,video):type.equals("file")?storage.saveFile(id,file):storage.save(id,file);
+ }
+ public Map<String,Object> upload(Principal user,String type,String source,String conversation,MultipartFile file) throws IOException {
+   validateUpload(user,type,source,conversation,file);
    String id="media_"+UUID.randomUUID().toString().replace("-","");
-   var stored=type.equals("voice")?storage.saveVoice(id,file,voice):type.equals("video")?storage.saveVideo(id,file,video):type.equals("file")?storage.saveFile(id,file):storage.save(id,file);
+   var stored=store(id,type,file);
    try {
      tx.executeWithoutResult(status->{
        if(source.equals("chat"))chat.lockMediaUpload(user,conversation);else lockUser(user.userId());
        db.update("""
          INSERT INTO media_assets(id,owner_user_id,url,media_type,status,storage_key,original_filename,
-           content_type,file_size,sha256,width,height,moderation_reason,source,conversation_id,duration_ms,image_derivatives_ready)
-         VALUES(?,?,?,?,'review_pending',?,?,?,?,?,?,?,?,?,?,?,?)
+           content_type,file_size,sha256,width,height,moderation_reason,source,conversation_id,duration_ms,image_derivatives_ready,processed_at)
+         VALUES(?,?,?,?,'review_pending',?,?,?,?,?,?,?,?,?,?,?,?,now())
          """,id,user.userId(),"media:"+id,type,stored.key(),safeName(file.getOriginalFilename()),stored.contentType(),
          stored.size(),stored.sha256(),stored.width(),stored.height(),type.equals("file")?"原始文件等待人工审核，未执行病毒扫描":"媒体已重新编码，内容等待审核",source,conversation,stored.durationMs(),type.equals("image"));
      });
@@ -43,14 +50,18 @@ public class MediaService {
    }
    return output(user,asset(id));
  }
- private String safeName(String name) {
+ String safeName(String name) {
    String clean=Optional.ofNullable(name).orElse("upload").replace('\\','/');
    clean=clean.substring(clean.lastIndexOf('/')+1).replaceAll("[\\p{Cntrl}]","");
    return clean.substring(0,Math.min(255,clean.length()));
  }
  public List<Map<String,Object>> list(Principal user) {
-   return db.queryForList("SELECT * FROM media_assets WHERE owner_user_id=? AND status<>'deleted' AND storage_key IS NOT NULL ORDER BY created_at DESC,id DESC",user.userId())
+   return db.queryForList("SELECT * FROM media_assets WHERE owner_user_id=? AND status<>'deleted' ORDER BY created_at DESC,id DESC",user.userId())
      .stream().map(row->output(user,row)).toList();
+ }
+ public Map<String,Object> owned(Principal user,String id){
+   var asset=asset(id);if(!user.userId().equals(asset.get("owner_user_id"))||"deleted".equals(asset.get("status")))throw missing();
+   return output(user,asset);
  }
  public Map<String,Object> metadata(String id){return output(null,asset(id));}
  private Map<String,Object> output(Principal user,Map<String,Object> asset) {
@@ -58,8 +69,12 @@ public class MediaService {
    Object preview=null;
    if(user!=null && Set.of("approved","review_pending").contains(asset.get("status")))try{preview=access(user,(String)asset.get("id"),null).get("url");}catch(ApiError inaccessible){}
    out.put("preview_url",preview);
-   out.put("visibility","restricted");out.put("processing_status","ready");
-   out.put("processing_error",null);out.put("processed_at",out.get("created_at"));
+   out.put("visibility","restricted");
+   if(!"ready".equals(asset.get("processing_status"))){
+     out.put("preview_url",null);out.put("media_metadata",Map.of());out.put("derivatives",Map.of());out.put("pipeline_version",null);
+     out.put("detected_content_type",null);out.put("malware_status","skipped");return out;
+   }
+   out.put("processing_error",null);
    out.put("detected_content_type",asset.get("content_type"));
    boolean audio="voice".equals(asset.get("media_type"));
    out.put("media_metadata",audio?Map.of("duration_ms",asset.get("duration_ms"),"duration_seconds",Math.min(60,(((Number)asset.get("duration_ms")).intValue()+999)/1000),"sample_rate",16000,"channels",1,"codec","pcm_s16le"):Map.of("width",asset.get("width"),"height",asset.get("height")));
@@ -145,6 +160,7 @@ public class MediaService {
      db.queryForList("SELECT user_id FROM user_profiles WHERE user_id=? FOR UPDATE",user.userId());
      db.queryForList("SELECT id FROM media_assets WHERE id=? FOR UPDATE",id);
      db.update("UPDATE media_assets SET status='deleted' WHERE id=?",id);
+     db.update("DELETE FROM media_processing_jobs WHERE media_id=?",id);
      detach(user.userId(),(String)asset.get("url"));
    });
    cleanupDeleted();
@@ -166,6 +182,7 @@ public class MediaService {
      db.queryForList("SELECT user_id FROM user_profiles WHERE user_id=? FOR UPDATE",owner);
      var found=db.queryForList("SELECT * FROM media_assets WHERE id=? FOR UPDATE",id);
      if(found.isEmpty() || found.getFirst().get("status").equals("deleted")) throw missing();
+     if(!"ready".equals(found.getFirst().get("processing_status")))throw new ApiError(409,"MEDIA_NOT_READY","媒体尚未处理完成");
      db.update("UPDATE media_assets SET status=?,reviewed_by=?,reviewed_at=now(),moderation_reason=? WHERE id=?",
        approved?"approved":"rejected",reviewer,reason,id);
      db.update("INSERT INTO media_reviews(media_id,reviewer_id,action,reason) VALUES(?,?,?,?)",id,reviewer,approved?"approved":"rejected",reason);
@@ -189,13 +206,13 @@ public class MediaService {
    var list=db.queryForList("SELECT * FROM media_assets WHERE id=?",id);
    if(list.isEmpty()) throw missing();return list.getFirst();
  }
- @Scheduled(initialDelay=10000,fixedDelay=60000)
+ @Scheduled(initialDelay=10000,fixedDelay=60000,scheduler="mediaProcessingScheduler")
  public void scheduledImageDerivatives(){if(derivativesWorkerEnabled)backfillImageDerivatives();}
  public int backfillImageDerivatives(){
   int completed=0;
   for(var candidate:db.queryForList("""
     SELECT id,owner_user_id FROM media_assets WHERE media_type='image' AND NOT image_derivatives_ready
-      AND storage_key IS NOT NULL AND status<>'deleted' AND image_derivatives_retry_at<=now()
+      AND storage_key IS NOT NULL AND status<>'deleted' AND processing_status='ready' AND image_derivatives_retry_at<=now()
     ORDER BY image_derivatives_retry_at,id LIMIT 10
     """)){
    String id=(String)candidate.get("id");
@@ -216,10 +233,10 @@ public class MediaService {
  }
  @Scheduled(initialDelay=60000,fixedDelay=60000)
  public void cleanupDeleted() {
-   for(var asset:db.queryForList("SELECT id,storage_key FROM media_assets WHERE status='deleted' AND storage_key IS NOT NULL LIMIT 100")) {
+   for(var asset:db.queryForList("SELECT id,storage_key FROM media_assets WHERE (status='deleted' OR processing_status='failed') AND storage_key IS NOT NULL LIMIT 100")) {
      try {
        storage.delete((String)asset.get("storage_key"));
-       db.update("UPDATE media_assets SET storage_key=NULL WHERE id=? AND status='deleted'",asset.get("id"));
+       db.update("UPDATE media_assets SET storage_key=NULL WHERE id=? AND (status='deleted' OR processing_status='failed')",asset.get("id"));
      }catch(IOException failure){ /* Tombstone retained; next scheduled run retries. */ }
    }
  }

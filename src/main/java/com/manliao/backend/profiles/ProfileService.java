@@ -113,10 +113,10 @@ public class ProfileService {
  }
  private void put(Map<String,Object> changes,String key,Object value) { if(value!=null) changes.put(key,value); }
  private String assetStatus(String owner,String url) {
-   var assets=db.queryForList("SELECT status,media_type FROM media_assets WHERE owner_user_id=? AND url=? AND source='profile' FOR SHARE",owner,url);
+   var assets=db.queryForList("SELECT status,media_type,processing_status FROM media_assets WHERE owner_user_id=? AND url=? AND source='profile' FOR SHARE",owner,url);
    if(assets.isEmpty()) throw new ApiError(404,"MEDIA_NOT_FOUND","媒体不存在或不属于当前账号");
    var asset=assets.getFirst();
-   if(!asset.get("media_type").equals("image") || !Set.of("approved","review_pending").contains(asset.get("status")))
+   if(!"ready".equals(asset.get("processing_status")) || !asset.get("media_type").equals("image") || !Set.of("approved","review_pending").contains(asset.get("status")))
      throw new ApiError(409,"MEDIA_NOT_APPROVED","媒体未通过审核，不能用于资料展示");
    return (String)asset.get("status");
  }

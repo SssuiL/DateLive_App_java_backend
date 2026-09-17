@@ -13,7 +13,7 @@ GitHub：[DateLive_App_java_backend](https://github.com/SssuiL/DateLive_App_java
 - 已实现 74 个 HTTP 接口和 2 个 WebSocket 入口：账号、资料、通知、图片、后台审核、注销/恢复、用户搜索、好友和拉黑，以及聊天会话、文本/图片/语音/视频/文件消息和静态贴纸/动态 GIF、引用回复、已读，以及撤回/搜索/个人隐藏和清空。到期清理已实现并在隔离库测试，自动 Worker 已获授权开启，每分钟清理超过 45 天冷静期的注销账号；可用 JAVA_ACCOUNT_ERASURE_ENABLED=false 关闭（本地启动脚本默认开启，使用 -DisableAccountErasure 可关闭）；短信仍为开发模拟。
 - 新增实时消息/通知、多端同步、断线恢复、ACK 送达回执、在线与输入状态；Flutter 协议适配和容量压测尚待完成。
 - 独立 Flyway 账号数据基线、事务审计、密码哈希、数据库会话校验和多实例共享的数据库限流。
-- 214 项测试覆盖真实 PostgreSQL/HTTP/WebSocket、并发、回滚、密码兼容、令牌签名与失效。
+- 232 项测试覆盖真实 PostgreSQL/HTTP/WebSocket、并发、回滚、密码兼容、令牌签名与失效。
 - 本地 API 已启动于 `http://127.0.0.1:8200`；数据库只监听 `127.0.0.1:15433`。
 - 后台页面、MFA、云存储、真实审核/短信供应商、推送投递、第三方登录和其他业务模块仍待迁移。
 
@@ -95,3 +95,9 @@ GitHub：[DateLive_App_java_backend](https://github.com/SssuiL/DateLive_App_java
 ## 图片衍生图（V15）
 
 已支持 PNG/JPEG 缩略图与展示图、GIF 静态缩略图及动画展示、旧 Java 图片自动补生成，沿用签名访问与整套文件清理。完整回归 **214 项通过**，本机 V15 冒烟通过，自动注销清理保持开启。详见 [迁移说明](docs/图片衍生图迁移说明.md) 和 [本机报告](docs/local-derivatives-smoke.json)。新上传仍同步处理；通用异步队列和草稿回收待完成。
+
+## 异步媒体与草稿回收（V16）
+
+新增可选 POST /media/upload?async=true 与仅本人可用的 GET /media/{id}。有界 PostgreSQL 持久化队列支持图片、GIF、语音、视频和普通文件，提供重试、重启恢复与取消/注销清理。默认每分钟检查超过 24 小时且无消息或资料引用的草稿，锁内复查后回收。
+
+完整回归 **232 项通过**，本机 V16 实际重启恢复冒烟通过。累计 **75 个 HTTP + 2 个 WebSocket**。Flutter 尚未切换异步调用；独立 Worker 进程、资源配额、云存储和真实扫描/审核仍待完成。详见 [接口与运行边界](docs/媒体异步与草稿回收迁移说明.md) 和 [本机报告](docs/local-media-jobs-smoke.json)。

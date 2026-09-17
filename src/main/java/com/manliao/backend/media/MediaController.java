@@ -9,12 +9,14 @@ import com.manliao.backend.identity.AuthDtos.Principal;
 @RestController
 @RequestMapping("/media")
 public class MediaController {
- private final MediaService media;
- public MediaController(MediaService media){this.media=media;}
+ private final MediaService media;private final MediaJobs jobs;
+ public MediaController(MediaService media,MediaJobs jobs){this.media=media;this.jobs=jobs;}
  @PostMapping(value="/upload",consumes="multipart/form-data")
  public Map<String,Object> upload(@AuthenticationPrincipal Principal user,@RequestParam("media_type") String type,
    @RequestParam(defaultValue="profile") String source,@RequestParam(name="conversation_id",required=false) String conversation,
-   @RequestParam MultipartFile file)throws IOException{return media.upload(user,type,source,conversation,file);}
+   @RequestParam(defaultValue="false") boolean async,@RequestParam MultipartFile file)throws IOException{return async?jobs.enqueue(user,type,source,conversation,file):media.upload(user,type,source,conversation,file);}
+ @GetMapping("/{id}")
+ public Map<String,Object> get(@AuthenticationPrincipal Principal user,@PathVariable String id){return media.owned(user,id);}
  @GetMapping("/me")
  public List<Map<String,Object>> list(@AuthenticationPrincipal Principal user){return media.list(user);}
  @PostMapping("/{id}/access-url")

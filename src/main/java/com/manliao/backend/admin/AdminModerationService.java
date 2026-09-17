@@ -19,7 +19,7 @@ public class AdminModerationService {
    admins.require(actor,"moderation.read",false);
    if((source!=null && !Set.of("profile","chat").contains(source)) || post!=null)return List.of();
    return db.queryForList("""
-     SELECT id FROM media_assets WHERE status<>'deleted' AND storage_key IS NOT NULL
+     SELECT id FROM media_assets WHERE status<>'deleted' AND processing_status='ready' AND storage_key IS NOT NULL
      AND (?::text IS NULL OR status=?) AND (?::text IS NULL OR media_type=?) AND (?::text IS NULL OR owner_user_id=?)
      AND (?::text IS NULL OR source=?) AND (?::text IS NULL OR conversation_id=?) AND (?::text IS NULL OR message_id=?)
      ORDER BY created_at DESC,id DESC LIMIT 100
@@ -29,7 +29,7 @@ public class AdminModerationService {
    admins.require(actor,"moderation.read",false);asset(id);return media.metadata(id);
  }
  private Map<String,Object> asset(String id){
-   var list=db.queryForList("SELECT * FROM media_assets WHERE id=? AND status<>'deleted' AND storage_key IS NOT NULL",id);
+   var list=db.queryForList("SELECT * FROM media_assets WHERE id=? AND status<>'deleted' AND processing_status='ready' AND storage_key IS NOT NULL",id);
    if(list.isEmpty())throw new ApiError(404,"MEDIA_NOT_FOUND","媒体不存在");
    return list.getFirst();
  }
