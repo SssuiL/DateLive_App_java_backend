@@ -1,4 +1,4 @@
-param([switch]$DevelopmentSms,[switch]$DevelopmentAdmin,[switch]$DevelopmentBilling,[switch]$DisableAccountErasure)
+param([switch]$DevelopmentSms,[switch]$DevelopmentAdmin,[switch]$DevelopmentBilling,[switch]$DevelopmentPayments,[switch]$DisableAccountErasure)
 $ErrorActionPreference='Stop'
 $javaProjectRoot=Split-Path $PSScriptRoot -Parent
 $javaRuntime=Join-Path $javaProjectRoot '.tools/jdk/jdk-25.0.4.1+1/bin/java.exe'
@@ -22,6 +22,10 @@ if($DevelopmentAdmin -and -not $javaLocalConfig.ContainsKey('adminPassword')) {
  $javaLocalConfig.adminPassword=[Convert]::ToHexString([Security.Cryptography.RandomNumberGenerator]::GetBytes(32))
  [IO.File]::WriteAllText($javaLocalSettings,($javaLocalConfig|ConvertTo-Json),[Text.UTF8Encoding]::new($false))
 }
+if($DevelopmentPayments -and -not $javaLocalConfig.ContainsKey('paymentCallbackSecret')){
+ $javaLocalConfig.paymentCallbackSecret=[Convert]::ToHexString([Security.Cryptography.RandomNumberGenerator]::GetBytes(48))
+ [IO.File]::WriteAllText($javaLocalSettings,($javaLocalConfig|ConvertTo-Json),[Text.UTF8Encoding]::new($false))
+}
 $javaPreviousEnv=@{}
 $javaLocalEnv=@{
  JAVA_DATABASE_PASSWORD=$javaLocalConfig.databasePassword
@@ -39,6 +43,10 @@ $javaLocalEnv=@{
  JAVA_APP_ENV='development'
  JAVA_DEV_RECHARGE_ENABLED=$(if($DevelopmentBilling){'true'}else{'false'})
  JAVA_API_BIND='127.0.0.1'
+ JAVA_PAYMENT_PROVIDER=$(if($DevelopmentPayments){'mock'}else{'disabled'})
+ JAVA_PAYMENT_MOCK_ENABLED=$(if($DevelopmentPayments){'true'}else{'false'})
+ JAVA_PAYMENT_CALLBACK_SECRET=$javaLocalConfig.paymentCallbackSecret
+ JAVA_WECHAT_PAY_ENABLED='false'
 }
 if($javaLocalConfig.groupPublicBaseUrl -and -not $env:JAVA_GROUP_PUBLIC_BASE_URL){
  $javaLocalEnv.JAVA_GROUP_PUBLIC_BASE_URL=$javaLocalConfig.groupPublicBaseUrl
@@ -57,6 +65,7 @@ try {
  }
  docker compose -f compose.yaml up -d --wait postgres
  if($LASTEXITCODE -ne 0) { throw 'Java-only PostgreSQL startup failed' }
+ if($DevelopmentPayments){Write-Host 'LOCAL ONLY: mock payment orders and signed synthetic callbacks enabled; real WeChat Pay disabled.'}
  if($DevelopmentBilling){Write-Host 'LOCAL ONLY: simulated coin recharge enabled; no real payment.'}
  if($DevelopmentAdmin){Write-Host 'LOCAL ONLY: first admin initialization enabled; credentials stored in .tools/local-development.json and never printed.'}
  if($DevelopmentSms){Write-Host 'LOCAL ONLY: development SMS enabled; API returns test codes and sends no real messages.'}

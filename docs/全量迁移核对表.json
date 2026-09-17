@@ -2,10 +2,10 @@
   "legacy_commit": "8f63d6dd46162d777867165df963d8c6efc2093b",
   "legacy_http_routes": 276,
   "legacy_websocket_routes": 3,
-  "java_verified_tests": 317,
-  "mapped_routes": 124,
+  "java_verified_tests": 346,
+  "mapped_routes": 132,
   "retired_routes": 1,
-  "unmapped_routes": 154,
+  "unmapped_routes": 146,
   "scope": "Static route cross-reference; excludes Java-only additions and does not claim full semantic or supplier parity.",
   "routes": [
     {
@@ -580,16 +580,16 @@
       "method": "GET",
       "legacy_path": "/admin/payments/orders",
       "source": "app/api/admin_payments.py:15",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/admin/payments/orders",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
       "method": "GET",
       "legacy_path": "/admin/payments/callback-events",
       "source": "app/api/admin_payments.py:35",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/admin/payments/callback-events",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
@@ -1828,48 +1828,48 @@
       "method": "POST",
       "legacy_path": "/callbacks/payments/{provider_name}",
       "source": "app/api/payment_callbacks.py:18",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/callbacks/payments/{provider}",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
       "method": "GET",
       "legacy_path": "/payments/packages",
       "source": "app/api/payments.py:20",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/payments/packages",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
       "method": "POST",
       "legacy_path": "/payments/orders",
       "source": "app/api/payments.py:25",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/payments/orders",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
       "method": "GET",
       "legacy_path": "/payments/orders",
       "source": "app/api/payments.py:34",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/payments/orders",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
       "method": "GET",
       "legacy_path": "/payments/orders/{order_id}",
       "source": "app/api/payments.py:42",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/payments/orders/{order_id}",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
       "method": "POST",
       "legacy_path": "/payments/orders/{order_id}/mock/complete",
       "source": "app/api/payments.py:54",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/payments/orders/{order_id}/mock/complete",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {

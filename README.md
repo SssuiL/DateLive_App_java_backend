@@ -10,7 +10,7 @@ GitHub：[DateLive_App_java_backend](https://github.com/SssuiL/DateLive_App_java
 
 - Java 25 LTS、Spring Boot 4.1.1、Maven 3.9.16、PostgreSQL 17.10。
 - 已配置 VS Code Oracle Java 插件的项目 JDK。
-- 已实现 131 个 HTTP 入口（其中超级喜欢为已取消的 410 兼容入口）和 2 个 WebSocket 入口：账号、资料、通知、图片、后台审核、注销/恢复、用户搜索、好友和拉黑，以及聊天会话、文本/图片/语音/视频/文件消息和静态贴纸/动态 GIF、引用回复、已读，以及撤回/搜索/个人隐藏和清空。到期清理已实现并在隔离库测试，自动 Worker 已获授权开启，每分钟清理超过 45 天冷静期的注销账号；可用 JAVA_ACCOUNT_ERASURE_ENABLED=false 关闭（本地启动脚本默认开启，使用 -DisableAccountErasure 可关闭）；短信仍为开发模拟。
+- 已实现 139 个 HTTP 入口（其中超级喜欢为已取消的 410 兼容入口）和 2 个 WebSocket 入口：账号、资料、通知、图片、后台审核、注销/恢复、用户搜索、好友和拉黑，以及聊天会话、文本/图片/语音/视频/文件消息和静态贴纸/动态 GIF、引用回复、已读，以及撤回/搜索/个人隐藏和清空。到期清理已实现并在隔离库测试，自动 Worker 已获授权开启，每分钟清理超过 45 天冷静期的注销账号；可用 JAVA_ACCOUNT_ERASURE_ENABLED=false 关闭（本地启动脚本默认开启，使用 -DisableAccountErasure 可关闭）；短信仍为开发模拟。
 - 新增实时消息/通知、多端同步、断线恢复、ACK 送达回执、在线与输入状态；Flutter 协议适配和容量压测尚待完成。
 - 独立 Flyway 账号数据基线、事务审计、密码哈希、数据库会话校验和多实例共享的数据库限流。
 - 317 项测试覆盖真实 PostgreSQL/HTTP/WebSocket、并发、回滚、密码兼容、令牌签名与失效。
@@ -124,3 +124,7 @@ GitHub：[DateLive_App_java_backend](https://github.com/SssuiL/DateLive_App_java
 ## 钱包账本（V20）
 
 已迁移钱包六个接口及后台账本查询两个接口，包含幂等、收支平衡、历史流水不可变、并发扣款和注销留存。完整回归 **317 项通过**，本地 HTTP 12 项烟测通过：[迁移说明](docs/钱包账本迁移说明.md)、[验收报告](docs/local-wallet-smoke.json)。显式使用 -DevelopmentBilling 开启本地模拟金币充值；默认和生产环境关闭。支付订单、回调、礼物分账与通话扣费接入仍在后续迁移范围。
+
+## 支付订单与回调（V21）
+
+已迁移 8 个支付接口，覆盖订单幂等、签名回调、原子入账、并发防重及后台审计。完整回归 **346 项通过**，本地支付 12 项、钱包 12 项验证通过。微信支付官方 SDK 的 RSA/AES-GCM 及请求/响应签名已离线测试；真实商户、公网回调与 Flutter 支付联调未完成。详见 [迁移说明](docs/支付订单与回调迁移说明.md) 和 [本机报告](docs/local-payments-smoke.json)。

@@ -19,11 +19,12 @@ public class LedgerService {
  public static Leg spendable(String user,long amount,String role){return new Leg("user",user,"user_spendable",amount,role);}
  public static Leg platform(String account,long amount,String role){return new Leg("platform","datelive-platform",account,amount,role);}
  private static String id(String prefix){return prefix+"_"+UUID.randomUUID().toString().replace("-","");}
- public void lockUsers(Collection<String> users){
+ public void lockUsers(Collection<String> users){lockUsers(users,true);}
+ private void lockUsers(Collection<String> users,boolean active){
   for(String user:new TreeSet<>(users)){
    var row=db.queryForList("SELECT status FROM users WHERE id=? FOR UPDATE",user);
    if(row.isEmpty())throw new ApiError(404,"USER_NOT_FOUND","用户不存在");
-   if(!"active".equals(row.getFirst().get("status")))throw new ApiError(403,"COMMON_FORBIDDEN","当前账号不可进行金币交易");
+   if(active&&!"active".equals(row.getFirst().get("status")))throw new ApiError(403,"COMMON_FORBIDDEN","当前账号不可进行金币交易");
   }
  }
  public Map<String,Object> ensureWallet(String user){
@@ -57,9 +58,15 @@ public class LedgerService {
   }
   if(total.signum()!=0||!positive.equals(BigInteger.valueOf(p.amount())))throw new ApiError(500,"BILLING_UNBALANCED_TRANSACTION","账本分录不平衡");
  }
- public Result post(Posting p){
+ public Result post(Posting p){return post(p,false);}
+ /** Verified incoming payment may credit a retained account; it never enables spending or restores an account. */
+ public Result postIncomingPayment(Posting p){
+  if(!"payment_recharge".equals(p.type())||!"payment_order".equals(p.referenceType())||p.legs().stream().anyMatch(l->l.ownerType().equals("user")?(!l.accountType().equals("user_spendable")||l.amount()<=0):(!l.accountType().equals("platform_coin_issuance")||l.amount()>=0)))throw new IllegalArgumentException("Not an incoming payment credit");
+  return post(p,true);
+ }
+ private Result post(Posting p,boolean incoming){
   validate(p);String hash=hash(p);return tx.execute(status->{
-   var users=new TreeSet<String>();for(var leg:p.legs())if(leg.ownerType().equals("user"))users.add(leg.ownerId());if(p.actor()!=null)users.add(p.actor());lockUsers(users);
+   var users=new TreeSet<String>();for(var leg:p.legs())if(leg.ownerType().equals("user"))users.add(leg.ownerId());if(p.actor()!=null)users.add(p.actor());lockUsers(users,!incoming);
    db.queryForList("SELECT pg_advisory_xact_lock(hashtextextended(?,0))","billing:"+p.key().strip());
    var existing=db.queryForList("SELECT id,payload_hash FROM billing_transactions WHERE idempotency_key=?",p.key().strip());
    if(!existing.isEmpty()){

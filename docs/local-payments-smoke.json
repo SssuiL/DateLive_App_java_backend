@@ -1,0 +1,21 @@
+{
+  "checked_at": "2026-09-17T09:27:33.4014376Z",
+  "target": "http://127.0.0.1:8200",
+  "schema": "V21",
+  "result": "passed",
+  "checks": [
+    "public_packages",
+    "order_idempotency",
+    "request_conflict",
+    "order_ownership",
+    "signed_callback",
+    "duplicate_callback",
+    "invalid_signature",
+    "paid_order_ledger_link",
+    "exact_credit",
+    "admin_callback_audit",
+    "balanced_payment_ledger",
+    "mock_completion"
+  ],
+  "note": "Local mock orders and HMAC callbacks only. WeChat RSA/AES-GCM and SDK request/response signatures are offline-tested separately; real merchant checkout, public callback delivery and Flutter SDK integration remain unverified."
+}

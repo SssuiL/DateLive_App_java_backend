@@ -12,7 +12,7 @@ public class AccountLifecycleService {
  private final com.manliao.backend.posts.PostErasure posts;private final DatabaseRows rows;private final ObjectMapper json;private final MediaStorage storage;private final com.manliao.backend.groups.GroupService groups;
  // Every users.id FK must have an explicit policy; integration tests compare this with the real schema.
  public static final Set<String> USER_FK_POLICY=Set.of(
-   "wallets.user_id","wallet_transactions.user_id","coin_accounts.user_id","billing_transactions.initiated_by_user_id","posts.author_id","post_likes.user_id","post_comments.author_id","post_comments.reply_to_user_id","post_comment_likes.user_id","post_media_reactions.user_id","explore_actions.actor_user_id","explore_actions.target_user_id","matches.user_a_id","matches.user_b_id","groups.owner_id","group_members.user_id","group_join_requests.user_id","account_erasure_records.user_id","auth_security_events.user_id","blocks.actor_user_id","blocks.target_user_id",
+   "payment_orders.user_id","wallets.user_id","wallet_transactions.user_id","coin_accounts.user_id","billing_transactions.initiated_by_user_id","posts.author_id","post_likes.user_id","post_comments.author_id","post_comments.reply_to_user_id","post_comment_likes.user_id","post_media_reactions.user_id","explore_actions.actor_user_id","explore_actions.target_user_id","matches.user_a_id","matches.user_b_id","groups.owner_id","group_members.user_id","group_join_requests.user_id","account_erasure_records.user_id","auth_security_events.user_id","blocks.actor_user_id","blocks.target_user_id",
    "media_assets.owner_user_id","notification_events.recipient_user_id","notification_events.actor_user_id",
    "notification_change_outbox.user_id","notification_preferences.user_id","profile_reviews.user_id",
    "push_devices.user_id","refresh_tokens.user_id","user_profiles.user_id",
@@ -64,7 +64,7 @@ public class AccountLifecycleService {
    return tx.execute(status->{
      var user=user(id,true);
      var counts=new LinkedHashMap<String,Object>();
-     counts.put("billing_records_retained",count("wallet_transactions","user_id=?",id));
+     counts.put("billing_records_retained",count("wallet_transactions","user_id=?",id)+count("payment_orders","user_id=?",id));
      counts.put("posts",count("posts","author_id=? AND deleted_at IS NULL",id));
      counts.put("post_comments",count("post_comments","author_id=? AND deleted_at IS NULL",id));
      counts.put("profiles",count("user_profiles","user_id=?",id));
