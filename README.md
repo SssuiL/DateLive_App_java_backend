@@ -10,7 +10,7 @@ GitHub：[DateLive_App_java_backend](https://github.com/SssuiL/DateLive_App_java
 
 - Java 25 LTS、Spring Boot 4.1.1、Maven 3.9.16、PostgreSQL 17.10。
 - 已配置 VS Code Oracle Java 插件的项目 JDK。
-- 已实现 168 个 HTTP 入口（其中超级喜欢为已取消的 410 兼容入口）和 2 个 WebSocket 入口：账号、资料、通知、图片、后台审核、注销/恢复、用户搜索、好友和拉黑，以及聊天会话、文本/图片/语音/视频/文件消息和静态贴纸/动态 GIF、引用回复、已读，以及撤回/搜索/个人隐藏和清空。到期清理已实现并在隔离库测试，自动 Worker 已获授权开启，每分钟清理超过 45 天冷静期的注销账号；可用 JAVA_ACCOUNT_ERASURE_ENABLED=false 关闭（本地启动脚本默认开启，使用 -DisableAccountErasure 可关闭）；短信仍为开发模拟。
+- 已实现 175 个 HTTP 入口（其中超级喜欢为已取消的 410 兼容入口）和 2 个 WebSocket 入口：账号、资料、通知、图片、后台审核、注销/恢复、用户搜索、好友和拉黑，以及聊天会话、文本/图片/语音/视频/文件消息和静态贴纸/动态 GIF、引用回复、已读，以及撤回/搜索/个人隐藏和清空。到期清理已实现并在隔离库测试，自动 Worker 已获授权开启，每分钟清理超过 45 天冷静期的注销账号；可用 JAVA_ACCOUNT_ERASURE_ENABLED=false 关闭（本地启动脚本默认开启，使用 -DisableAccountErasure 可关闭）；短信仍为开发模拟。
 - 新增实时消息/通知、多端同步、断线恢复、ACK 送达回执、在线与输入状态；Flutter 协议适配和容量压测尚待完成。
 - 独立 Flyway 账号数据基线、事务审计、密码哈希、数据库会话校验和多实例共享的数据库限流。
 - 317 项测试覆盖真实 PostgreSQL/HTTP/WebSocket、并发、回滚、密码兼容、令牌签名与失效。
@@ -144,3 +144,8 @@ GitHub：[DateLive_App_java_backend](https://github.com/SssuiL/DateLive_App_java
 ## 礼物安全设置与审计（V25）
 
 完整回归 **404 项通过**，本地 10 项验收通过。支持个人限额、提醒、榜单隐私、管理员年龄状态及风险处理；今日消费从账本统计并排除冲正。送礼事务内的实际风控、二次确认和分账仍在后续迁移范围。详见 [迁移说明](docs/礼物安全迁移说明.md) 和 [本机报告](docs/local-gift-safety-smoke.json)。
+
+
+## V26 直播送礼
+
+完整回归 **419 项通过**，本地 12 项验收通过。实现原子扣款和主播收益、并发幂等、年龄/消费限额、高额确认、连击、隐私榜单及注销账务保留。退款、结算和直播广播继续迁移。详见 [说明](docs/直播送礼迁移说明.md) 和 [本机报告](docs/local-live-gift-smoke.json)。

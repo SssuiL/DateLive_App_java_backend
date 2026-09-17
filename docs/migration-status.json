@@ -1,8 +1,8 @@
 {
   "updated_at": "2026-09-17",
   "legacy_commit": "8f63d6dd46162d777867165df963d8c6efc2093b",
-  "scope": "Identity, profiles, notifications, managed media, admin, account lifecycle, social, private text/image/GIF/voice/video/file chat and static stickers; signed variants, image/video thumbnails, image display and legacy image backfill, single ranges; realtime delivery/ACK/replay/multi-device/presence; bounded durable opt-in async media processing and unreferenced draft reclamation; automatic erasure enabled; not complete migration; groups/roles/join rules/group chat/media revocation and account erasure, share links/public invite pages; unlimited ordinary likes/mutual matches/undo; super-like retired by user; posts/feed/comments/replies/likes/media reactions/save preference, publishing moderation and post-aware erasure; wallet/balanced immutable ledger/bills/summary/admin billing reads with disabled-by-default simulated recharge; payment orders, idempotent signed callbacks, official WeChat Pay SDK offline crypto verification and admin payment audits; public/admin gift catalog, versioned icon/Lottie assets and transactional audit; host manual qualification applications/review/suspension/restoration, identity masking, official notifications and identity erasure; mock live room lifecycle, host-bound single-use preflight tickets, participant presence, signed cover access/reclamation and room erasure; personal gift safety settings, UTC gift-spend ledger aggregation, administrative age state and risk review",
-  "verified_tests": 404,
+  "scope": "Identity, profiles, notifications, managed media, admin, account lifecycle, social, private text/image/GIF/voice/video/file chat and static stickers; signed variants, image/video thumbnails, image display and legacy image backfill, single ranges; realtime delivery/ACK/replay/multi-device/presence; bounded durable opt-in async media processing and unreferenced draft reclamation; automatic erasure enabled; not complete migration; groups/roles/join rules/group chat/media revocation and account erasure, share links/public invite pages; unlimited ordinary likes/mutual matches/undo; super-like retired by user; posts/feed/comments/replies/likes/media reactions/save preference, publishing moderation and post-aware erasure; wallet/balanced immutable ledger/bills/summary/admin billing reads with disabled-by-default simulated recharge; payment orders, idempotent signed callbacks, official WeChat Pay SDK offline crypto verification and admin payment audits; public/admin gift catalog, versioned icon/Lottie assets and transactional audit; host manual qualification applications/review/suspension/restoration, identity masking, official notifications and identity erasure; mock live room lifecycle, host-bound single-use preflight tickets, participant presence, signed cover access/reclamation and room erasure; personal gift safety settings, UTC gift-spend ledger aggregation, administrative age state and risk review; atomic live gifting, balanced 70% host payable ledger, idempotency, confirmation and limits, privacy ranking, mature income and financial erasure retention",
+  "verified_tests": 419,
   "routes": [
     {
       "method": "POST",
@@ -1046,10 +1046,52 @@
       "status": "implemented_and_integration_tested",
       "production_ready": false,
       "scope": "Settings and audit only; actual gifting enforcement integration pending"
+    },
+    {
+      "method": "POST",
+      "path": "/live/rooms/{room}/gift-confirmations",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "POST",
+      "path": "/live/rooms/{room}/gifts",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "GET",
+      "path": "/live/rooms/{room}/gifts",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "GET",
+      "path": "/live/rooms/{room}/gift-ranking",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "GET",
+      "path": "/live/income/summary",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "GET",
+      "path": "/live/income/records",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "GET",
+      "path": "/admin/live/rooms/{room}/gifts",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
     }
   ],
   "remaining": "real payment merchant/client/public callbacks and reconciliation, gifts/settlements, live/calls, safety/support/admin/client releases and remaining auth/provider gaps; Flutter new product rules, reliable/media/async protocols and device integration; retention/resync, capacity, media leases/OS resource limits; real malware/moderation/storage/SMS/push. Public share DNS/TLS/routing and real social-platform tests pending.",
-  "schema": "V1 identity through V25 gift safety; no legacy data imported",
+  "schema": "V1 identity through V26 live gifts; no legacy data imported",
   "deployment": "localhost only; no cloud or Flutter cutover",
   "account_erasure_worker_enabled": true,
   "video_smoke": "docs/local-video-smoke.json",
@@ -1079,6 +1121,7 @@
   "gift_catalog_smoke": "docs/local-gift-catalog-smoke.json",
   "host_verification_smoke": "docs/local-host-verification-smoke.json",
   "live_room_smoke": "docs/local-live-room-smoke.json",
-  "verification_detail": "404 tests passed in full V25 verify; local gift safety smoke passed 10 checks.",
-  "gift_safety_smoke": "docs/local-gift-safety-smoke.json"
+  "verification_detail": "419 tests passed in full V26 verify; local live gift smoke passed 12 checks.",
+  "gift_safety_smoke": "docs/local-gift-safety-smoke.json",
+  "live_gift_smoke": "docs/local-live-gift-smoke.json"
 }

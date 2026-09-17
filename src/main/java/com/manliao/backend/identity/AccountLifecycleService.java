@@ -12,7 +12,7 @@ public class AccountLifecycleService {
  private final com.manliao.backend.posts.PostErasure posts;private final DatabaseRows rows;private final ObjectMapper json;private final MediaStorage storage;private final com.manliao.backend.groups.GroupService groups;
  // Every users.id FK must have an explicit policy; integration tests compare this with the real schema.
  public static final Set<String> USER_FK_POLICY=Set.of(
-   "gift_safety_settings.user_id","gift_risk_events.user_id","live_rooms.host_user_id","live_room_participants.user_id","live_start_preflights.host_user_id","live_host_qualifications.user_id","live_host_verification_applications.user_id","payment_orders.user_id","wallets.user_id","wallet_transactions.user_id","coin_accounts.user_id","billing_transactions.initiated_by_user_id","posts.author_id","post_likes.user_id","post_comments.author_id","post_comments.reply_to_user_id","post_comment_likes.user_id","post_media_reactions.user_id","explore_actions.actor_user_id","explore_actions.target_user_id","matches.user_a_id","matches.user_b_id","groups.owner_id","group_members.user_id","group_join_requests.user_id","account_erasure_records.user_id","auth_security_events.user_id","blocks.actor_user_id","blocks.target_user_id",
+   "gift_risk_confirmations.user_id","live_gift_records.sender_id","live_gift_records.host_user_id","gift_safety_settings.user_id","gift_risk_events.user_id","live_rooms.host_user_id","live_room_participants.user_id","live_start_preflights.host_user_id","live_host_qualifications.user_id","live_host_verification_applications.user_id","payment_orders.user_id","wallets.user_id","wallet_transactions.user_id","coin_accounts.user_id","billing_transactions.initiated_by_user_id","posts.author_id","post_likes.user_id","post_comments.author_id","post_comments.reply_to_user_id","post_comment_likes.user_id","post_media_reactions.user_id","explore_actions.actor_user_id","explore_actions.target_user_id","matches.user_a_id","matches.user_b_id","groups.owner_id","group_members.user_id","group_join_requests.user_id","account_erasure_records.user_id","auth_security_events.user_id","blocks.actor_user_id","blocks.target_user_id",
    "media_assets.owner_user_id","notification_events.recipient_user_id","notification_events.actor_user_id",
    "notification_change_outbox.user_id","notification_preferences.user_id","profile_reviews.user_id",
    "push_devices.user_id","refresh_tokens.user_id","user_profiles.user_id",
@@ -64,6 +64,7 @@ public class AccountLifecycleService {
    return tx.execute(status->{
      var user=user(id,true);
      var counts=new LinkedHashMap<String,Object>();
+     counts.put("live_gift_records_retained",count("live_gift_records","sender_id=? OR host_user_id=?",id,id));
      counts.put("host_applications",count("live_host_verification_applications","user_id=?",id));
      counts.put("host_qualifications",count("live_host_qualifications","user_id=?",id));
      counts.put("billing_records_retained",count("wallet_transactions","user_id=?",id)+count("payment_orders","user_id=?",id));
@@ -127,9 +128,13 @@ public class AccountLifecycleService {
      var summary=new LinkedHashMap<String,Object>();
      groups.eraseMemberships(userId);posts.erase(userId);
      summary.put("gift_safety_settings_deleted",db.update("DELETE FROM gift_safety_settings WHERE user_id=?",userId));
-     summary.put("gift_risk_events_deleted",db.update("DELETE FROM gift_risk_events WHERE user_id=?",userId));
-     summary.put("live_memberships_deleted",db.update("DELETE FROM live_room_participants WHERE user_id=?",userId));
-     summary.put("live_rooms_deleted",db.update("DELETE FROM live_rooms WHERE host_user_id=?",userId));
+     summary.put("gift_risk_events_deleted",db.update("DELETE FROM gift_risk_events WHERE user_id=? AND gift_record_id IS NULL",userId));
+     summary.put("gift_confirmations_deleted",db.update("DELETE FROM gift_risk_confirmations WHERE user_id=? OR room_id IN (SELECT id FROM live_rooms WHERE host_user_id=?)",userId,userId));
+     summary.put("gift_risk_events_scrubbed",db.update("UPDATE gift_risk_events SET details='{}'::jsonb,resolution=NULL WHERE user_id=? AND gift_record_id IS NOT NULL",userId));
+     summary.put("live_memberships_deleted",db.update("DELETE FROM live_room_participants WHERE user_id=? OR room_id IN (SELECT id FROM live_rooms WHERE host_user_id=?)",userId,userId));
+     db.update("DELETE FROM live_start_preflights WHERE host_user_id=?",userId);
+     summary.put("live_rooms_retained",db.update("UPDATE live_rooms SET status='closed',stream_state='ended',title='已注销主播的直播',category='其他',tags='[]'::jsonb,cover_url=NULL,announcement=NULL,close_reason=NULL,ended_at=coalesce(ended_at,now()),updated_at=now() WHERE host_user_id=? AND EXISTS(SELECT 1 FROM live_gift_records g WHERE g.room_id=live_rooms.id)",userId));
+     summary.put("live_rooms_deleted",db.update("DELETE FROM live_rooms WHERE host_user_id=? AND NOT EXISTS(SELECT 1 FROM live_gift_records g WHERE g.room_id=live_rooms.id)",userId));
      summary.put("group_messages_anonymized",db.update("""
        UPDATE messages SET content='已注销用户的消息',type='text',media_asset_id=NULL,media_kind=NULL,duration_seconds=0,
         recalled_at=coalesce(recalled_at,clock_timestamp()),recalled_by_user_id=?

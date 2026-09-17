@@ -1,0 +1,21 @@
+{
+  "checked_at": "2026-09-17T10:23:09.8853083Z",
+  "target": "http://127.0.0.1:8200",
+  "schema": "V26",
+  "result": "passed",
+  "checks": [
+    "age_required",
+    "integer_income_split",
+    "duplicate_idempotency",
+    "payload_conflict",
+    "confirmation_required",
+    "confirmation_send",
+    "daily_spend",
+    "host_income",
+    "anonymous_ranking",
+    "ranking_consent",
+    "gift_history",
+    "admin_gift_audit"
+  ],
+  "note": "Local synthetic coin recharge and mock room only. No real payment, streaming, settlement or gift WebSocket broadcast."
+}

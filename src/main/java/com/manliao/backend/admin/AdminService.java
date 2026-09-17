@@ -16,9 +16,9 @@ public class AdminService {
  }
  public Set<String> permissions(String role) {
    return switch(role){
-     case "owner"->Set.of("admin.manage","moderation.read","moderation.write","operation_logs.read","users.erase","billing.read","payments.read","live_preflight.read","host_verification.read","host_verification.write","gifts.read","gifts.write","gift_risk.read","gift_risk.write");
-     case "auditor"->Set.of("moderation.read","moderation.write","billing.read","payments.read","live_preflight.read","host_verification.read","host_verification.write","gifts.read","gift_risk.read");
-     case "operator"->Set.of("billing.read","payments.read","live_preflight.read","host_verification.read","host_verification.write","gifts.read","gifts.write","gift_risk.read","gift_risk.write");
+     case "owner"->Set.of("admin.manage","moderation.read","moderation.write","operation_logs.read","users.erase","billing.read","payments.read","live.read","live_preflight.read","host_verification.read","host_verification.write","gifts.read","gifts.write","gift_risk.read","gift_risk.write");
+     case "auditor"->Set.of("moderation.read","moderation.write","billing.read","payments.read","live.read","live_preflight.read","host_verification.read","host_verification.write","gifts.read","gift_risk.read");
+     case "operator"->Set.of("billing.read","payments.read","live.read","live_preflight.read","host_verification.read","host_verification.write","gifts.read","gifts.write","gift_risk.read","gift_risk.write");
      default->Set.of();
    };
  }

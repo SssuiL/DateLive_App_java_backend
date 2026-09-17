@@ -2,10 +2,10 @@
   "legacy_commit": "8f63d6dd46162d777867165df963d8c6efc2093b",
   "legacy_http_routes": 276,
   "legacy_websocket_routes": 3,
-  "java_verified_tests": 404,
-  "mapped_routes": 160,
+  "java_verified_tests": 419,
+  "mapped_routes": 167,
   "retired_routes": 1,
-  "unmapped_routes": 118,
+  "unmapped_routes": 111,
   "scope": "Static route cross-reference; excludes Java-only additions and does not claim full semantic or supplier parity.",
   "routes": [
     {
@@ -252,8 +252,8 @@
       "method": "GET",
       "legacy_path": "/admin/live/rooms/{room_id}/gifts",
       "source": "app/api/admin.py:416",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/admin/live/rooms/{room}/gifts",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
@@ -1236,16 +1236,16 @@
       "method": "GET",
       "legacy_path": "/live/income/summary",
       "source": "app/api/live.py:81",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/live/income/summary",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
       "method": "GET",
       "legacy_path": "/live/income/records",
       "source": "app/api/live.py:89",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/live/income/records",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
@@ -1428,32 +1428,32 @@
       "method": "GET",
       "legacy_path": "/live/rooms/{room_id}/gifts",
       "source": "app/api/live.py:283",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/live/rooms/{room}/gifts",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
       "method": "GET",
       "legacy_path": "/live/rooms/{room_id}/gift-ranking",
       "source": "app/api/live.py:288",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/live/rooms/{room}/gift-ranking",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
       "method": "POST",
       "legacy_path": "/live/rooms/{room_id}/gift-confirmations",
       "source": "app/api/live.py:301",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/live/rooms/{room}/gift-confirmations",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
       "method": "POST",
       "legacy_path": "/live/rooms/{room_id}/gifts",
       "source": "app/api/live.py:313",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/live/rooms/{room}/gifts",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
