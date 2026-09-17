@@ -2,9 +2,10 @@
   "legacy_commit": "8f63d6dd46162d777867165df963d8c6efc2093b",
   "legacy_http_routes": 276,
   "legacy_websocket_routes": 3,
-  "java_verified_tests": 235,
-  "mapped_routes": 72,
-  "unmapped_routes": 207,
+  "java_verified_tests": 271,
+  "mapped_routes": 97,
+  "retired_routes": 1,
+  "unmapped_routes": 181,
   "scope": "Static route cross-reference; excludes Java-only additions and does not claim full semantic or supplier parity.",
   "routes": [
     {
@@ -891,64 +892,64 @@
       "method": "GET",
       "legacy_path": "/explore/candidates",
       "source": "app/api/explore.py:13",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/explore/candidates",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
       "method": "GET",
       "legacy_path": "/explore/liked-profiles",
       "source": "app/api/explore.py:18",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/explore/liked-profiles",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
       "method": "POST",
       "legacy_path": "/explore/exposures/{target_user_id}",
       "source": "app/api/explore.py:23",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/explore/exposures/{target}",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
       "method": "POST",
       "legacy_path": "/explore/likes/{target_user_id}",
       "source": "app/api/explore.py:28",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/explore/likes/{target}",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
       "method": "POST",
       "legacy_path": "/explore/super-likes/{target_user_id}",
       "source": "app/api/explore.py:33",
-      "java_path": null,
-      "status": "not_mapped",
-      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+      "java_path": "/explore/super-likes/{target}",
+      "status": "retired_by_product_decision",
+      "note": "User removed super-like on 2026-09-17; compatibility endpoint returns 410 without side effects."
     },
     {
       "method": "POST",
       "legacy_path": "/explore/skips/{target_user_id}",
       "source": "app/api/explore.py:38",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/explore/skips/{target}",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
       "method": "POST",
       "legacy_path": "/explore/undo",
       "source": "app/api/explore.py:43",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/explore/undo",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
       "method": "POST",
       "legacy_path": "/explore/blocks/{target_user_id}",
       "source": "app/api/explore.py:48",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/explore/blocks/{target}",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
@@ -1003,128 +1004,128 @@
       "method": "POST",
       "legacy_path": "/groups/",
       "source": "app/api/groups.py:23",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/groups/",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
       "method": "GET",
       "legacy_path": "/groups/",
       "source": "app/api/groups.py:28",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/groups/",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
       "method": "GET",
       "legacy_path": "/groups/search",
       "source": "app/api/groups.py:33",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/groups/search",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
       "method": "GET",
       "legacy_path": "/groups/{group_id}",
       "source": "app/api/groups.py:38",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/groups/{id}",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
       "method": "POST",
       "legacy_path": "/groups/{group_id}/invite",
       "source": "app/api/groups.py:43",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/groups/{id}/invite",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
       "method": "POST",
       "legacy_path": "/groups/{group_id}/join-requests",
       "source": "app/api/groups.py:48",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/groups/{id}/join-requests",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
       "method": "POST",
       "legacy_path": "/groups/join-by-link-code",
       "source": "app/api/groups.py:53",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/groups/join-by-link-code",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
       "method": "GET",
       "legacy_path": "/groups/{group_id}/members",
       "source": "app/api/groups.py:61",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/groups/{id}/members",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
       "method": "GET",
       "legacy_path": "/groups/{group_id}/join-requests",
       "source": "app/api/groups.py:66",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/groups/{id}/join-requests",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
       "method": "POST",
       "legacy_path": "/groups/{group_id}/join-requests/{request_id}/approve",
       "source": "app/api/groups.py:71",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/groups/{id}/join-requests/{request}/approve",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
       "method": "POST",
       "legacy_path": "/groups/{group_id}/join-requests/{request_id}/reject",
       "source": "app/api/groups.py:76",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/groups/{id}/join-requests/{request}/reject",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
       "method": "PATCH",
       "legacy_path": "/groups/{group_id}/members/{user_id}/role",
       "source": "app/api/groups.py:81",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/groups/{id}/members/{target}/role",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
       "method": "DELETE",
       "legacy_path": "/groups/{group_id}/members/{user_id}",
       "source": "app/api/groups.py:86",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/groups/{id}/members/{target}",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
       "method": "POST",
       "legacy_path": "/groups/{group_id}/leave",
       "source": "app/api/groups.py:91",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/groups/{id}/leave",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
       "method": "POST",
       "legacy_path": "/groups/{group_id}/transfer-owner",
       "source": "app/api/groups.py:96",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/groups/{id}/transfer-owner",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
       "method": "DELETE",
       "legacy_path": "/groups/{group_id}",
       "source": "app/api/groups.py:101",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/groups/{id}",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
@@ -1699,16 +1700,16 @@
       "method": "GET",
       "legacy_path": "/matches/",
       "source": "app/api/matches.py:13",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/matches/",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
       "method": "GET",
       "legacy_path": "/matches/{match_id}",
       "source": "app/api/matches.py:18",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/matches/{id}",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {

@@ -12,8 +12,9 @@ public class ChatNotifications {
   if(!TransactionSynchronizationManager.isActualTransactionActive())throw new IllegalStateException("Chat notification requires transaction");
   db.update("INSERT INTO notification_preferences(user_id) VALUES(?) ON CONFLICT DO NOTHING",receiver);
   var p=db.queryForMap("SELECT * FROM notification_preferences WHERE user_id=?",receiver);
+  boolean group=db.queryForObject("SELECT type FROM conversations WHERE id=?",String.class,conversation).equals("group");
   String reason=null;
-  if(!Boolean.TRUE.equals(p.get("chat_messages_enabled")))reason="notification_preference_disabled";
+  if(!Boolean.TRUE.equals(p.get(group?"group_messages_enabled":"chat_messages_enabled")))reason="notification_preference_disabled";
   else if(Boolean.TRUE.equals(p.get("night_quiet_enabled"))&&FriendRequestNotifications.quiet(LocalTime.now(ZoneOffset.UTC),
     LocalTime.parse((String)p.get("night_quiet_start")),LocalTime.parse((String)p.get("night_quiet_end"))))reason="night_quiet";
   else if(Boolean.TRUE.equals(db.queryForObject("SELECT muted FROM conversation_member_states WHERE conversation_id=? AND user_id=?",Boolean.class,conversation,receiver)))reason="conversation_muted";
@@ -21,9 +22,9 @@ public class ChatNotifications {
   int inserted=db.update("""
    INSERT INTO notification_events(id,deduplication_key,recipient_user_id,actor_user_id,event_type,category,
     source_type,source_id,conversation_id,title,body,status,suppress_reason,delivery_channel)
-   VALUES(?,?,?,?,'chat_message','chat','message',?,?,'你收到一条新消息','打开漫聊查看详情',?,?,?)
+   VALUES(?,?,?,?,?,?, 'message',?,?,'你收到一条新消息','打开漫聊查看详情',?,?,?)
    ON CONFLICT(deduplication_key) DO NOTHING
-   ""","notif_"+message,"chat_message:"+message,receiver,sender,message,conversation,
+   ""","notif_"+java.util.UUID.randomUUID().toString().replace("-",""),"chat_message:"+message+":"+receiver,receiver,sender,group?"group_message":"chat_message",group?"group":"chat",message,conversation,
     reason==null?"pending":"suppressed",reason,reason==null?"offline_push":"none");
   if(inserted>0)db.update("INSERT INTO notification_change_outbox(user_id,event_type) VALUES(?,'unread_count_changed')",receiver);
  }

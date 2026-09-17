@@ -38,6 +38,9 @@ $javaLocalEnv=@{
  JAVA_API_PORT='8200'
  JAVA_API_BIND='127.0.0.1'
 }
+if($javaLocalConfig.groupPublicBaseUrl -and -not $env:JAVA_GROUP_PUBLIC_BASE_URL){
+ $javaLocalEnv.JAVA_GROUP_PUBLIC_BASE_URL=$javaLocalConfig.groupPublicBaseUrl
+}
 $audioManifest=Join-Path $javaProjectRoot '.tools/ffmpeg-install.json'
 if(Test-Path $audioManifest){
  $audio=Get-Content -Raw $audioManifest|ConvertFrom-Json

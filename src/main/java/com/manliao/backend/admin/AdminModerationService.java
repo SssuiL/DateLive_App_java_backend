@@ -56,7 +56,9 @@ public class AdminModerationService {
      // Never trust reviewer_id supplied by the client.
      String reason=input.reason()==null?(approved?"人工审核通过":"人工审核拒绝"):input.reason();
      media.resolveReview(id,approved,actor.id(),reason);
-     admins.audit(actor.id(),approved?"media.approve":"media.reject","media",id,Map.of("reason",reason),request);
+     boolean portrait=approved&&Boolean.TRUE.equals(input.portrait_manual_approved());
+     db.update("UPDATE media_assets SET portrait_manual_approved=(? AND source='profile' AND media_type='image') WHERE id=?",portrait,id);
+     admins.audit(actor.id(),approved?"media.approve":"media.reject","media",id,Map.of("reason",reason,"portrait_manual_approved",portrait),request);
      return media.metadata(id);
    });
  }

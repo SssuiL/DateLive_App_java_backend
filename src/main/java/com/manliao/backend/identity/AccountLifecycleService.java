@@ -9,17 +9,17 @@ import com.manliao.backend.media.MediaStorage;
 @Service
 public class AccountLifecycleService {
  private final JdbcTemplate db;private final TransactionTemplate tx;private final AuthService auth;
- private final DatabaseRows rows;private final ObjectMapper json;private final MediaStorage storage;
+ private final DatabaseRows rows;private final ObjectMapper json;private final MediaStorage storage;private final com.manliao.backend.groups.GroupService groups;
  // Every users.id FK must have an explicit policy; integration tests compare this with the real schema.
  public static final Set<String> USER_FK_POLICY=Set.of(
-   "account_erasure_records.user_id","auth_security_events.user_id","blocks.actor_user_id","blocks.target_user_id",
+   "explore_actions.actor_user_id","explore_actions.target_user_id","matches.user_a_id","matches.user_b_id","groups.owner_id","group_members.user_id","group_join_requests.user_id","account_erasure_records.user_id","auth_security_events.user_id","blocks.actor_user_id","blocks.target_user_id",
    "media_assets.owner_user_id","notification_events.recipient_user_id","notification_events.actor_user_id",
    "notification_change_outbox.user_id","notification_preferences.user_id","profile_reviews.user_id",
    "push_devices.user_id","refresh_tokens.user_id","user_profiles.user_id",
    "friend_requests.requester_id","friend_requests.receiver_id","friendships.user_a_id","friendships.user_b_id",
    "conversation_member_states.user_id","messages.recalled_by_user_id","messages.sender_id","message_receipts.user_id","chat_change_outbox.actor_user_id","realtime_events.recipient_user_id","realtime_events.actor_user_id","realtime_connections.user_id","realtime_checkpoints.user_id");
- public AccountLifecycleService(JdbcTemplate db,TransactionTemplate tx,AuthService auth,DatabaseRows rows,ObjectMapper json,MediaStorage storage){
-   this.db=db;this.tx=tx;this.auth=auth;this.rows=rows;this.json=json;this.storage=storage;
+ public AccountLifecycleService(JdbcTemplate db,TransactionTemplate tx,AuthService auth,DatabaseRows rows,ObjectMapper json,MediaStorage storage,com.manliao.backend.groups.GroupService groups){
+   this.db=db;this.tx=tx;this.auth=auth;this.rows=rows;this.json=json;this.storage=storage;this.groups=groups;
  }
  public Map<String,Object> deactivate(AuthDtos.Principal user,String request){
    return tx.execute(status->{
@@ -65,14 +65,14 @@ public class AccountLifecycleService {
      var user=user(id,true);
      var counts=new LinkedHashMap<String,Object>();
      counts.put("profiles",count("user_profiles","user_id=?",id));
-     counts.put("media_assets",count("media_assets","owner_user_id=? OR conversation_id IN (SELECT conversation_id FROM conversation_member_states WHERE user_id=?)",id,id));
+     counts.put("media_assets",count("media_assets","owner_user_id=? OR conversation_id IN (SELECT m.conversation_id FROM conversation_member_states m JOIN conversations c ON c.id=m.conversation_id WHERE m.user_id=? AND c.type<>'group')",id,id));
      counts.put("sessions",count("refresh_tokens","user_id=?",id));
      counts.put("push_devices",count("push_devices","user_id=?",id));
      counts.put("social_relations",count("blocks","actor_user_id=? OR target_user_id=?",id,id)
        +count("friendships","user_a_id=? OR user_b_id=?",id,id)
        +count("friend_requests","requester_id=? OR receiver_id=?",id,id));
      counts.put("conversations",count("conversation_member_states","user_id=?",id));
-     counts.put("messages",count("messages","conversation_id IN (SELECT conversation_id FROM conversation_member_states WHERE user_id=?)",id));
+     counts.put("messages",count("messages","conversation_id IN (SELECT m.conversation_id FROM conversation_member_states m JOIN conversations c ON c.id=m.conversation_id WHERE m.user_id=? AND c.type<>'group')",id));
      counts.put("notifications",count("notification_events","recipient_user_id=? OR actor_user_id=?",id,id));
      var out=new LinkedHashMap<String,Object>();
      out.put("user_id",id);out.put("status",user.get("status"));out.put("due_at",user.get("deactivation_due_at"));
@@ -120,8 +120,19 @@ public class AccountLifecycleService {
        id("erase"),userId,user.get("deactivation_due_at"));
      String record=db.queryForObject("UPDATE account_erasure_records SET status='running',started_at=now(),error_message=NULL WHERE user_id=? RETURNING id",String.class,userId);
      var summary=new LinkedHashMap<String,Object>();
+     groups.eraseMemberships(userId);
+     summary.put("group_messages_anonymized",db.update("""
+       UPDATE messages SET content='已注销用户的消息',type='text',media_asset_id=NULL,media_kind=NULL,duration_seconds=0,
+        recalled_at=coalesce(recalled_at,clock_timestamp()),recalled_by_user_id=?
+       WHERE sender_id=? AND conversation_id IN (SELECT id FROM conversations WHERE type='group')
+       """,userId,userId));
+     db.update("""
+       UPDATE conversations c SET last_message=(SELECT left(m.content,500) FROM messages m WHERE m.conversation_id=c.id ORDER BY m.created_at DESC,m.id DESC LIMIT 1)
+       WHERE c.type='group' AND EXISTS(SELECT 1 FROM messages m WHERE m.conversation_id=c.id AND m.sender_id=?)
+       """,userId);
+     db.update("DELETE FROM chat_change_outbox WHERE actor_user_id=? AND conversation_id IN (SELECT id FROM conversations WHERE type='group')",userId);
      db.queryForList("SELECT user_id FROM user_profiles WHERE user_id=? FOR UPDATE",userId);
-     var assets=db.queryForList("SELECT id,storage_key FROM media_assets WHERE owner_user_id=? OR conversation_id IN (SELECT conversation_id FROM conversation_member_states WHERE user_id=?) ORDER BY id FOR UPDATE",userId,userId);
+     var assets=db.queryForList("SELECT id,storage_key FROM media_assets WHERE owner_user_id=? OR conversation_id IN (SELECT m.conversation_id FROM conversation_member_states m JOIN conversations c ON c.id=m.conversation_id WHERE m.user_id=? AND c.type<>'group') ORDER BY id FOR UPDATE",userId,userId);
      for(var asset:assets){
        if(asset.get("storage_key")!=null)db.update("""
          INSERT INTO storage_deletion_jobs(id,erasure_record_id,storage_key) VALUES(?,?,?)
@@ -130,7 +141,7 @@ public class AccountLifecycleService {
        db.update("DELETE FROM media_reviews WHERE media_id=?",asset.get("id"));
        db.update("UPDATE admin_operation_logs SET details='{}'::jsonb WHERE target_type='media' AND target_id=?",asset.get("id"));
      }
-     summary.put("media_assets_deleted",db.update("DELETE FROM media_assets WHERE owner_user_id=? OR conversation_id IN (SELECT conversation_id FROM conversation_member_states WHERE user_id=?)",userId,userId));
+     summary.put("media_assets_deleted",db.update("DELETE FROM media_assets WHERE owner_user_id=? OR conversation_id IN (SELECT m.conversation_id FROM conversation_member_states m JOIN conversations c ON c.id=m.conversation_id WHERE m.user_id=? AND c.type<>'group')",userId,userId));
      summary.put("realtime_events_deleted",db.update("DELETE FROM realtime_events WHERE recipient_user_id=? OR actor_user_id=?",userId,userId));
      summary.put("realtime_connections_deleted",db.update("DELETE FROM realtime_connections WHERE user_id=?",userId));
      summary.put("realtime_checkpoints_deleted",db.update("DELETE FROM realtime_checkpoints WHERE user_id=?",userId));
@@ -141,12 +152,14 @@ public class AccountLifecycleService {
      summary.put("sessions_deleted",db.update("DELETE FROM refresh_tokens WHERE user_id=?",userId));
      summary.put("blocks_deleted",db.update("DELETE FROM blocks WHERE actor_user_id=? OR target_user_id=?",userId,userId));
      summary.put("friend_requests_deleted",db.update("DELETE FROM friend_requests WHERE requester_id=? OR receiver_id=?",userId,userId));
+     summary.put("explore_actions_deleted",db.update("DELETE FROM explore_actions WHERE actor_user_id=? OR target_user_id=?",userId,userId));
+     summary.put("matches_deleted",db.update("DELETE FROM matches WHERE user_a_id=? OR user_b_id=?",userId,userId));
      summary.put("friendships_deleted",db.update("DELETE FROM friendships WHERE user_a_id=? OR user_b_id=?",userId,userId));
-     summary.put("chat_events_deleted",db.update("DELETE FROM chat_change_outbox WHERE conversation_id IN (SELECT conversation_id FROM conversation_member_states WHERE user_id=?)",userId));
-     summary.put("messages_deleted",db.update("DELETE FROM messages WHERE conversation_id IN (SELECT conversation_id FROM conversation_member_states WHERE user_id=?)",userId));
-     // Currently only friend conversations exist; erase both member states with their private conversation.
-     summary.put("conversations_deleted",db.update("DELETE FROM conversations WHERE id IN (SELECT conversation_id FROM conversation_member_states WHERE user_id=?)",userId));
-     db.update("DELETE FROM auth_rate_windows WHERE bucket_key IN (?,?)","social-request:"+userId,"chat-send:"+userId);
+     summary.put("chat_events_deleted",db.update("DELETE FROM chat_change_outbox WHERE conversation_id IN (SELECT m.conversation_id FROM conversation_member_states m JOIN conversations c ON c.id=m.conversation_id WHERE m.user_id=? AND c.type<>'group')",userId));
+     summary.put("messages_deleted",db.update("DELETE FROM messages WHERE conversation_id IN (SELECT m.conversation_id FROM conversation_member_states m JOIN conversations c ON c.id=m.conversation_id WHERE m.user_id=? AND c.type<>'group')",userId));
+     // Erase private conversations; group member state is retained inactive for sender referential integrity.
+     summary.put("conversations_deleted",db.update("DELETE FROM conversations WHERE id IN (SELECT m.conversation_id FROM conversation_member_states m JOIN conversations c ON c.id=m.conversation_id WHERE m.user_id=? AND c.type<>'group')",userId));
+     db.update("DELETE FROM auth_rate_windows WHERE bucket_key IN (?,?,?)","social-request:"+userId,"chat-send:"+userId,"group-write:"+userId);
      summary.put("verification_codes_deleted",db.update("DELETE FROM auth_verification_codes WHERE phone=?",user.get("phone")));
      db.update("UPDATE auth_security_events SET session_id=NULL,request_id='erased' WHERE user_id=?",userId);
      db.update("UPDATE admin_operation_logs SET details='{}'::jsonb WHERE target_type IN ('user','account') AND target_id=?",userId);

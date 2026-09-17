@@ -1,0 +1,30 @@
+{
+  "checked_at": "2026-09-17T08:17:10.3629529Z",
+  "target": "http://127.0.0.1:8200",
+  "public_base": "https://sssuuil-server.top",
+  "result": "passed",
+  "checks": [
+    "ordinary_like",
+    "mutual_match",
+    "idempotency",
+    "super_like_retired",
+    "matched_chat",
+    "group_create",
+    "configured_share_domain",
+    "public_preview",
+    "invite_html",
+    "share_member_permission",
+    "link_manual_join",
+    "approve",
+    "invite",
+    "three_member_fanout",
+    "read",
+    "admin_role",
+    "transfer_owner",
+    "leave_revokes_chat",
+    "remove_revokes_chat",
+    "dissolve_revokes_link",
+    "logout"
+  ],
+  "note": "Local Java HTTP only; synthetic accounts. Public DNS/TLS/routing and platform sharing are not verified by this smoke. No legacy writes, no forced erasure."
+}

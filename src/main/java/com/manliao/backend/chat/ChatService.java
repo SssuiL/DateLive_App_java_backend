@@ -11,31 +11,31 @@ import com.manliao.backend.notifications.ChatNotifications;
 @Service
 public class ChatService {
  private static final String CONVERSATION_COLUMNS="""
-  c.id,NULL::text AS group_id,c.type,c.title,s.unread_count,s.pinned,s.muted,
+  c.id,c.group_id,c.type,c.title,s.unread_count,s.pinned,s.muted,
   (SELECT CASE WHEN lm.recalled_at IS NULL THEN left(lm.content,500) ELSE '消息已撤回' END FROM messages lm
    JOIN message_receipts lr ON lr.message_id=lm.id AND lr.user_id=s.user_id AND lr.hidden_at IS NULL
    WHERE lm.conversation_id=c.id ORDER BY lm.created_at DESC,lm.id DESC LIMIT 1) AS last_message,c.last_active_at,c.expires_at,
-  (SELECT jsonb_agg(m.user_id ORDER BY m.user_id) FROM conversation_member_states m WHERE m.conversation_id=c.id) AS participant_ids
+  (SELECT jsonb_agg(m.user_id ORDER BY m.user_id) FROM conversation_member_states m WHERE m.conversation_id=c.id AND m.active) AS participant_ids
   """;
  private static final String MESSAGE_COLUMNS="""
   m.id,m.conversation_id,m.sender_id,m.client_message_id,m.reply_to_message_id,m.type,CASE WHEN m.recalled_at IS NULL THEN m.content ELSE '消息已撤回' END AS content,m.created_at,
   CASE WHEN m.recalled_at IS NULL AND EXISTS(SELECT 1 FROM media_assets a WHERE a.id=m.media_asset_id AND a.status='approved' AND a.storage_key IS NOT NULL) THEN m.media_asset_id ELSE NULL END AS media_asset_id,
   CASE WHEN m.recalled_at IS NULL AND EXISTS(SELECT 1 FROM media_assets a WHERE a.id=m.media_asset_id AND a.status='approved' AND a.storage_key IS NOT NULL) THEN m.media_kind ELSE NULL END AS media_kind,CASE WHEN m.recalled_at IS NULL THEN m.duration_seconds ELSE 0 END AS duration_seconds,
   m.recalled_at,m.recalled_by_user_id,(m.recalled_at IS NOT NULL) AS is_recalled,
-  CASE WHEN r.id IS NULL OR reply_visibility.hidden_at IS NOT NULL THEN NULL ELSE jsonb_build_object('id',r.id,'sender_id',r.sender_id,'type',r.type,'content',CASE WHEN r.recalled_at IS NULL THEN r.content ELSE '原消息已撤回' END,'recalled',r.recalled_at IS NOT NULL) END AS reply_preview,
+  CASE WHEN r.id IS NULL OR reply_visibility.message_id IS NULL OR reply_visibility.hidden_at IS NOT NULL THEN NULL ELSE jsonb_build_object('id',r.id,'sender_id',r.sender_id,'type',r.type,'content',CASE WHEN r.recalled_at IS NULL THEN r.content ELSE '原消息已撤回' END,'recalled',r.recalled_at IS NOT NULL) END AS reply_preview,
   COALESCE((SELECT jsonb_agg(p.user_id ORDER BY p.user_id) FROM message_receipts p WHERE p.message_id=m.id AND p.read_at IS NOT NULL),'[]'::jsonb) AS read_by,
   COALESCE((SELECT jsonb_agg(p.user_id ORDER BY p.user_id) FROM message_receipts p WHERE p.message_id=m.id AND p.delivered_at IS NOT NULL),'[]'::jsonb) AS delivered_to_user_ids
   """;
  private static final String MESSAGE_FROM=" FROM messages m JOIN message_receipts visibility ON visibility.message_id=m.id AND visibility.user_id=? LEFT JOIN messages r ON r.id=m.reply_to_message_id LEFT JOIN message_receipts reply_visibility ON reply_visibility.message_id=r.id AND reply_visibility.user_id=visibility.user_id ";
  private static final String LIST_FROM="""
   FROM conversations c JOIN conversation_member_states s ON s.conversation_id=c.id
-  WHERE s.user_id=? AND c.type='friend'
+  WHERE s.user_id=? AND s.active AND ((c.type='friend'
    AND EXISTS(SELECT 1 FROM friendships f WHERE f.conversation_id=c.id AND (f.user_a_id=s.user_id OR f.user_b_id=s.user_id))
    AND (SELECT count(*) FROM conversation_member_states m WHERE m.conversation_id=c.id)=2
    AND NOT EXISTS(SELECT 1 FROM conversation_member_states m JOIN users u ON u.id=m.user_id
      WHERE m.conversation_id=c.id AND m.user_id<>s.user_id AND u.status<>'active')
    AND NOT EXISTS(SELECT 1 FROM blocks b JOIN conversation_member_states m ON m.conversation_id=c.id AND m.user_id<>s.user_id
-     WHERE (b.actor_user_id=s.user_id AND b.target_user_id=m.user_id) OR (b.target_user_id=s.user_id AND b.actor_user_id=m.user_id))
+     WHERE (b.actor_user_id=s.user_id AND b.target_user_id=m.user_id) OR (b.target_user_id=s.user_id AND b.actor_user_id=m.user_id))) OR (c.type='group' AND EXISTS(SELECT 1 FROM groups g WHERE g.id=c.group_id AND g.dissolved_at IS NULL)))
   """;
  private final JdbcTemplate db;private final TransactionTemplate tx,readTx;
  private final DatabaseRows rows;private final ObjectMapper json;private final ChatCursor cursors;private final ChatNotifications notifications;
@@ -94,7 +94,7 @@ public class ChatService {
   if(key!=null&&key.length()<8)throw new ApiError(400,"COMMON_VALIDATION_ERROR","client_message_id 格式无效",Map.of("field","client_message_id"));
   return tx.execute(status->{
    String peer=lock(caller,id,true);
-   if(db.queryForObject("SELECT count(*) FROM friendships WHERE conversation_id=? AND (user_a_id=? OR user_b_id=?)",Integer.class,id,caller.userId(),caller.userId())==0)
+   if(!isGroup(id)&&db.queryForObject("SELECT count(*) FROM friendships WHERE conversation_id=? AND (user_a_id=? OR user_b_id=?)",Integer.class,id,caller.userId(),caller.userId())==0)
     throw new ApiError(403,"CONVERSATION_ACCESS_FORBIDDEN","你们已不是好友，不能继续发送消息");
    if(key!=null){
     var existing=db.queryForList("SELECT id,content,reply_to_message_id,type,media_asset_id,media_kind FROM messages WHERE conversation_id=? AND sender_id=? AND client_message_id=?",id,caller.userId(),key);
@@ -114,13 +114,16 @@ public class ChatService {
    var created=db.queryForMap("INSERT INTO messages(id,conversation_id,sender_id,client_message_id,reply_to_message_id,content,type,media_asset_id,media_kind,duration_seconds) VALUES(?,?,?,?,?,?,?,?,?,?) RETURNING created_at",
      message,id,caller.userId(),key,input.reply_to_message_id(),input.content(),type,input.media_asset_id(),kind,duration);
    if(!type.equals("text"))db.update("UPDATE media_assets SET message_id=? WHERE id=?",message,input.media_asset_id());
-   db.update("INSERT INTO message_receipts(message_id,conversation_id,user_id,read_at) VALUES(?,?,?,clock_timestamp()),(?,?,?,NULL)",
-     message,id,caller.userId(),message,id,peer);
+   db.update("""
+    INSERT INTO message_receipts(message_id,conversation_id,user_id,read_at)
+    SELECT ?,m.conversation_id,m.user_id,CASE WHEN m.user_id=? THEN clock_timestamp() ELSE NULL END
+    FROM conversation_member_states m JOIN users u ON u.id=m.user_id WHERE m.conversation_id=? AND m.active AND u.status IN ('active','deactivation_pending')
+    """,message,caller.userId(),id);
    String preview=input.content().substring(0,input.content().offsetByCodePoints(0,Math.min(500,input.content().codePointCount(0,input.content().length()))));
    db.update("UPDATE conversations SET last_message=?,last_active_at=? WHERE id=?",preview,created.get("created_at"),id);
-   db.update("UPDATE conversation_member_states SET unread_count=unread_count+1,updated_at=clock_timestamp() WHERE conversation_id=? AND user_id=?",id,peer);
+   db.update("UPDATE conversation_member_states SET unread_count=unread_count+1,updated_at=clock_timestamp() WHERE conversation_id=? AND user_id<>? AND active AND EXISTS(SELECT 1 FROM message_receipts r WHERE r.message_id=? AND r.user_id=conversation_member_states.user_id)",id,caller.userId(),message);
    db.update("INSERT INTO chat_change_outbox(conversation_id,actor_user_id,message_id,event_type) VALUES(?,?,?,'message.created')",id,caller.userId(),message);
-   notifications.created(message,id,caller.userId(),peer);
+   for(String recipient:db.queryForList("SELECT user_id FROM message_receipts WHERE message_id=? AND user_id<>?",String.class,message,caller.userId()))notifications.created(message,id,caller.userId(),recipient);
    return message(message,caller.userId());
   });
  }
@@ -257,7 +260,7 @@ public class ChatService {
 
  public void lockMediaUpload(Principal caller,String conversation){
   lock(caller,conversation,true);
-  if(db.queryForObject("SELECT count(*) FROM friendships WHERE conversation_id=?",Integer.class,conversation)==0)
+  if(!isGroup(conversation)&&db.queryForObject("SELECT count(*) FROM friendships WHERE conversation_id=?",Integer.class,conversation)==0)
    throw new ApiError(403,"CONVERSATION_ACCESS_FORBIDDEN","已不是好友，不能上传聊天图片");
  }
  private int validateMedia(String owner,String conversation,String id,String type,String kind){
@@ -276,23 +279,29 @@ public class ChatService {
   return Set.of("voice","video").contains(type)?Math.min(60,(millis+999)/1000):0;
  }
  private String lock(Principal caller,String id,boolean sending){
-  var members=authorize(caller.userId(),id);
+  var members=authorize(caller.userId(),id);boolean group=isGroup(id);
   // Same order as social writes: users, conversation, member states, messages/receipts/outbox.
   for(String member:members){
    var state=db.queryForList("SELECT status FROM users WHERE id=? FOR UPDATE",member);
-   if(state.isEmpty()||(sending&&!state.getFirst().get("status").equals("active")))throw missing();
+   if(state.isEmpty()||(sending&&(!group||member.equals(caller.userId()))&&!state.getFirst().get("status").equals("active")))throw missing();
   }
   if(db.queryForList("SELECT id FROM conversations WHERE id=? FOR UPDATE",id).isEmpty())throw missing();
   members=authorize(caller.userId(),id);
   if(db.queryForObject("SELECT count(*) FROM refresh_tokens WHERE user_id=? AND id=? AND revoked_at IS NULL AND expires_at>now()",Integer.class,caller.userId(),caller.sessionId())==0)
    throw new ApiError(401,"AUTH_INVALID_TOKEN","登录会话已失效");
-  return members.stream().filter(member->!member.equals(caller.userId())).findFirst().orElseThrow(ChatService::missing);
+  return members.stream().filter(member->!member.equals(caller.userId())).findFirst().orElse(null);
  }
+ private boolean isGroup(String id){return db.queryForObject("SELECT count(*) FROM conversations WHERE id=? AND type='group'",Integer.class,id)>0;}
  private List<String> authorize(String viewer,String id){
   var members=db.queryForList("""
    SELECT m.user_id,u.status,c.type FROM conversation_member_states m
-   JOIN users u ON u.id=m.user_id JOIN conversations c ON c.id=m.conversation_id WHERE c.id=? ORDER BY m.user_id
+   JOIN users u ON u.id=m.user_id JOIN conversations c ON c.id=m.conversation_id WHERE c.id=? AND m.active ORDER BY m.user_id
    """,id);
+  if(!members.isEmpty()&&"group".equals(members.getFirst().get("type"))){
+   if(members.stream().noneMatch(m->viewer.equals(m.get("user_id"))&&Set.of("active","deactivation_pending").contains(m.get("status")))||
+     db.queryForObject("SELECT count(*) FROM conversations c JOIN groups g ON g.id=c.group_id WHERE c.id=? AND g.dissolved_at IS NULL",Integer.class,id)==0)throw missing();
+   return members.stream().filter(m->Set.of("active","deactivation_pending").contains(m.get("status"))).map(m->(String)m.get("user_id")).toList();
+  }
   if(members.size()!=2||members.stream().noneMatch(m->viewer.equals(m.get("user_id")))||
     members.stream().anyMatch(m->!m.get("type").equals("friend")||!(viewer.equals(m.get("user_id"))?Set.of("active","deactivation_pending").contains(m.get("status")):m.get("status").equals("active"))))
    throw missing();
@@ -309,7 +318,7 @@ public class ChatService {
   for(var member:db.queryForList("""
    SELECT u.id,u.last_seen_at,EXISTS(SELECT 1 FROM realtime_connections r JOIN refresh_tokens t ON t.id=r.session_id
     WHERE r.user_id=u.id AND r.channel='messages' AND r.expires_at>clock_timestamp() AND t.revoked_at IS NULL AND t.expires_at>clock_timestamp()) AS online
-   FROM users u JOIN conversation_member_states m ON m.user_id=u.id WHERE m.conversation_id=?
+   FROM users u JOIN conversation_member_states m ON m.user_id=u.id WHERE m.conversation_id=? AND m.active
    """,out.get("id"))){
     String user=(String)member.get("id");online.put(user,member.get("online"));
     Object time=member.get("last_seen_at");seen.put(user,time instanceof java.sql.Timestamp t?t.toInstant():null);

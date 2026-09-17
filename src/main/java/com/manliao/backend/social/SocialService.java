@@ -165,6 +165,17 @@ public class SocialService {
   for(String user:List.of(a,b))db.update("INSERT INTO conversation_member_states(id,conversation_id,user_id) VALUES(?,?,?)",id("member"),id,user);
   return id;
  }
+ /** Internal entry point after mutual ordinary likes have been confirmed in the caller's transaction. */
+ public String ensureMatchedFriendship(Principal actor,String target){
+  if(!org.springframework.transaction.support.TransactionSynchronizationManager.isActualTransactionActive())throw new IllegalStateException("Match requires transaction");
+  pair(actor,target,true);notBlocked(actor.userId(),target);String[] ids=sorted(actor.userId(),target);
+  var found=db.queryForList("SELECT conversation_id FROM friendships WHERE user_a_id=? AND user_b_id=?",ids[0],ids[1]);
+  if(!found.isEmpty())return (String)found.getFirst().get("conversation_id");
+  String conversation=conversation(ids[0],ids[1]);
+  db.update("INSERT INTO friendships(id,user_a_id,user_b_id,conversation_id) VALUES(?,?,?,?)",id("friendship"),ids[0],ids[1],conversation);
+  db.update("UPDATE friend_requests SET status='accepted' WHERE status='pending' AND ((requester_id=? AND receiver_id=?) OR (requester_id=? AND receiver_id=?))",ids[0],ids[1],ids[1],ids[0]);
+  return conversation;
+ }
  private void admit(String user){
   int hits=db.queryForObject("""
    INSERT INTO auth_rate_windows(bucket_key,hits,expires_at) VALUES(?,1,now()+interval '60 seconds')

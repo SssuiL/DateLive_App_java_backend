@@ -74,7 +74,7 @@ public class RealtimeStore {
   String actor=chatEvent?(String)row.get("actor_user_id"):null;
   if(chatEvent){
    users.add(actor);
-   users.addAll(db.queryForList("SELECT user_id FROM conversation_member_states WHERE conversation_id=?",String.class,conversation));
+   users.addAll(db.queryForList("SELECT user_id FROM conversation_member_states WHERE active AND conversation_id=?",String.class,conversation));
   }else users.add((String)row.get("user_id"));
   userLocks(users);
   var claimed=db.queryForList("SELECT * FROM "+table+" WHERE id=? AND delivered_at IS NULL AND next_retry_at<=clock_timestamp() FOR UPDATE",id);
@@ -118,12 +118,12 @@ public class RealtimeStore {
     out.put("conversation_id",conversation);if(message!=null)out.put("message_id",message);return out;
    }
    if(type.startsWith("typing.")){
-    if(user.equals(event.get("actor_user_id"))||!friends(conversation))return null;
+    if(user.equals(event.get("actor_user_id"))||!available(conversation))return null;
     out.put("conversation_id",conversation);out.put("user_id",event.get("actor_user_id"));return out;
    }
    out.put("conversation_id",conversation);
    if(type.equals("message.created")||type.equals("message.recalled")||type.equals("message.delivered")){
-    if(type.equals("message.created")&&!friends(conversation))return null;
+    if(type.equals("message.created")&&!available(conversation))return null;
     var current=chat.realtimeMessage(user,conversation,message);
     if(type.equals("message.created")&&Boolean.TRUE.equals(current.get("is_recalled")))return null;
     if(type.equals("message.delivered")){
@@ -141,7 +141,7 @@ public class RealtimeStore {
    return out;
   }catch(ApiError inaccessible){return null;}
  }
- private boolean friends(String conversation){return db.queryForObject("SELECT count(*) FROM friendships WHERE conversation_id=?",Integer.class,conversation)>0;}
+ private boolean available(String conversation){return db.queryForObject("SELECT count(*) FROM conversations c WHERE c.id=? AND (EXISTS(SELECT 1 FROM friendships f WHERE f.conversation_id=c.id) OR EXISTS(SELECT 1 FROM groups g WHERE g.id=c.group_id AND g.dissolved_at IS NULL))",Integer.class,conversation)>0;}
  public long unread(String user){return db.queryForObject("SELECT count(*) FROM notification_events WHERE recipient_user_id=? AND read_at IS NULL",Long.class,user);}
  public void ack(String token,String channel,long eventId){
   var principal=authenticate(token);
@@ -160,9 +160,9 @@ public class RealtimeStore {
  public void typing(String token,String conversation,String type){
   tx.executeWithoutResult(status->{
    serial();var actor=authenticate(token);
-   var users=db.queryForList("SELECT user_id FROM conversation_member_states WHERE conversation_id=? ORDER BY user_id",String.class,conversation);
+   var users=db.queryForList("SELECT user_id FROM conversation_member_states WHERE active AND conversation_id=? ORDER BY user_id",String.class,conversation);
    userLocks(users);authenticate(token);chat.get(actor.userId(),conversation);
-   if(!friends(conversation))throw new ApiError(403,"CONVERSATION_ACCESS_FORBIDDEN","已不是好友");
+   if(!available(conversation))throw new ApiError(403,"CONVERSATION_ACCESS_FORBIDDEN","已不是好友");
    String source="typing:"+UUID.randomUUID();
    for(String user:users)if(!user.equals(actor.userId()))append(user,actor.userId(),"messages",type,source,conversation,null,"{}",java.sql.Timestamp.from(java.time.Instant.now().plusSeconds(5)));
   });
@@ -175,7 +175,7 @@ public class RealtimeStore {
     SELECT u.id,EXISTS(SELECT 1 FROM realtime_connections r JOIN refresh_tokens t ON t.id=r.session_id
       WHERE r.user_id=u.id AND r.channel='messages' AND r.expires_at>clock_timestamp()
        AND t.revoked_at IS NULL AND t.expires_at>clock_timestamp()) AS online
-    FROM users u JOIN conversation_member_states m ON m.user_id=u.id WHERE m.conversation_id=? AND u.id<>? AND u.status='active'
+    FROM users u JOIN conversation_member_states m ON m.user_id=u.id WHERE m.active AND m.conversation_id=? AND u.id<>? AND u.status='active'
     """,id,viewer))out.put((String)row.get("id"),(Boolean)row.get("online"));
   }
   return out;

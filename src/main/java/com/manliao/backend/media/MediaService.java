@@ -91,7 +91,7 @@ public class MediaService {
    out.put("pipeline_version",generic?"java-file-v1":gif?(derivativesReady?"java-gif-v2":"java-gif-v1"):movie?"java-video-v1":audio?"java-voice-v1":derivativesReady?"java-image-v2":"java-image-v1");
    out.put("malware_status","skipped");out.put("latest_security_scan_id",null);out.put("quarantined_at",null);out.put("released_at",null);
    out.put("post_id",null);
-   out.put("moderation_provider",asset.get("reviewed_by")==null?"manual_pending":"manual");out.put("moderation_labels",List.of());
+   out.put("moderation_provider",asset.get("reviewed_by")==null?"manual_pending":"manual");out.put("moderation_labels",Boolean.TRUE.equals(asset.get("portrait_manual_approved"))?List.of("portrait_manual_approved"):List.of());
    return out;
  }
  public Map<String,Object> access(Principal user,String id,String variant) {
