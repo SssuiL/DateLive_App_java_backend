@@ -16,9 +16,9 @@ public class AdminService {
  }
  public Set<String> permissions(String role) {
    return switch(role){
-     case "owner"->Set.of("admin.manage","moderation.read","moderation.write","operation_logs.read","users.erase","billing.read","payments.read","gifts.read","gifts.write");
-     case "auditor"->Set.of("moderation.read","moderation.write","billing.read","payments.read","gifts.read");
-     case "operator"->Set.of("billing.read","payments.read","gifts.read","gifts.write");
+     case "owner"->Set.of("admin.manage","moderation.read","moderation.write","operation_logs.read","users.erase","billing.read","payments.read","host_verification.read","host_verification.write","gifts.read","gifts.write");
+     case "auditor"->Set.of("moderation.read","moderation.write","billing.read","payments.read","host_verification.read","host_verification.write","gifts.read");
+     case "operator"->Set.of("billing.read","payments.read","host_verification.read","host_verification.write","gifts.read","gifts.write");
      default->Set.of();
    };
  }

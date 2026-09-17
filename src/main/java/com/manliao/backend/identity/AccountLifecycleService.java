@@ -12,7 +12,7 @@ public class AccountLifecycleService {
  private final com.manliao.backend.posts.PostErasure posts;private final DatabaseRows rows;private final ObjectMapper json;private final MediaStorage storage;private final com.manliao.backend.groups.GroupService groups;
  // Every users.id FK must have an explicit policy; integration tests compare this with the real schema.
  public static final Set<String> USER_FK_POLICY=Set.of(
-   "payment_orders.user_id","wallets.user_id","wallet_transactions.user_id","coin_accounts.user_id","billing_transactions.initiated_by_user_id","posts.author_id","post_likes.user_id","post_comments.author_id","post_comments.reply_to_user_id","post_comment_likes.user_id","post_media_reactions.user_id","explore_actions.actor_user_id","explore_actions.target_user_id","matches.user_a_id","matches.user_b_id","groups.owner_id","group_members.user_id","group_join_requests.user_id","account_erasure_records.user_id","auth_security_events.user_id","blocks.actor_user_id","blocks.target_user_id",
+   "live_host_qualifications.user_id","live_host_verification_applications.user_id","payment_orders.user_id","wallets.user_id","wallet_transactions.user_id","coin_accounts.user_id","billing_transactions.initiated_by_user_id","posts.author_id","post_likes.user_id","post_comments.author_id","post_comments.reply_to_user_id","post_comment_likes.user_id","post_media_reactions.user_id","explore_actions.actor_user_id","explore_actions.target_user_id","matches.user_a_id","matches.user_b_id","groups.owner_id","group_members.user_id","group_join_requests.user_id","account_erasure_records.user_id","auth_security_events.user_id","blocks.actor_user_id","blocks.target_user_id",
    "media_assets.owner_user_id","notification_events.recipient_user_id","notification_events.actor_user_id",
    "notification_change_outbox.user_id","notification_preferences.user_id","profile_reviews.user_id",
    "push_devices.user_id","refresh_tokens.user_id","user_profiles.user_id",
@@ -64,6 +64,8 @@ public class AccountLifecycleService {
    return tx.execute(status->{
      var user=user(id,true);
      var counts=new LinkedHashMap<String,Object>();
+     counts.put("host_applications",count("live_host_verification_applications","user_id=?",id));
+     counts.put("host_qualifications",count("live_host_qualifications","user_id=?",id));
      counts.put("billing_records_retained",count("wallet_transactions","user_id=?",id)+count("payment_orders","user_id=?",id));
      counts.put("posts",count("posts","author_id=? AND deleted_at IS NULL",id));
      counts.put("post_comments",count("post_comments","author_id=? AND deleted_at IS NULL",id));
@@ -152,6 +154,8 @@ public class AccountLifecycleService {
      for(String table:List.of("notification_change_outbox","notification_preferences","profile_reviews","push_devices","user_profiles"))
        summary.put(table+"_deleted",db.update("DELETE FROM "+table+" WHERE user_id=?",userId));
      db.update("UPDATE refresh_tokens SET replaced_by_token_id=NULL WHERE user_id=?",userId);
+     summary.put("host_qualifications_deleted",db.update("DELETE FROM live_host_qualifications WHERE user_id=?",userId));
+     summary.put("host_applications_deleted",db.update("DELETE FROM live_host_verification_applications WHERE user_id=?",userId));
      summary.put("sessions_deleted",db.update("DELETE FROM refresh_tokens WHERE user_id=?",userId));
      summary.put("blocks_deleted",db.update("DELETE FROM blocks WHERE actor_user_id=? OR target_user_id=?",userId,userId));
      summary.put("friend_requests_deleted",db.update("DELETE FROM friend_requests WHERE requester_id=? OR receiver_id=?",userId,userId));

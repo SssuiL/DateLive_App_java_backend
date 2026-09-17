@@ -2,10 +2,10 @@
   "legacy_commit": "8f63d6dd46162d777867165df963d8c6efc2093b",
   "legacy_http_routes": 276,
   "legacy_websocket_routes": 3,
-  "java_verified_tests": 358,
-  "mapped_routes": 137,
+  "java_verified_tests": 374,
+  "mapped_routes": 143,
   "retired_routes": 1,
-  "unmapped_routes": 141,
+  "unmapped_routes": 135,
   "scope": "Static route cross-reference; excludes Java-only additions and does not claim full semantic or supplier parity.",
   "routes": [
     {
@@ -364,32 +364,32 @@
       "method": "GET",
       "legacy_path": "/admin/host-verification/applications",
       "source": "app/api/admin_host_verification.py:20",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/admin/host-verification/applications",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
       "method": "POST",
       "legacy_path": "/admin/host-verification/applications/{application_id}/resolve",
       "source": "app/api/admin_host_verification.py:30",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/admin/host-verification/applications/{application_id}/resolve",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
       "method": "POST",
       "legacy_path": "/admin/host-verification/qualifications/{user_id}/suspend",
       "source": "app/api/admin_host_verification.py:40",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/admin/host-verification/qualifications/{user_id}/suspend",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
       "method": "POST",
       "legacy_path": "/admin/host-verification/qualifications/{user_id}/restore",
       "source": "app/api/admin_host_verification.py:50",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/admin/host-verification/qualifications/{user_id}/restore",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
@@ -1596,16 +1596,16 @@
       "method": "GET",
       "legacy_path": "/live/host-verification/me",
       "source": "app/api/live_host_verification.py:14",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/live/host-verification/me",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
       "method": "POST",
       "legacy_path": "/live/host-verification/applications",
       "source": "app/api/live_host_verification.py:22",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/live/host-verification/applications",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {

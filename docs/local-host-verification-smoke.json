@@ -1,0 +1,20 @@
+{
+  "checked_at": "2026-09-17T09:47:10.1469973Z",
+  "target": "http://127.0.0.1:8200",
+  "schema": "V23",
+  "result": "passed",
+  "checks": [
+    "initial_state",
+    "submission",
+    "masking",
+    "duplicate_pending",
+    "admin_filter",
+    "approval",
+    "duplicate_review",
+    "suspension",
+    "no_reapplication_bypass",
+    "restore_without_gifts",
+    "official_notification"
+  ],
+  "note": "Synthetic identity and manual local review only; no external identity verification or live streaming exercised."
+}
