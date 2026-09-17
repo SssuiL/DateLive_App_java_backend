@@ -2,6 +2,7 @@ package com.manliao.backend.media;
 import java.io.IOException;
 import jakarta.servlet.MultipartConfigElement;
 import org.springframework.context.annotation.*;
+@org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication
 @Configuration
 public class MediaConfiguration {
  @Bean MultipartConfigElement multipartConfigElement(MediaStorage storage)throws IOException {

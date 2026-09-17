@@ -1,0 +1,2243 @@
+{
+  "legacy_commit": "8f63d6dd46162d777867165df963d8c6efc2093b",
+  "legacy_http_routes": 276,
+  "legacy_websocket_routes": 3,
+  "java_verified_tests": 235,
+  "mapped_routes": 72,
+  "unmapped_routes": 207,
+  "scope": "Static route cross-reference; excludes Java-only additions and does not claim full semantic or supplier parity.",
+  "routes": [
+    {
+      "method": "POST",
+      "legacy_path": "/admin/auth/bootstrap",
+      "source": "app/api/admin.py:55",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/admin/auth/login",
+      "source": "app/api/admin.py:60",
+      "java_path": "/admin/auth/login",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/admin/auth/me",
+      "source": "app/api/admin.py:65",
+      "java_path": "/admin/auth/me",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "PATCH",
+      "legacy_path": "/admin/auth/password",
+      "source": "app/api/admin.py:76",
+      "java_path": "/admin/auth/password",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/admin/admin-users",
+      "source": "app/api/admin.py:85",
+      "java_path": "/admin/admin-users",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "PATCH",
+      "legacy_path": "/admin/admin-users/{admin_id}/status",
+      "source": "app/api/admin.py:96",
+      "java_path": "/admin/admin-users/{admin_id}/status",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "PATCH",
+      "legacy_path": "/admin/admin-users/{admin_id}/password",
+      "source": "app/api/admin.py:106",
+      "java_path": "/admin/admin-users/{admin_id}/password",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/admin/operation-logs",
+      "source": "app/api/admin.py:116",
+      "java_path": "/admin/operation-logs",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/admin/test/friendships",
+      "source": "app/api/admin.py:135",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/admin/users",
+      "source": "app/api/admin.py:144",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "PATCH",
+      "legacy_path": "/admin/users/{user_id}/status",
+      "source": "app/api/admin.py:154",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/admin/users/{user_id}/erasure-preview",
+      "source": "app/api/admin.py:167",
+      "java_path": "/admin/users/{user_id}/erasure-preview",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/admin/reports",
+      "source": "app/api/admin.py:177",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "PATCH",
+      "legacy_path": "/admin/reports/{report_id}/status",
+      "source": "app/api/admin.py:193",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/admin/notifications/events",
+      "source": "app/api/admin.py:203",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/admin/notifications/deliveries",
+      "source": "app/api/admin.py:222",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/admin/notifications/deliveries/retry-due",
+      "source": "app/api/admin.py:245",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/admin/messages/dispatch-jobs",
+      "source": "app/api/admin.py:261",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/admin/messages/dispatch-jobs/{job_id}/retry",
+      "source": "app/api/admin.py:282",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/admin/live/events/dispatch-health",
+      "source": "app/api/admin.py:296",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/admin/live/events/dispatch-jobs",
+      "source": "app/api/admin.py:307",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/admin/live/events/dispatch-jobs/{job_id}/retry",
+      "source": "app/api/admin.py:326",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/admin/live/rooms",
+      "source": "app/api/admin.py:335",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/admin/live/hosts/{host_user_id}/overview",
+      "source": "app/api/admin.py:344",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/admin/live/settlements",
+      "source": "app/api/admin.py:354",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/admin/live/settlements/{settlement_id}/approve",
+      "source": "app/api/admin.py:363",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/admin/live/settlements/{settlement_id}/reject",
+      "source": "app/api/admin.py:372",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/admin/live/settlements/{settlement_id}/mark-paid",
+      "source": "app/api/admin.py:382",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/admin/live/rooms/{room_id}/close",
+      "source": "app/api/admin.py:397",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/admin/live/rooms/{room_id}/participants",
+      "source": "app/api/admin.py:407",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/admin/live/rooms/{room_id}/gifts",
+      "source": "app/api/admin.py:416",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/admin/live/rooms/{room_id}/participants/{user_id}/{action}",
+      "source": "app/api/admin.py:425",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/admin/auth-events",
+      "source": "app/api/admin_auth_events.py:15",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/admin/billing/transactions",
+      "source": "app/api/admin_billing.py:19",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/admin/billing/accounts",
+      "source": "app/api/admin_billing.py:41",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/admin/billing/gifts/{gift_id}/refund",
+      "source": "app/api/admin_billing.py:58",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/admin-console",
+      "source": "app/api/admin_console.py:9",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/admin/gift-risk/events",
+      "source": "app/api/admin_gift_risk.py:20",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/admin/gift-risk/events/{event_id}/resolve",
+      "source": "app/api/admin_gift_risk.py:38",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "PATCH",
+      "legacy_path": "/admin/gift-risk/users/{user_id}/age-status",
+      "source": "app/api/admin_gift_risk.py:58",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/admin/live-gifts",
+      "source": "app/api/admin_gifts.py:15",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/admin/live-gifts",
+      "source": "app/api/admin_gifts.py:23",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "PATCH",
+      "legacy_path": "/admin/live-gifts/{gift_id}",
+      "source": "app/api/admin_gifts.py:43",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/admin/live-gifts/{gift_id}/assets/{asset_type}",
+      "source": "app/api/admin_gifts.py:64",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/admin/host-verification/applications",
+      "source": "app/api/admin_host_verification.py:20",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/admin/host-verification/applications/{application_id}/resolve",
+      "source": "app/api/admin_host_verification.py:30",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/admin/host-verification/qualifications/{user_id}/suspend",
+      "source": "app/api/admin_host_verification.py:40",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/admin/host-verification/qualifications/{user_id}/restore",
+      "source": "app/api/admin_host_verification.py:50",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/admin/live-moderation/reports/{report_id}/escalate",
+      "source": "app/api/admin_live_moderation.py:25",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/admin/live-moderation/appeals",
+      "source": "app/api/admin_live_moderation.py:34",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/admin/live-moderation/appeals/{appeal_id}/resolve",
+      "source": "app/api/admin_live_moderation.py:48",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/admin/live-moderation/rooms/{room_id}/sample",
+      "source": "app/api/admin_live_moderation.py:58",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/admin/live-moderation/tasks",
+      "source": "app/api/admin_live_moderation.py:67",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/admin/live-moderation/incidents",
+      "source": "app/api/admin_live_moderation.py:80",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/admin/live-moderation/incidents/{incident_id}/resolve",
+      "source": "app/api/admin_live_moderation.py:93",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/admin/live-moderation/tasks/{task_id}/simulate-result",
+      "source": "app/api/admin_live_moderation.py:103",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/admin/live-preflight",
+      "source": "app/api/admin_live_preflight.py:15",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/admin/live-provider-events/callbacks",
+      "source": "app/api/admin_live_provider_events.py:21",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/admin/live-provider-events/transitions",
+      "source": "app/api/admin_live_provider_events.py:41",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/admin/live-provider-events/rooms/{room_id}/simulate",
+      "source": "app/api/admin_live_provider_events.py:60",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/admin/moderation/storage-deletions",
+      "source": "app/api/admin_moderation.py:21",
+      "java_path": "/admin/moderation/storage-deletions",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/admin/moderation/media",
+      "source": "app/api/admin_moderation.py:35",
+      "java_path": "/admin/moderation/media",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/admin/moderation/media/pending",
+      "source": "app/api/admin_moderation.py:59",
+      "java_path": "/admin/moderation/media/pending",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/admin/moderation/media/{media_id}",
+      "source": "app/api/admin_moderation.py:67",
+      "java_path": "/admin/moderation/media/{media_id}",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/admin/moderation/media/{media_id}/preview-url",
+      "source": "app/api/admin_moderation.py:76",
+      "java_path": "/admin/moderation/media/{media_id}/preview-url",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/admin/moderation/media-jobs",
+      "source": "app/api/admin_moderation.py:102",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/admin/moderation/media-jobs/{job_id}/retry",
+      "source": "app/api/admin_moderation.py:116",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/admin/moderation/media-security-scans",
+      "source": "app/api/admin_moderation.py:136",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/admin/moderation/media/{media_id}/approve",
+      "source": "app/api/admin_moderation.py:152",
+      "java_path": "/admin/moderation/media/{media_id}/approve",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/admin/moderation/media/{media_id}/reject",
+      "source": "app/api/admin_moderation.py:162",
+      "java_path": "/admin/moderation/media/{media_id}/reject",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/admin/moderation/reviews",
+      "source": "app/api/admin_moderation.py:172",
+      "java_path": "/admin/moderation/reviews",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/admin/payments/orders",
+      "source": "app/api/admin_payments.py:15",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/admin/payments/callback-events",
+      "source": "app/api/admin_payments.py:35",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/auth/register",
+      "source": "app/api/auth.py:47",
+      "java_path": "/auth/register",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/auth/register/verify",
+      "source": "app/api/auth.py:116",
+      "java_path": "/auth/register/verify",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/auth/login",
+      "source": "app/api/auth.py:151",
+      "java_path": "/auth/login",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/auth/sms/send",
+      "source": "app/api/auth.py:182",
+      "java_path": "/auth/sms/send",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/auth/sms/login",
+      "source": "app/api/auth.py:213",
+      "java_path": "/auth/sms/login",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/auth/password/reset",
+      "source": "app/api/auth.py:244",
+      "java_path": "/auth/password/reset",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/auth/social/providers",
+      "source": "app/api/auth.py:274",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/auth/social/{provider}/login",
+      "source": "app/api/auth.py:279",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/auth/refresh",
+      "source": "app/api/auth.py:301",
+      "java_path": "/auth/refresh",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/auth/logout",
+      "source": "app/api/auth.py:315",
+      "java_path": "/auth/logout",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/auth/sessions",
+      "source": "app/api/auth.py:320",
+      "java_path": "/auth/sessions",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "DELETE",
+      "legacy_path": "/auth/sessions/{session_id}",
+      "source": "app/api/auth.py:329",
+      "java_path": "/auth/sessions/{session_id}",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/auth/sessions/revoke-others",
+      "source": "app/api/auth.py:349",
+      "java_path": "/auth/sessions/revoke-others",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/auth/me",
+      "source": "app/api/auth.py:370",
+      "java_path": "/auth/me",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/auth/me/membership",
+      "source": "app/api/auth.py:375",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/auth/account/deactivate",
+      "source": "app/api/auth.py:380",
+      "java_path": "/auth/account/deactivate",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/auth/account/restore",
+      "source": "app/api/auth.py:385",
+      "java_path": "/auth/account/restore",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/call-settings/me",
+      "source": "app/api/call_settings.py:13",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "PATCH",
+      "legacy_path": "/call-settings/me",
+      "source": "app/api/call_settings.py:18",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/call-settings/users/{user_id}",
+      "source": "app/api/call_settings.py:23",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/calls/",
+      "source": "app/api/calls.py:13",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/calls/",
+      "source": "app/api/calls.py:18",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/calls/{call_id}",
+      "source": "app/api/calls.py:23",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/calls/{call_id}/end",
+      "source": "app/api/calls.py:28",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/client/android-release",
+      "source": "app/api/client_release.py:10",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/conversations/",
+      "source": "app/api/conversations.py:29",
+      "java_path": "/conversations/",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/conversations/page",
+      "source": "app/api/conversations.py:34",
+      "java_path": "/conversations/page",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/conversations/{conversation_id}",
+      "source": "app/api/conversations.py:49",
+      "java_path": "/conversations/{conversation_id}",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/conversations/{conversation_id}/messages",
+      "source": "app/api/conversations.py:54",
+      "java_path": "/conversations/{conversation_id}/messages",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/conversations/{conversation_id}/messages/page",
+      "source": "app/api/conversations.py:59",
+      "java_path": "/conversations/{conversation_id}/messages/page",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/conversations/{conversation_id}/messages",
+      "source": "app/api/conversations.py:76",
+      "java_path": "/conversations/{conversation_id}/messages",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/conversations/{conversation_id}/messages/{message_id}/recall",
+      "source": "app/api/conversations.py:101",
+      "java_path": "/conversations/{conversation_id}/messages/{message_id}/recall",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/conversations/{conversation_id}/messages/search",
+      "source": "app/api/conversations.py:130",
+      "java_path": "/conversations/{conversation_id}/messages/search",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "DELETE",
+      "legacy_path": "/conversations/{conversation_id}/messages/{message_id}",
+      "source": "app/api/conversations.py:151",
+      "java_path": "/conversations/{conversation_id}/messages/{message_id}",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "DELETE",
+      "legacy_path": "/conversations/{conversation_id}/messages",
+      "source": "app/api/conversations.py:156",
+      "java_path": "/conversations/{conversation_id}/messages",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/conversations/{conversation_id}/read",
+      "source": "app/api/conversations.py:161",
+      "java_path": "/conversations/{conversation_id}/read",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "PATCH",
+      "legacy_path": "/conversations/{conversation_id}/settings",
+      "source": "app/api/conversations.py:179",
+      "java_path": "/conversations/{conversation_id}/settings",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/explore/candidates",
+      "source": "app/api/explore.py:13",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/explore/liked-profiles",
+      "source": "app/api/explore.py:18",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/explore/exposures/{target_user_id}",
+      "source": "app/api/explore.py:23",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/explore/likes/{target_user_id}",
+      "source": "app/api/explore.py:28",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/explore/super-likes/{target_user_id}",
+      "source": "app/api/explore.py:33",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/explore/skips/{target_user_id}",
+      "source": "app/api/explore.py:38",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/explore/undo",
+      "source": "app/api/explore.py:43",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/explore/blocks/{target_user_id}",
+      "source": "app/api/explore.py:48",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/friends/requests",
+      "source": "app/api/friends.py:13",
+      "java_path": "/friends/requests",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/friends/requests",
+      "source": "app/api/friends.py:18",
+      "java_path": "/friends/requests",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/friends/requests/{request_id}/accept",
+      "source": "app/api/friends.py:23",
+      "java_path": "/friends/requests/{request_id}/accept",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/friends/requests/{request_id}/reject",
+      "source": "app/api/friends.py:28",
+      "java_path": "/friends/requests/{request_id}/reject",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/friends/",
+      "source": "app/api/friends.py:33",
+      "java_path": "/friends/",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "DELETE",
+      "legacy_path": "/friends/{target_user_id}",
+      "source": "app/api/friends.py:38",
+      "java_path": "/friends/{target_user_id}",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/groups/",
+      "source": "app/api/groups.py:23",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/groups/",
+      "source": "app/api/groups.py:28",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/groups/search",
+      "source": "app/api/groups.py:33",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/groups/{group_id}",
+      "source": "app/api/groups.py:38",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/groups/{group_id}/invite",
+      "source": "app/api/groups.py:43",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/groups/{group_id}/join-requests",
+      "source": "app/api/groups.py:48",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/groups/join-by-link-code",
+      "source": "app/api/groups.py:53",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/groups/{group_id}/members",
+      "source": "app/api/groups.py:61",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/groups/{group_id}/join-requests",
+      "source": "app/api/groups.py:66",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/groups/{group_id}/join-requests/{request_id}/approve",
+      "source": "app/api/groups.py:71",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/groups/{group_id}/join-requests/{request_id}/reject",
+      "source": "app/api/groups.py:76",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "PATCH",
+      "legacy_path": "/groups/{group_id}/members/{user_id}/role",
+      "source": "app/api/groups.py:81",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "DELETE",
+      "legacy_path": "/groups/{group_id}/members/{user_id}",
+      "source": "app/api/groups.py:86",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/groups/{group_id}/leave",
+      "source": "app/api/groups.py:91",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/groups/{group_id}/transfer-owner",
+      "source": "app/api/groups.py:96",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "DELETE",
+      "legacy_path": "/groups/{group_id}",
+      "source": "app/api/groups.py:101",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/health",
+      "source": "app/api/health.py:22",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/health/ready",
+      "source": "app/api/health.py:27",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/health/capabilities",
+      "source": "app/api/health.py:64",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/health/outbox",
+      "source": "app/api/health.py:69",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/health/realtime",
+      "source": "app/api/health.py:76",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/health/performance",
+      "source": "app/api/health.py:85",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/live/categories",
+      "source": "app/api/live.py:22",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/live/gifts",
+      "source": "app/api/live.py:27",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/live/gift-safety/me",
+      "source": "app/api/live.py:32",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "PATCH",
+      "legacy_path": "/live/gift-safety/me",
+      "source": "app/api/live.py:42",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/live/following",
+      "source": "app/api/live.py:53",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/live/hosts/me/access",
+      "source": "app/api/live.py:58",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/live/hosts/me/overview",
+      "source": "app/api/live.py:66",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/live/income/summary",
+      "source": "app/api/live.py:81",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/live/income/records",
+      "source": "app/api/live.py:89",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/live/settlements",
+      "source": "app/api/live.py:98",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/live/settlements",
+      "source": "app/api/live.py:106",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/live/hosts/{host_user_id}/follow",
+      "source": "app/api/live.py:114",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/live/hosts/{host_user_id}/follow",
+      "source": "app/api/live.py:119",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "DELETE",
+      "legacy_path": "/live/hosts/{host_user_id}/follow",
+      "source": "app/api/live.py:124",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/live/schedules",
+      "source": "app/api/live.py:129",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/live/schedules",
+      "source": "app/api/live.py:139",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/live/schedules/{schedule_id}/reservations",
+      "source": "app/api/live.py:144",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "DELETE",
+      "legacy_path": "/live/schedules/{schedule_id}/reservations/me",
+      "source": "app/api/live.py:149",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/live/schedules/{schedule_id}/start",
+      "source": "app/api/live.py:154",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/live/schedules/{schedule_id}/cancel",
+      "source": "app/api/live.py:167",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/live/rooms",
+      "source": "app/api/live.py:172",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/live/rooms/{room_id}/start",
+      "source": "app/api/live.py:177",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/live/rooms/{room_id}/stream-session",
+      "source": "app/api/live.py:190",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/live/rooms/{room_id}/end",
+      "source": "app/api/live.py:195",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/live/rooms",
+      "source": "app/api/live.py:200",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/live/rooms/{room_id}",
+      "source": "app/api/live.py:205",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/live/rooms/{room_id}/participants/me",
+      "source": "app/api/live.py:210",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "DELETE",
+      "legacy_path": "/live/rooms/{room_id}/participants/me",
+      "source": "app/api/live.py:215",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/live/rooms/{room_id}/messages",
+      "source": "app/api/live.py:231",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/live/rooms/{room_id}/messages",
+      "source": "app/api/live.py:236",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/live/rooms/{room_id}/likes",
+      "source": "app/api/live.py:266",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/live/rooms/{room_id}/gifts",
+      "source": "app/api/live.py:283",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/live/rooms/{room_id}/gift-ranking",
+      "source": "app/api/live.py:288",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/live/rooms/{room_id}/gift-confirmations",
+      "source": "app/api/live.py:301",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/live/rooms/{room_id}/gifts",
+      "source": "app/api/live.py:313",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/live/rooms/{room_id}/watch-events",
+      "source": "app/api/live.py:336",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/live/rooms/{room_id}/cohost-requests",
+      "source": "app/api/live_cohost.py:26",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/live/rooms/{room_id}/cohost-requests/me",
+      "source": "app/api/live_cohost.py:38",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "DELETE",
+      "legacy_path": "/live/rooms/{room_id}/cohost-requests/me",
+      "source": "app/api/live_cohost.py:47",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/live/rooms/{room_id}/cohost-requests",
+      "source": "app/api/live_cohost.py:58",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/live/rooms/{room_id}/cohost-requests/{request_id}/accept",
+      "source": "app/api/live_cohost.py:71",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/live/rooms/{room_id}/cohost-requests/{request_id}/reject",
+      "source": "app/api/live_cohost.py:86",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/live/rooms/{room_id}/cohost/end",
+      "source": "app/api/live_cohost.py:98",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/live/rooms/{room_id}/governance",
+      "source": "app/api/live_governance.py:27",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "PATCH",
+      "legacy_path": "/live/rooms/{room_id}/governance",
+      "source": "app/api/live_governance.py:32",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/live/rooms/{room_id}/participants",
+      "source": "app/api/live_governance.py:39",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/live/rooms/{room_id}/participants/{user_id}/manager",
+      "source": "app/api/live_governance.py:44",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "DELETE",
+      "legacy_path": "/live/rooms/{room_id}/participants/{user_id}/manager",
+      "source": "app/api/live_governance.py:51",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/live/rooms/{room_id}/participants/{user_id}/mute",
+      "source": "app/api/live_governance.py:58",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "DELETE",
+      "legacy_path": "/live/rooms/{room_id}/participants/{user_id}/mute",
+      "source": "app/api/live_governance.py:65",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/live/rooms/{room_id}/participants/{user_id}/kick",
+      "source": "app/api/live_governance.py:72",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/live/rooms/{room_id}/governance-logs",
+      "source": "app/api/live_governance.py:80",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/live/host-verification/me",
+      "source": "app/api/live_host_verification.py:14",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/live/host-verification/applications",
+      "source": "app/api/live_host_verification.py:22",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/live/network-probe",
+      "source": "app/api/live_preflight.py:15",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/live/rooms/{room_id}/preflight",
+      "source": "app/api/live_preflight.py:26",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/live/schedules/{schedule_id}/preflight",
+      "source": "app/api/live_preflight.py:36",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/callbacks/live/{provider_name}",
+      "source": "app/api/live_provider_callbacks.py:47",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/live/rooms/{room_id}/provider-events/simulate",
+      "source": "app/api/live_provider_callbacks.py:91",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/live/rooms/{room_id}/stream/recover",
+      "source": "app/api/live_provider_callbacks.py:116",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/live/rooms/{room_id}/stream-credentials/push",
+      "source": "app/api/live_stream_credentials.py:20",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/live/rooms/{room_id}/stream-credentials/play",
+      "source": "app/api/live_stream_credentials.py:32",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/live/rooms/{room_id}/stream-credentials/me",
+      "source": "app/api/live_stream_credentials.py:44",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "DELETE",
+      "legacy_path": "/live/rooms/{room_id}/stream-credentials/{credential_id}",
+      "source": "app/api/live_stream_credentials.py:56",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/live/stream-credentials/{credential_id}/validate",
+      "source": "app/api/live_stream_credentials.py:71",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/matches/",
+      "source": "app/api/matches.py:13",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/matches/{match_id}",
+      "source": "app/api/matches.py:18",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/media/upload",
+      "source": "app/api/media.py:14",
+      "java_path": "/media/upload",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/media/me",
+      "source": "app/api/media.py:34",
+      "java_path": "/media/me",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/media/{media_id}/access-url",
+      "source": "app/api/media.py:46",
+      "java_path": "/media/{media_id}/access-url",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/media/access/{token}",
+      "source": "app/api/media.py:56",
+      "java_path": "/media/access/{token}",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "DELETE",
+      "legacy_path": "/media/{media_id}",
+      "source": "app/api/media.py:69",
+      "java_path": "/media/{media_id}",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/notifications/devices",
+      "source": "app/api/notifications.py:22",
+      "java_path": "/notifications/devices",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/notifications/devices",
+      "source": "app/api/notifications.py:31",
+      "java_path": "/notifications/devices",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "DELETE",
+      "legacy_path": "/notifications/devices/{device_id}",
+      "source": "app/api/notifications.py:36",
+      "java_path": "/notifications/devices/{device_id}",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/notifications/preferences",
+      "source": "app/api/notifications.py:41",
+      "java_path": "/notifications/preferences",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "PATCH",
+      "legacy_path": "/notifications/preferences",
+      "source": "app/api/notifications.py:46",
+      "java_path": "/notifications/preferences",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/notifications/events",
+      "source": "app/api/notifications.py:55",
+      "java_path": "/notifications/events",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/notifications/unread-count",
+      "source": "app/api/notifications.py:60",
+      "java_path": "/notifications/unread-count",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/notifications/events/{event_id}/read",
+      "source": "app/api/notifications.py:65",
+      "java_path": "/notifications/events/{event_id}/read",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/notifications/events/read-all",
+      "source": "app/api/notifications.py:70",
+      "java_path": "/notifications/events/read-all",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/callbacks/payments/{provider_name}",
+      "source": "app/api/payment_callbacks.py:18",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/payments/packages",
+      "source": "app/api/payments.py:20",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/payments/orders",
+      "source": "app/api/payments.py:25",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/payments/orders",
+      "source": "app/api/payments.py:34",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/payments/orders/{order_id}",
+      "source": "app/api/payments.py:42",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/payments/orders/{order_id}/mock/complete",
+      "source": "app/api/payments.py:54",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/posts/",
+      "source": "app/api/posts.py:23",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/posts/feed",
+      "source": "app/api/posts.py:28",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/posts/feed/page",
+      "source": "app/api/posts.py:33",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/posts/user/{user_id}",
+      "source": "app/api/posts.py:43",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/posts/{post_id}",
+      "source": "app/api/posts.py:48",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/posts/{post_id}/likes",
+      "source": "app/api/posts.py:53",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "DELETE",
+      "legacy_path": "/posts/{post_id}/likes",
+      "source": "app/api/posts.py:58",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/posts/{post_id}/media/{media_asset_id}/reactions",
+      "source": "app/api/posts.py:66",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "PUT",
+      "legacy_path": "/posts/{post_id}/media/{media_asset_id}/reaction",
+      "source": "app/api/posts.py:79",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "DELETE",
+      "legacy_path": "/posts/{post_id}/media/{media_asset_id}/reaction",
+      "source": "app/api/posts.py:99",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/posts/{post_id}/media/{media_asset_id}/download",
+      "source": "app/api/posts.py:112",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/posts/{post_id}/comments",
+      "source": "app/api/posts.py:122",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/posts/{post_id}/comments/page",
+      "source": "app/api/posts.py:127",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/posts/{post_id}/comments/{comment_id}/replies",
+      "source": "app/api/posts.py:146",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/posts/{post_id}/comments",
+      "source": "app/api/posts.py:165",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/posts/{post_id}/comments/{comment_id}/likes",
+      "source": "app/api/posts.py:170",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "DELETE",
+      "legacy_path": "/posts/{post_id}/comments/{comment_id}/likes",
+      "source": "app/api/posts.py:175",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "DELETE",
+      "legacy_path": "/posts/{post_id}/comments/{comment_id}",
+      "source": "app/api/posts.py:180",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "DELETE",
+      "legacy_path": "/posts/{post_id}",
+      "source": "app/api/posts.py:186",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/profiles/me",
+      "source": "app/api/profiles.py:14",
+      "java_path": "/profiles/me",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "PATCH",
+      "legacy_path": "/profiles/me",
+      "source": "app/api/profiles.py:21",
+      "java_path": "/profiles/me",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/profiles/{user_id}",
+      "source": "app/api/profiles.py:26",
+      "java_path": "/profiles/{user_id}",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/safety/reports",
+      "source": "app/api/safety.py:18",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/safety/live-moderation/incidents/{incident_id}/appeals",
+      "source": "app/api/safety.py:26",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/safety/live-moderation/appeals/me",
+      "source": "app/api/safety.py:36",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/safety/live-moderation/incidents/me",
+      "source": "app/api/safety.py:44",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/safety/blocks",
+      "source": "app/api/safety.py:52",
+      "java_path": "/safety/blocks",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/safety/blocks",
+      "source": "app/api/safety.py:57",
+      "java_path": "/safety/blocks",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "DELETE",
+      "legacy_path": "/safety/blocks/{block_id}",
+      "source": "app/api/safety.py:62",
+      "java_path": "/safety/blocks/{block_id}",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/storage/{object_key:path}",
+      "source": "app/api/storage_assets.py:7",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/uploads/{object_key:path}",
+      "source": "app/api/storage_assets.py:7",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/support/feedback",
+      "source": "app/api/support.py:14",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/support/feedback/me",
+      "source": "app/api/support.py:19",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/admin/support/feedback",
+      "source": "app/api/support.py:25",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "PATCH",
+      "legacy_path": "/admin/support/feedback/{ticket_id}",
+      "source": "app/api/support.py:32",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/users/",
+      "source": "app/api/users.py:14",
+      "java_path": "/users/",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/users/{user_id}",
+      "source": "app/api/users.py:24",
+      "java_path": "/users/{user_id}",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/wallet/me",
+      "source": "app/api/wallet.py:17",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "POST",
+      "legacy_path": "/wallet/recharge/dev",
+      "source": "app/api/wallet.py:22",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/wallet/transactions",
+      "source": "app/api/wallet.py:27",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/wallet/ledger",
+      "source": "app/api/wallet.py:32",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/wallet/summary",
+      "source": "app/api/wallet.py:47",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "GET",
+      "legacy_path": "/wallet/bills",
+      "source": "app/api/wallet.py:62",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "WEBSOCKET",
+      "legacy_path": "/ws/notifications",
+      "source": "app/api/websocket_messages.py:29",
+      "java_path": "/ws/notifications",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "WEBSOCKET",
+      "legacy_path": "/ws/live/{room_id}",
+      "source": "app/api/websocket_messages.py:86",
+      "java_path": null,
+      "status": "not_mapped",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    },
+    {
+      "method": "WEBSOCKET",
+      "legacy_path": "/ws/messages",
+      "source": "app/api/websocket_messages.py:126",
+      "java_path": "/ws/messages",
+      "status": "route_mapped_contract_audit_required",
+      "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
+    }
+  ]
+}

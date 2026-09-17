@@ -3,6 +3,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.jdbc.core.JdbcTemplate;
+@org.springframework.context.annotation.Profile("!media-worker")
 @Configuration
 @EnableScheduling
 public class RateWindowMaintenance {

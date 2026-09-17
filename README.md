@@ -13,7 +13,7 @@ GitHub：[DateLive_App_java_backend](https://github.com/SssuiL/DateLive_App_java
 - 已实现 74 个 HTTP 接口和 2 个 WebSocket 入口：账号、资料、通知、图片、后台审核、注销/恢复、用户搜索、好友和拉黑，以及聊天会话、文本/图片/语音/视频/文件消息和静态贴纸/动态 GIF、引用回复、已读，以及撤回/搜索/个人隐藏和清空。到期清理已实现并在隔离库测试，自动 Worker 已获授权开启，每分钟清理超过 45 天冷静期的注销账号；可用 JAVA_ACCOUNT_ERASURE_ENABLED=false 关闭（本地启动脚本默认开启，使用 -DisableAccountErasure 可关闭）；短信仍为开发模拟。
 - 新增实时消息/通知、多端同步、断线恢复、ACK 送达回执、在线与输入状态；Flutter 协议适配和容量压测尚待完成。
 - 独立 Flyway 账号数据基线、事务审计、密码哈希、数据库会话校验和多实例共享的数据库限流。
-- 232 项测试覆盖真实 PostgreSQL/HTTP/WebSocket、并发、回滚、密码兼容、令牌签名与失效。
+- 235 项测试覆盖真实 PostgreSQL/HTTP/WebSocket、并发、回滚、密码兼容、令牌签名与失效。
 - 本地 API 已启动于 `http://127.0.0.1:8200`；数据库只监听 `127.0.0.1:15433`。
 - 后台页面、MFA、云存储、真实审核/短信供应商、推送投递、第三方登录和其他业务模块仍待迁移。
 
@@ -101,3 +101,11 @@ GitHub：[DateLive_App_java_backend](https://github.com/SssuiL/DateLive_App_java
 新增可选 POST /media/upload?async=true 与仅本人可用的 GET /media/{id}。有界 PostgreSQL 持久化队列支持图片、GIF、语音、视频和普通文件，提供重试、重启恢复与取消/注销清理。默认每分钟检查超过 24 小时且无消息或资料引用的草稿，锁内复查后回收。
 
 完整回归 **232 项通过**，本机 V16 实际重启恢复冒烟通过。累计 **75 个 HTTP + 2 个 WebSocket**。Flutter 尚未切换异步调用；独立 Worker 进程、资源配额、云存储和真实扫描/审核仍待完成。详见 [接口与运行边界](docs/媒体异步与草稿回收迁移说明.md) 和 [本机报告](docs/local-media-jobs-smoke.json)。
+
+## 独立媒体 Worker
+
+本地 start-local.ps1 现在默认启动 API 和无 HTTP 监听的独立媒体 Worker。Worker 单独限制 256 MiB Java 堆、2 个数据库连接；stop-local.ps1 停止两者，stop-media-worker-local.ps1 可只停止 Worker。可用 JAVA_MEDIA_JOBS_WORKER_ENABLED=false 暂停自动启动 Worker，排队数据仍保留。
+
+全量 **235 项测试通过**，独立进程处理、无监听端口及停止 Worker 后 API 仍健康已实际验证：[本机报告](docs/local-media-worker-smoke.json)。堆上限不等于进程总内存或 CPU 硬配额；任务租约、OS 资源配额与容量测试仍待完成。
+
+完整旧接口对照见 [全量迁移核对表](docs/全量迁移核对表.json)，由 tools/update-migration-ledger.ps1 更新。映射只证明存在路径，语义契约仍需逐项验收。

@@ -9,6 +9,7 @@ import org.springframework.web.socket.server.HandshakeInterceptor;
 import org.springframework.web.socket.server.standard.ServletServerContainerFactoryBean;
 import org.springframework.web.util.UriComponentsBuilder;
 import com.manliao.backend.identity.AuthService;
+@org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication
 @Configuration
 @EnableWebSocket
 public class RealtimeConfiguration implements WebSocketConfigurer {

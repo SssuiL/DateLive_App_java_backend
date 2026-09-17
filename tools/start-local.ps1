@@ -66,7 +66,7 @@ try {
  Copy-Item -LiteralPath $javaJar -Destination $javaRunJar -Force
  $javaErasureArgument='--app.accounts.worker-enabled='+$(if($DisableAccountErasure){'false'}else{'true'})
  Write-Host ('Account erasure worker enabled: '+(-not $DisableAccountErasure))
- $javaProcess=Start-Process -FilePath $javaRuntime -ArgumentList @('-Xmx256m','-jar',('"'+$javaRunJar+'"'),$javaErasureArgument) -WorkingDirectory $javaProjectRoot -WindowStyle Hidden -PassThru -RedirectStandardOutput (Join-Path $javaRunDir 'api.log') -RedirectStandardError (Join-Path $javaRunDir 'api-error.log')
+ $javaProcess=Start-Process -FilePath $javaRuntime -ArgumentList @('-Xmx256m','-jar',('"'+$javaRunJar+'"'),$javaErasureArgument,'--spring.profiles.active=media-api') -WorkingDirectory $javaProjectRoot -WindowStyle Hidden -PassThru -RedirectStandardOutput (Join-Path $javaRunDir 'api.log') -RedirectStandardError (Join-Path $javaRunDir 'api-error.log')
  [IO.File]::WriteAllText($javaPidFile,[string]$javaProcess.Id)
  $javaReady=$false
  $javaDeadline=[DateTime]::UtcNow.AddSeconds(25)
@@ -80,10 +80,14 @@ try {
  }
  if(-not $javaReady){throw 'Readiness timeout; inspect .tools/run logs'}
  Write-Host 'Java API ready: http://127.0.0.1:8200; stop with tools/stop-local.ps1'
+ if($env:JAVA_MEDIA_JOBS_WORKER_ENABLED -ne 'false'){
+  & (Join-Path $PSScriptRoot 'start-media-worker-local.ps1')
+ }
  $javaStartExit=0
 } finally {
  foreach($entry in $javaPreviousEnv.GetEnumerator()) {
-   [Environment]::SetEnvironmentVariable($entry.Key,$entry.Value,'Process')
+   if($null -eq $entry.Value){Remove-Item -LiteralPath ('Env:'+$entry.Key) -ErrorAction SilentlyContinue}
+   else{[Environment]::SetEnvironmentVariable($entry.Key,$entry.Value,'Process')}
  }
  Pop-Location
 }

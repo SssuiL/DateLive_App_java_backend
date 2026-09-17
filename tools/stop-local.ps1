@@ -1,5 +1,6 @@
 $ErrorActionPreference='Stop'
 $javaProjectRoot=Split-Path $PSScriptRoot -Parent
+& (Join-Path $PSScriptRoot 'stop-media-worker-local.ps1')
 $javaPidFile=Join-Path $javaProjectRoot '.tools/run/api.pid'
 if(-not (Test-Path $javaPidFile)){Write-Host 'No Java API PID recorded.';exit 0}
 $javaRecordedPid=[int](Get-Content $javaPidFile)

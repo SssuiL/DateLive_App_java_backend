@@ -17,6 +17,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.filter.OncePerRequestFilter;
 import com.manliao.backend.common.*;
 
+@org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication
 @Configuration
 public class SecurityConfiguration {
     @Bean

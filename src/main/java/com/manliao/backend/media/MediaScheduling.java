@@ -1,6 +1,7 @@
 package com.manliao.backend.media;
 import org.springframework.context.annotation.*;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
+@org.springframework.scheduling.annotation.EnableScheduling
 @Configuration
 class MediaScheduling {
  @Bean(name="taskScheduler") ThreadPoolTaskScheduler backgroundScheduler(){return scheduler("background-");}

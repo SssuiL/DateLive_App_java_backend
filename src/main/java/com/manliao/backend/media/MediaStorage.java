@@ -29,6 +29,21 @@ public class MediaStorage {
    if(!target.getParent().equals(root) || Files.isSymbolicLink(target)) throw new IOException("Invalid storage path");
    return target;
  }
+ /** Bounded, non-recursive cleanup of processor-owned files abandoned for over a day. */
+ public int cleanupAbandonedTemporaryFiles()throws IOException{
+  Path temporary=tempDirectory();int removed=0;var cutoff=java.time.Instant.now().minusSeconds(86400);
+  try(var entries=Files.list(temporary)){
+   for(Path candidate:entries.limit(1000).toList()){
+    String name=candidate.getFileName().toString();
+    if(!name.matches("(voice-.*\\.m4a|video-.*\\.(mov|mp4|png)|derivative-.*\\.tmp)"))continue;
+    if(!candidate.toAbsolutePath().normalize().getParent().equals(temporary))throw new IOException("Invalid temporary path");
+    if(Files.isRegularFile(candidate,LinkOption.NOFOLLOW_LINKS)&&Files.getLastModifiedTime(candidate,LinkOption.NOFOLLOW_LINKS).toInstant().isBefore(cutoff)){
+     Files.deleteIfExists(candidate);if(++removed>=100)break;
+    }
+   }
+  }
+  return removed;
+ }
  public record Stored(String key,long size,String sha256,int width,int height,int durationMs,String contentType) {}
  public Path tempDirectory() throws IOException {
    checkRoot();Path temp=root.resolve("multipart");Files.createDirectories(temp);
