@@ -1,0 +1,21 @@
+{
+  "checked_at": "2026-09-17T09:36:23.3042270Z",
+  "target": "http://127.0.0.1:8200",
+  "schema": "V22",
+  "result": "passed",
+  "checks": [
+    "default_catalog",
+    "admin_authentication",
+    "create",
+    "duplicate_code",
+    "animation_upload",
+    "resource_version",
+    "checksum",
+    "public_resource",
+    "deactivate",
+    "reactivate",
+    "price_update",
+    "validation"
+  ],
+  "note": "Local catalog and synthetic Lottie resource only. Flutter animation rendering, cloud object storage and gift charging/settlement are separate migration work."
+}

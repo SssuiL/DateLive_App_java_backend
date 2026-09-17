@@ -2,10 +2,10 @@
   "legacy_commit": "8f63d6dd46162d777867165df963d8c6efc2093b",
   "legacy_http_routes": 276,
   "legacy_websocket_routes": 3,
-  "java_verified_tests": 346,
-  "mapped_routes": 132,
+  "java_verified_tests": 358,
+  "mapped_routes": 137,
   "retired_routes": 1,
-  "unmapped_routes": 146,
+  "unmapped_routes": 141,
   "scope": "Static route cross-reference; excludes Java-only additions and does not claim full semantic or supplier parity.",
   "routes": [
     {
@@ -332,32 +332,32 @@
       "method": "GET",
       "legacy_path": "/admin/live-gifts",
       "source": "app/api/admin_gifts.py:15",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/admin/live-gifts",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
       "method": "POST",
       "legacy_path": "/admin/live-gifts",
       "source": "app/api/admin_gifts.py:23",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/admin/live-gifts",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
       "method": "PATCH",
       "legacy_path": "/admin/live-gifts/{gift_id}",
       "source": "app/api/admin_gifts.py:43",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/admin/live-gifts/{gift_id}",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
       "method": "POST",
       "legacy_path": "/admin/live-gifts/{gift_id}/assets/{asset_type}",
       "source": "app/api/admin_gifts.py:64",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/admin/live-gifts/{gift_id}/assets/{asset_type}",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
@@ -1188,8 +1188,8 @@
       "method": "GET",
       "legacy_path": "/live/gifts",
       "source": "app/api/live.py:27",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/live/gifts",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
