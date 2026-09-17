@@ -2,10 +2,10 @@
   "legacy_commit": "8f63d6dd46162d777867165df963d8c6efc2093b",
   "legacy_http_routes": 276,
   "legacy_websocket_routes": 3,
-  "java_verified_tests": 297,
-  "mapped_routes": 116,
+  "java_verified_tests": 317,
+  "mapped_routes": 124,
   "retired_routes": 1,
-  "unmapped_routes": 162,
+  "unmapped_routes": 154,
   "scope": "Static route cross-reference; excludes Java-only additions and does not claim full semantic or supplier parity.",
   "routes": [
     {
@@ -276,16 +276,16 @@
       "method": "GET",
       "legacy_path": "/admin/billing/transactions",
       "source": "app/api/admin_billing.py:19",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/admin/billing/transactions",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
       "method": "GET",
       "legacy_path": "/admin/billing/accounts",
       "source": "app/api/admin_billing.py:41",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/admin/billing/accounts",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
@@ -2172,48 +2172,48 @@
       "method": "GET",
       "legacy_path": "/wallet/me",
       "source": "app/api/wallet.py:17",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/wallet/me",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
       "method": "POST",
       "legacy_path": "/wallet/recharge/dev",
       "source": "app/api/wallet.py:22",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/wallet/recharge/dev",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
       "method": "GET",
       "legacy_path": "/wallet/transactions",
       "source": "app/api/wallet.py:27",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/wallet/transactions",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
       "method": "GET",
       "legacy_path": "/wallet/ledger",
       "source": "app/api/wallet.py:32",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/wallet/ledger",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
       "method": "GET",
       "legacy_path": "/wallet/summary",
       "source": "app/api/wallet.py:47",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/wallet/summary",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
       "method": "GET",
       "legacy_path": "/wallet/bills",
       "source": "app/api/wallet.py:62",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/wallet/bills",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {

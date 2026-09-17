@@ -1,8 +1,8 @@
 {
   "updated_at": "2026-09-17",
   "legacy_commit": "8f63d6dd46162d777867165df963d8c6efc2093b",
-  "scope": "Identity, profiles, notifications, managed media, admin, account lifecycle, social, private text/image/GIF/voice/video/file chat and static stickers; signed variants, image/video thumbnails, image display and legacy image backfill, single ranges; realtime delivery/ACK/replay/multi-device/presence; bounded durable opt-in async media processing and unreferenced draft reclamation; automatic erasure enabled; not complete migration; groups/roles/join rules/group chat/media revocation and account erasure, share links/public invite pages; unlimited ordinary likes/mutual matches/undo; super-like retired by user; posts/feed/comments/replies/likes/media reactions/save preference, publishing moderation and post-aware erasure",
-  "verified_tests": 297,
+  "scope": "Identity, profiles, notifications, managed media, admin, account lifecycle, social, private text/image/GIF/voice/video/file chat and static stickers; signed variants, image/video thumbnails, image display and legacy image backfill, single ranges; realtime delivery/ACK/replay/multi-device/presence; bounded durable opt-in async media processing and unreferenced draft reclamation; automatic erasure enabled; not complete migration; groups/roles/join rules/group chat/media revocation and account erasure, share links/public invite pages; unlimited ordinary likes/mutual matches/undo; super-like retired by user; posts/feed/comments/replies/likes/media reactions/save preference, publishing moderation and post-aware erasure; wallet/balanced immutable ledger/bills/summary/admin billing reads with disabled-by-default simulated recharge",
+  "verified_tests": 317,
   "routes": [
     {
       "method": "POST",
@@ -759,10 +759,58 @@
       "path": "/posts/{id}/media/{asset}/download",
       "status": "implemented_and_integration_tested",
       "production_ready": false
+    },
+    {
+      "method": "GET",
+      "path": "/wallet/me",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "POST",
+      "path": "/wallet/recharge/dev",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "GET",
+      "path": "/wallet/transactions",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "GET",
+      "path": "/wallet/ledger",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "GET",
+      "path": "/wallet/bills",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "GET",
+      "path": "/wallet/summary",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "GET",
+      "path": "/admin/billing/transactions",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
+    },
+    {
+      "method": "GET",
+      "path": "/admin/billing/accounts",
+      "status": "implemented_and_integration_tested",
+      "production_ready": false
     }
   ],
-  "remaining": "wallet/payment/gifts/settlements, live/calls, safety/support/admin/client releases and remaining auth/provider gaps; Flutter new product rules, reliable/media/async protocols and device integration; retention/resync, capacity, media leases/OS resource limits; real malware/moderation/storage/SMS/push. Public share DNS/TLS/routing and real social-platform tests pending.",
-  "schema": "V1 identity through V19 posts/comments; no legacy data imported",
+  "remaining": "payment orders/callbacks/providers, gifts/settlements, live/calls, safety/support/admin/client releases and remaining auth/provider gaps; Flutter new product rules, reliable/media/async protocols and device integration; retention/resync, capacity, media leases/OS resource limits; real malware/moderation/storage/SMS/push. Public share DNS/TLS/routing and real social-platform tests pending.",
+  "schema": "V1 identity through V20 wallet and balanced ledger; no legacy data imported",
   "deployment": "localhost only; no cloud or Flutter cutover",
   "account_erasure_worker_enabled": true,
   "video_smoke": "docs/local-video-smoke.json",
@@ -786,5 +834,6 @@
   "group_public_base": "https://sssuuil-server.top",
   "group_public_network_status": "SSH read-only audit of 8.138.228.137 completed. api.sssuuil-server.top has valid DNS/TLS; configured root domain has no address and mismatched certificate. Awaiting domain selection; no cloud Java deployment or routing changes.",
   "explore_policy": "unlimited ordinary likes and undo; mutual ordinary likes create friendship/chat; super-like compatibility endpoint returns 410",
-  "posts_smoke": "docs/local-posts-smoke.json"
+  "posts_smoke": "docs/local-posts-smoke.json",
+  "wallet_smoke": "docs/local-wallet-smoke.json"
 }

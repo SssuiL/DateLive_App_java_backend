@@ -1,0 +1,21 @@
+{
+  "checked_at": "2026-09-17T09:00:51.2357361Z",
+  "target": "http://127.0.0.1:8200",
+  "schema": "V20",
+  "result": "passed",
+  "checks": [
+    "initial_zero",
+    "authentication",
+    "idempotent_recharge",
+    "payload_conflict",
+    "user_ledger_privacy",
+    "peer_isolation",
+    "income_expense_filters",
+    "summary",
+    "legacy_history",
+    "admin_authorization",
+    "balanced_admin_entries",
+    "account_reconciliation"
+  ],
+  "note": "Local synthetic coins only, explicitly enabled with -DevelopmentBilling. No real provider, callback or financial transaction was exercised. Concurrent debit and rollback are separately integration-tested."
+}

@@ -1,4 +1,4 @@
-param([switch]$DevelopmentSms,[switch]$DevelopmentAdmin,[switch]$DisableAccountErasure)
+param([switch]$DevelopmentSms,[switch]$DevelopmentAdmin,[switch]$DevelopmentBilling,[switch]$DisableAccountErasure)
 $ErrorActionPreference='Stop'
 $javaProjectRoot=Split-Path $PSScriptRoot -Parent
 $javaRuntime=Join-Path $javaProjectRoot '.tools/jdk/jdk-25.0.4.1+1/bin/java.exe'
@@ -36,6 +36,8 @@ $javaLocalEnv=@{
  JAVA_SMS_RETURN_DEV_CODE=$(if($DevelopmentSms){'true'}else{'false'})
  JAVA_LEGACY_REGISTRATION_ENABLED='true'
  JAVA_API_PORT='8200'
+ JAVA_APP_ENV='development'
+ JAVA_DEV_RECHARGE_ENABLED=$(if($DevelopmentBilling){'true'}else{'false'})
  JAVA_API_BIND='127.0.0.1'
 }
 if($javaLocalConfig.groupPublicBaseUrl -and -not $env:JAVA_GROUP_PUBLIC_BASE_URL){
@@ -55,6 +57,7 @@ try {
  }
  docker compose -f compose.yaml up -d --wait postgres
  if($LASTEXITCODE -ne 0) { throw 'Java-only PostgreSQL startup failed' }
+ if($DevelopmentBilling){Write-Host 'LOCAL ONLY: simulated coin recharge enabled; no real payment.'}
  if($DevelopmentAdmin){Write-Host 'LOCAL ONLY: first admin initialization enabled; credentials stored in .tools/local-development.json and never printed.'}
  if($DevelopmentSms){Write-Host 'LOCAL ONLY: development SMS enabled; API returns test codes and sends no real messages.'}
  Write-Host 'Java development API: http://127.0.0.1:8200 (password-only test registration enabled)'

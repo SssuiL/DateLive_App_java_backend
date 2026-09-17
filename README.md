@@ -10,10 +10,10 @@ GitHub：[DateLive_App_java_backend](https://github.com/SssuiL/DateLive_App_java
 
 - Java 25 LTS、Spring Boot 4.1.1、Maven 3.9.16、PostgreSQL 17.10。
 - 已配置 VS Code Oracle Java 插件的项目 JDK。
-- 已实现 123 个 HTTP 入口（其中超级喜欢为已取消的 410 兼容入口）和 2 个 WebSocket 入口：账号、资料、通知、图片、后台审核、注销/恢复、用户搜索、好友和拉黑，以及聊天会话、文本/图片/语音/视频/文件消息和静态贴纸/动态 GIF、引用回复、已读，以及撤回/搜索/个人隐藏和清空。到期清理已实现并在隔离库测试，自动 Worker 已获授权开启，每分钟清理超过 45 天冷静期的注销账号；可用 JAVA_ACCOUNT_ERASURE_ENABLED=false 关闭（本地启动脚本默认开启，使用 -DisableAccountErasure 可关闭）；短信仍为开发模拟。
+- 已实现 131 个 HTTP 入口（其中超级喜欢为已取消的 410 兼容入口）和 2 个 WebSocket 入口：账号、资料、通知、图片、后台审核、注销/恢复、用户搜索、好友和拉黑，以及聊天会话、文本/图片/语音/视频/文件消息和静态贴纸/动态 GIF、引用回复、已读，以及撤回/搜索/个人隐藏和清空。到期清理已实现并在隔离库测试，自动 Worker 已获授权开启，每分钟清理超过 45 天冷静期的注销账号；可用 JAVA_ACCOUNT_ERASURE_ENABLED=false 关闭（本地启动脚本默认开启，使用 -DisableAccountErasure 可关闭）；短信仍为开发模拟。
 - 新增实时消息/通知、多端同步、断线恢复、ACK 送达回执、在线与输入状态；Flutter 协议适配和容量压测尚待完成。
 - 独立 Flyway 账号数据基线、事务审计、密码哈希、数据库会话校验和多实例共享的数据库限流。
-- 297 项测试覆盖真实 PostgreSQL/HTTP/WebSocket、并发、回滚、密码兼容、令牌签名与失效。
+- 317 项测试覆盖真实 PostgreSQL/HTTP/WebSocket、并发、回滚、密码兼容、令牌签名与失效。
 - 本地 API 已启动于 `http://127.0.0.1:8200`；数据库只监听 `127.0.0.1:15433`。
 - 后台页面、MFA、云存储、真实审核/短信供应商、推送投递、第三方登录和其他业务模块仍待迁移。
 
@@ -120,3 +120,7 @@ GitHub：[DateLive_App_java_backend](https://github.com/SssuiL/DateLive_App_java
 已迁移 19 个动态接口，涵盖文字/图片/语音/视频、可见范围、点赞、线程评论、Emoji 点评、媒体保存偏好及审核联动。完整回归 297 项通过，本地 V19 动态 14 项和群组/划卡 21 项 HTTP 冒烟通过。详见 [迁移说明](docs/动态与评论迁移说明.md) 和 [本机报告](docs/local-posts-smoke.json)。
 
 已使用现有 SSH 密钥完成轻量服务器只读盘点；尚未部署 Java 或修改云端服务。域名和实测资源见 [服务器接入记录](docs/轻量测试服务器接入记录.md)。全后端迁移继续进行，下一阶段为钱包账本与支付。
+
+## 钱包账本（V20）
+
+已迁移钱包六个接口及后台账本查询两个接口，包含幂等、收支平衡、历史流水不可变、并发扣款和注销留存。完整回归 **317 项通过**，本地 HTTP 12 项烟测通过：[迁移说明](docs/钱包账本迁移说明.md)、[验收报告](docs/local-wallet-smoke.json)。显式使用 -DevelopmentBilling 开启本地模拟金币充值；默认和生产环境关闭。支付订单、回调、礼物分账与通话扣费接入仍在后续迁移范围。
