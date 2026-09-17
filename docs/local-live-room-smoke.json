@@ -1,0 +1,23 @@
+{
+  "checked_at": "2026-09-17T10:00:00.6405948Z",
+  "target": "http://127.0.0.1:8200",
+  "schema": "V24",
+  "result": "passed",
+  "checks": [
+    "categories",
+    "host_qualification",
+    "draft_ownership",
+    "requires_preflight",
+    "ticket_issuance",
+    "start",
+    "mock_session",
+    "join",
+    "host_cannot_leave",
+    "viewer_leave",
+    "consumed_ticket_audit",
+    "end",
+    "ended_room_hidden",
+    "utf8_network_probe"
+  ],
+  "note": "Local mock room lifecycle only; no real camera/network attestation or audio/video streaming. Broadcast, governance, gifting, schedules and provider integration remain separate work."
+}

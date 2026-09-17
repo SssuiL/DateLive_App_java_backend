@@ -131,6 +131,7 @@ public class MediaService {
    }
    if(owner.equals(user.userId())) return asset;
    if(!asset.get("status").equals("approved")) throw missing();
+   if(db.queryForObject("SELECT count(*) FROM live_rooms r JOIN users u ON u.id=r.host_user_id WHERE r.cover_url=? AND r.status='live' AND u.status='active' AND NOT EXISTS(SELECT 1 FROM blocks b WHERE (b.actor_user_id=? AND b.target_user_id=u.id) OR (b.target_user_id=? AND b.actor_user_id=u.id))",Integer.class,asset.get("url"),user.userId(),user.userId())>0)return asset;
    if(db.queryForObject("""
      SELECT count(*) FROM users u JOIN user_profiles p ON p.user_id=u.id
      WHERE u.id=? AND u.status='active'

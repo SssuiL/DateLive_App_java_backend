@@ -1,4 +1,4 @@
-param([switch]$DevelopmentSms,[switch]$DevelopmentAdmin,[switch]$DevelopmentBilling,[switch]$DevelopmentPayments,[switch]$DisableAccountErasure)
+param([switch]$DevelopmentSms,[switch]$DevelopmentAdmin,[switch]$DevelopmentBilling,[switch]$DevelopmentPayments,[switch]$DevelopmentLive,[switch]$DisableAccountErasure)
 $ErrorActionPreference='Stop'
 $javaProjectRoot=Split-Path $PSScriptRoot -Parent
 $javaRuntime=Join-Path $javaProjectRoot '.tools/jdk/jdk-25.0.4.1+1/bin/java.exe'
@@ -47,6 +47,8 @@ $javaLocalEnv=@{
  JAVA_PAYMENT_MOCK_ENABLED=$(if($DevelopmentPayments){'true'}else{'false'})
  JAVA_PAYMENT_CALLBACK_SECRET=$javaLocalConfig.paymentCallbackSecret
  JAVA_WECHAT_PAY_ENABLED='false'
+ JAVA_LIVE_PROVIDER=$(if($DevelopmentLive){'mock'}else{'disabled'})
+ JAVA_LIVE_MOCK_ENABLED=$DevelopmentLive.IsPresent.ToString().ToLowerInvariant()
 }
 if($javaLocalConfig.groupPublicBaseUrl -and -not $env:JAVA_GROUP_PUBLIC_BASE_URL){
  $javaLocalEnv.JAVA_GROUP_PUBLIC_BASE_URL=$javaLocalConfig.groupPublicBaseUrl
@@ -65,6 +67,7 @@ try {
  }
  docker compose -f compose.yaml up -d --wait postgres
  if($LASTEXITCODE -ne 0) { throw 'Java-only PostgreSQL startup failed' }
+ if($DevelopmentLive){Write-Host 'LOCAL ONLY: mock live rooms enabled; no real audio/video streaming.'}
  if($DevelopmentPayments){Write-Host 'LOCAL ONLY: mock payment orders and signed synthetic callbacks enabled; real WeChat Pay disabled.'}
  if($DevelopmentBilling){Write-Host 'LOCAL ONLY: simulated coin recharge enabled; no real payment.'}
  if($DevelopmentAdmin){Write-Host 'LOCAL ONLY: first admin initialization enabled; credentials stored in .tools/local-development.json and never printed.'}

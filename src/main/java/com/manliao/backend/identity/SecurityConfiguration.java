@@ -55,7 +55,7 @@ public class SecurityConfiguration {
             .authorizeHttpRequests(rules -> rules
                 .requestMatchers(org.springframework.http.HttpMethod.GET,"/admin/moderation/access/*").permitAll()
                 .requestMatchers(org.springframework.http.HttpMethod.POST,"/admin/auth/login","/callbacks/payments/*").permitAll()
-                .requestMatchers(org.springframework.http.HttpMethod.GET,"/payments/packages","/live/gifts","/gift-assets/*").permitAll()
+                .requestMatchers(org.springframework.http.HttpMethod.GET,"/payments/packages","/live/gifts","/live/categories","/gift-assets/*").permitAll()
                 .requestMatchers(org.springframework.http.HttpMethod.GET,"/media/access/*","/g/*","/group-links/*").permitAll()
                 .requestMatchers(org.springframework.http.HttpMethod.GET,"/ws/messages","/ws/notifications").permitAll()
                 .requestMatchers("/health", "/health/ready", "/actuator/health").permitAll()

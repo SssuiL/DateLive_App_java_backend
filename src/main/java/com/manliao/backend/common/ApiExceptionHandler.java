@@ -39,6 +39,10 @@ public class ApiExceptionHandler {
     ResponseEntity<?> notFound(HttpServletRequest request) {
         return ResponseEntity.status(404).body(errors.body("COMMON_NOT_FOUND", "资源不存在", request, null));
     }
+    @ExceptionHandler(org.springframework.web.HttpMediaTypeNotSupportedException.class)
+    ResponseEntity<?> unsupportedMediaType(HttpServletRequest request) {
+        return ResponseEntity.status(415).body(errors.body("COMMON_BAD_REQUEST", "请求内容类型不受支持", request, null));
+    }
     @ExceptionHandler(org.springframework.web.HttpRequestMethodNotSupportedException.class)
     ResponseEntity<?> wrongMethod(HttpServletRequest request) {
         return ResponseEntity.status(405).body(errors.body("COMMON_BAD_REQUEST", "请求方法不支持", request, null));

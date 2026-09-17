@@ -100,6 +100,7 @@ public class MediaJobs {
  private static final String UNREFERENCED="""
   a.status<>'deleted' AND a.message_id IS NULL AND a.created_at<now()-(? * interval '1 hour')
   AND NOT EXISTS(SELECT 1 FROM messages m WHERE m.media_asset_id=a.id)
+  AND NOT EXISTS(SELECT 1 FROM live_rooms r WHERE r.cover_url=a.url AND r.status IN ('draft','live'))
   AND NOT EXISTS(SELECT 1 FROM posts p WHERE p.id=a.post_id AND p.deleted_at IS NULL)
   AND NOT EXISTS(SELECT 1 FROM post_comments c JOIN posts p ON p.id=c.post_id WHERE c.media_asset_id=a.id AND c.deleted_at IS NULL AND p.deleted_at IS NULL)
   AND NOT EXISTS(SELECT 1 FROM user_profiles p WHERE p.avatar_url=a.url OR p.pending_avatar_url=a.url
