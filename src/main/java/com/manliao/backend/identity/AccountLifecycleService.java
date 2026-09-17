@@ -12,7 +12,7 @@ public class AccountLifecycleService {
  private final com.manliao.backend.posts.PostErasure posts;private final DatabaseRows rows;private final ObjectMapper json;private final MediaStorage storage;private final com.manliao.backend.groups.GroupService groups;
  // Every users.id FK must have an explicit policy; integration tests compare this with the real schema.
  public static final Set<String> USER_FK_POLICY=Set.of(
-   "live_rooms.host_user_id","live_room_participants.user_id","live_start_preflights.host_user_id","live_host_qualifications.user_id","live_host_verification_applications.user_id","payment_orders.user_id","wallets.user_id","wallet_transactions.user_id","coin_accounts.user_id","billing_transactions.initiated_by_user_id","posts.author_id","post_likes.user_id","post_comments.author_id","post_comments.reply_to_user_id","post_comment_likes.user_id","post_media_reactions.user_id","explore_actions.actor_user_id","explore_actions.target_user_id","matches.user_a_id","matches.user_b_id","groups.owner_id","group_members.user_id","group_join_requests.user_id","account_erasure_records.user_id","auth_security_events.user_id","blocks.actor_user_id","blocks.target_user_id",
+   "gift_safety_settings.user_id","gift_risk_events.user_id","live_rooms.host_user_id","live_room_participants.user_id","live_start_preflights.host_user_id","live_host_qualifications.user_id","live_host_verification_applications.user_id","payment_orders.user_id","wallets.user_id","wallet_transactions.user_id","coin_accounts.user_id","billing_transactions.initiated_by_user_id","posts.author_id","post_likes.user_id","post_comments.author_id","post_comments.reply_to_user_id","post_comment_likes.user_id","post_media_reactions.user_id","explore_actions.actor_user_id","explore_actions.target_user_id","matches.user_a_id","matches.user_b_id","groups.owner_id","group_members.user_id","group_join_requests.user_id","account_erasure_records.user_id","auth_security_events.user_id","blocks.actor_user_id","blocks.target_user_id",
    "media_assets.owner_user_id","notification_events.recipient_user_id","notification_events.actor_user_id",
    "notification_change_outbox.user_id","notification_preferences.user_id","profile_reviews.user_id",
    "push_devices.user_id","refresh_tokens.user_id","user_profiles.user_id",
@@ -126,6 +126,8 @@ public class AccountLifecycleService {
      String record=db.queryForObject("UPDATE account_erasure_records SET status='running',started_at=now(),error_message=NULL WHERE user_id=? RETURNING id",String.class,userId);
      var summary=new LinkedHashMap<String,Object>();
      groups.eraseMemberships(userId);posts.erase(userId);
+     summary.put("gift_safety_settings_deleted",db.update("DELETE FROM gift_safety_settings WHERE user_id=?",userId));
+     summary.put("gift_risk_events_deleted",db.update("DELETE FROM gift_risk_events WHERE user_id=?",userId));
      summary.put("live_memberships_deleted",db.update("DELETE FROM live_room_participants WHERE user_id=?",userId));
      summary.put("live_rooms_deleted",db.update("DELETE FROM live_rooms WHERE host_user_id=?",userId));
      summary.put("group_messages_anonymized",db.update("""

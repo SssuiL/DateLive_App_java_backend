@@ -2,10 +2,10 @@
   "legacy_commit": "8f63d6dd46162d777867165df963d8c6efc2093b",
   "legacy_http_routes": 276,
   "legacy_websocket_routes": 3,
-  "java_verified_tests": 393,
-  "mapped_routes": 155,
+  "java_verified_tests": 404,
+  "mapped_routes": 160,
   "retired_routes": 1,
-  "unmapped_routes": 123,
+  "unmapped_routes": 118,
   "scope": "Static route cross-reference; excludes Java-only additions and does not claim full semantic or supplier parity.",
   "routes": [
     {
@@ -308,24 +308,24 @@
       "method": "GET",
       "legacy_path": "/admin/gift-risk/events",
       "source": "app/api/admin_gift_risk.py:20",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/admin/gift-risk/events",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
       "method": "POST",
       "legacy_path": "/admin/gift-risk/events/{event_id}/resolve",
       "source": "app/api/admin_gift_risk.py:38",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/admin/gift-risk/events/{event_id}/resolve",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
       "method": "PATCH",
       "legacy_path": "/admin/gift-risk/users/{user_id}/age-status",
       "source": "app/api/admin_gift_risk.py:58",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/admin/gift-risk/users/{user_id}/age-status",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
@@ -1196,16 +1196,16 @@
       "method": "GET",
       "legacy_path": "/live/gift-safety/me",
       "source": "app/api/live.py:32",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/live/gift-safety/me",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
       "method": "PATCH",
       "legacy_path": "/live/gift-safety/me",
       "source": "app/api/live.py:42",
-      "java_path": null,
-      "status": "not_mapped",
+      "java_path": "/live/gift-safety/me",
+      "status": "route_mapped_contract_audit_required",
       "note": "Route presence alone is not functional parity. Compare schemas, permissions, state transitions, events and failure cases before closing."
     },
     {
