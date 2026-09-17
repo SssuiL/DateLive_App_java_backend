@@ -9,17 +9,17 @@ import com.manliao.backend.media.MediaStorage;
 @Service
 public class AccountLifecycleService {
  private final JdbcTemplate db;private final TransactionTemplate tx;private final AuthService auth;
- private final DatabaseRows rows;private final ObjectMapper json;private final MediaStorage storage;private final com.manliao.backend.groups.GroupService groups;
+ private final com.manliao.backend.posts.PostErasure posts;private final DatabaseRows rows;private final ObjectMapper json;private final MediaStorage storage;private final com.manliao.backend.groups.GroupService groups;
  // Every users.id FK must have an explicit policy; integration tests compare this with the real schema.
  public static final Set<String> USER_FK_POLICY=Set.of(
-   "explore_actions.actor_user_id","explore_actions.target_user_id","matches.user_a_id","matches.user_b_id","groups.owner_id","group_members.user_id","group_join_requests.user_id","account_erasure_records.user_id","auth_security_events.user_id","blocks.actor_user_id","blocks.target_user_id",
+   "posts.author_id","post_likes.user_id","post_comments.author_id","post_comments.reply_to_user_id","post_comment_likes.user_id","post_media_reactions.user_id","explore_actions.actor_user_id","explore_actions.target_user_id","matches.user_a_id","matches.user_b_id","groups.owner_id","group_members.user_id","group_join_requests.user_id","account_erasure_records.user_id","auth_security_events.user_id","blocks.actor_user_id","blocks.target_user_id",
    "media_assets.owner_user_id","notification_events.recipient_user_id","notification_events.actor_user_id",
    "notification_change_outbox.user_id","notification_preferences.user_id","profile_reviews.user_id",
    "push_devices.user_id","refresh_tokens.user_id","user_profiles.user_id",
    "friend_requests.requester_id","friend_requests.receiver_id","friendships.user_a_id","friendships.user_b_id",
    "conversation_member_states.user_id","messages.recalled_by_user_id","messages.sender_id","message_receipts.user_id","chat_change_outbox.actor_user_id","realtime_events.recipient_user_id","realtime_events.actor_user_id","realtime_connections.user_id","realtime_checkpoints.user_id");
- public AccountLifecycleService(JdbcTemplate db,TransactionTemplate tx,AuthService auth,DatabaseRows rows,ObjectMapper json,MediaStorage storage,com.manliao.backend.groups.GroupService groups){
-   this.db=db;this.tx=tx;this.auth=auth;this.rows=rows;this.json=json;this.storage=storage;this.groups=groups;
+ public AccountLifecycleService(JdbcTemplate db,TransactionTemplate tx,AuthService auth,DatabaseRows rows,ObjectMapper json,MediaStorage storage,com.manliao.backend.groups.GroupService groups,com.manliao.backend.posts.PostErasure posts){
+   this.db=db;this.tx=tx;this.auth=auth;this.rows=rows;this.json=json;this.storage=storage;this.groups=groups;this.posts=posts;
  }
  public Map<String,Object> deactivate(AuthDtos.Principal user,String request){
    return tx.execute(status->{
@@ -64,6 +64,8 @@ public class AccountLifecycleService {
    return tx.execute(status->{
      var user=user(id,true);
      var counts=new LinkedHashMap<String,Object>();
+     counts.put("posts",count("posts","author_id=? AND deleted_at IS NULL",id));
+     counts.put("post_comments",count("post_comments","author_id=? AND deleted_at IS NULL",id));
      counts.put("profiles",count("user_profiles","user_id=?",id));
      counts.put("media_assets",count("media_assets","owner_user_id=? OR conversation_id IN (SELECT m.conversation_id FROM conversation_member_states m JOIN conversations c ON c.id=m.conversation_id WHERE m.user_id=? AND c.type<>'group')",id,id));
      counts.put("sessions",count("refresh_tokens","user_id=?",id));
@@ -120,7 +122,7 @@ public class AccountLifecycleService {
        id("erase"),userId,user.get("deactivation_due_at"));
      String record=db.queryForObject("UPDATE account_erasure_records SET status='running',started_at=now(),error_message=NULL WHERE user_id=? RETURNING id",String.class,userId);
      var summary=new LinkedHashMap<String,Object>();
-     groups.eraseMemberships(userId);
+     groups.eraseMemberships(userId);posts.erase(userId);
      summary.put("group_messages_anonymized",db.update("""
        UPDATE messages SET content='已注销用户的消息',type='text',media_asset_id=NULL,media_kind=NULL,duration_seconds=0,
         recalled_at=coalesce(recalled_at,clock_timestamp()),recalled_by_user_id=?

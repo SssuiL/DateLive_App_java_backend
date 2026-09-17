@@ -1,0 +1,23 @@
+{
+  "checked_at": "2026-09-17T08:49:12.9927232Z",
+  "target": "http://127.0.0.1:8200",
+  "schema": "V19",
+  "result": "passed",
+  "checks": [
+    "friends_visibility",
+    "stranger_denied",
+    "like_idempotency",
+    "comment_thread",
+    "comment_page_preview",
+    "deleted_root_preserves_reply",
+    "pending_post_hidden",
+    "admin_approval_publishes",
+    "signed_media_download",
+    "emoji_reaction",
+    "save_preference",
+    "owner_download",
+    "owner_removes_pending_comment",
+    "delete_revokes_old_media_url"
+  ],
+  "note": "Synthetic local HTTP and real image processing. Cloud, Flutter and real external moderation are not verified by this smoke."
+}

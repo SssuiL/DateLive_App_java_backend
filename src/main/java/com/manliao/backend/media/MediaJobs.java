@@ -61,7 +61,7 @@ public class MediaJobs {
     ORDER BY j.available_at,j.media_id LIMIT 1
     """);
    if(candidates.isEmpty())return false;var first=candidates.getFirst();String id=(String)first.get("id");
-   db.queryForList("SELECT id FROM users WHERE id=? FOR UPDATE",first.get("owner_user_id"));
+   media.lockContentReview(id);db.queryForList("SELECT id FROM users WHERE id=? FOR UPDATE",first.get("owner_user_id"));
    var found=db.queryForList("SELECT * FROM media_assets WHERE id=? FOR UPDATE",id);
    if(found.isEmpty())return false;var asset=found.getFirst();
    if(!"queued".equals(asset.get("processing_status"))||"deleted".equals(asset.get("status")))return false;
@@ -80,7 +80,7 @@ public class MediaJobs {
     try{storage.delete(key);}catch(IOException cleanup){failure.addSuppressed(cleanup);}
     if(permanent||attempt>=3){
      db.update("UPDATE media_assets SET processing_status='failed',processing_error=?,status='rejected',moderation_reason='媒体处理失败' WHERE id=?",code,id);
-     db.update("DELETE FROM media_processing_jobs WHERE media_id=?",id);
+     db.update("DELETE FROM media_processing_jobs WHERE media_id=?",id);media.syncContentReview(id);
     }else{
      db.update("UPDATE media_processing_jobs SET attempts=?,available_at=now()+interval '30 seconds' WHERE media_id=?",attempt,id);
      db.update("UPDATE media_assets SET processing_error=? WHERE id=?",code,id);
@@ -100,6 +100,8 @@ public class MediaJobs {
  private static final String UNREFERENCED="""
   a.status<>'deleted' AND a.message_id IS NULL AND a.created_at<now()-(? * interval '1 hour')
   AND NOT EXISTS(SELECT 1 FROM messages m WHERE m.media_asset_id=a.id)
+  AND NOT EXISTS(SELECT 1 FROM posts p WHERE p.id=a.post_id AND p.deleted_at IS NULL)
+  AND NOT EXISTS(SELECT 1 FROM post_comments c JOIN posts p ON p.id=c.post_id WHERE c.media_asset_id=a.id AND c.deleted_at IS NULL AND p.deleted_at IS NULL)
   AND NOT EXISTS(SELECT 1 FROM user_profiles p WHERE p.avatar_url=a.url OR p.pending_avatar_url=a.url
     OR p.photo_urls @> jsonb_build_array(a.url) OR p.pending_photo_urls @> jsonb_build_array(a.url))
   """;

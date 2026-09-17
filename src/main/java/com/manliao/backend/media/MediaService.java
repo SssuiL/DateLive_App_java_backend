@@ -14,16 +14,17 @@ import com.manliao.backend.identity.AuthDtos.Principal;
 public class MediaService {
  private final JdbcTemplate db;private final TransactionTemplate tx;
  @org.springframework.beans.factory.annotation.Value("${app.media.derivatives-worker-enabled:true}") private boolean derivativesWorkerEnabled;
- private final MediaStorage storage;private final MediaTokens tokens;private final DatabaseRows rows;
+ private final com.manliao.backend.posts.PostAccess posts;private final com.manliao.backend.posts.PostModeration postModeration;private final MediaStorage storage;private final MediaTokens tokens;private final DatabaseRows rows;
  private final com.manliao.backend.chat.ChatService chat;private final VoiceProcessor voice;private final VideoProcessor video;
- public MediaService(JdbcTemplate db,TransactionTemplate tx,MediaStorage storage,MediaTokens tokens,DatabaseRows rows,com.manliao.backend.chat.ChatService chat,VoiceProcessor voice,VideoProcessor video) {
-   this.db=db;this.tx=tx;this.storage=storage;this.tokens=tokens;this.rows=rows;this.chat=chat;this.voice=voice;this.video=video;
+ public MediaService(JdbcTemplate db,TransactionTemplate tx,MediaStorage storage,MediaTokens tokens,DatabaseRows rows,com.manliao.backend.chat.ChatService chat,VoiceProcessor voice,VideoProcessor video,com.manliao.backend.posts.PostAccess posts,com.manliao.backend.posts.PostModeration postModeration) {
+   this.db=db;this.tx=tx;this.storage=storage;this.tokens=tokens;this.rows=rows;this.chat=chat;this.voice=voice;this.video=video;this.posts=posts;this.postModeration=postModeration;
  }
  void validateUpload(Principal user,String type,String source,String conversation,MultipartFile file) {
-   if(!Set.of("image","voice","video","file").contains(type) || (!type.equals("image")&&!source.equals("chat")) || !Set.of("profile","chat").contains(source) ||
-     (source.equals("profile")&&conversation!=null)||(source.equals("chat")&&(conversation==null||conversation.isBlank())))
-     throw new ApiError(400,"MEDIA_TYPE_INVALID","支持资料图片或绑定会话的聊天图片/语音/视频/文件");
-   if(source.equals("profile")&&"image/gif".equals(file.getContentType()))throw new ApiError(400,"MEDIA_TYPE_INVALID","GIF 目前仅支持聊天附件");
+   if(!Set.of("image","voice","video","file").contains(type)||!Set.of("profile","chat","post","post_comment").contains(source)||
+     (Set.of("profile","post_comment").contains(source)&&!type.equals("image"))||(source.equals("post")&&type.equals("file"))||
+     (!source.equals("chat")&&conversation!=null)||(source.equals("chat")&&(conversation==null||conversation.isBlank())))
+     throw new ApiError(400,"MEDIA_TYPE_INVALID","媒体类型或用途不匹配");
+   if(source.equals("profile")&&"image/gif".equals(file.getContentType()))throw new ApiError(400,"MEDIA_TYPE_INVALID","资料照片不支持 GIF");
    if(source.equals("chat"))chat.get(user.userId(),conversation);
  }
  void lockUpload(Principal user,String source,String conversation){if(source.equals("chat"))chat.lockMediaUpload(user,conversation);else lockUser(user.userId());}
@@ -90,7 +91,7 @@ public class MediaService {
    if(gif)out.put("media_metadata",Map.of("width",asset.get("width"),"height",asset.get("height"),"duration_ms",asset.get("duration_ms"),"format","gif"));
    out.put("pipeline_version",generic?"java-file-v1":gif?(derivativesReady?"java-gif-v2":"java-gif-v1"):movie?"java-video-v1":audio?"java-voice-v1":derivativesReady?"java-image-v2":"java-image-v1");
    out.put("malware_status","skipped");out.put("latest_security_scan_id",null);out.put("quarantined_at",null);out.put("released_at",null);
-   out.put("post_id",null);
+   out.put("post_id",asset.get("post_id"));
    out.put("moderation_provider",asset.get("reviewed_by")==null?"manual_pending":"manual");out.put("moderation_labels",Boolean.TRUE.equals(asset.get("portrait_manual_approved"))?List.of("portrait_manual_approved"):List.of());
    return out;
  }
@@ -115,6 +116,9 @@ public class MediaService {
    var asset=asset(id);
    if(asset.get("storage_key")==null || !Set.of("approved","review_pending").contains(asset.get("status"))) throw missing();
    String owner=(String)asset.get("owner_user_id");
+   if(Set.of("post","post_comment").contains(asset.get("source"))){
+    try{posts.media(user.userId(),asset);}catch(ApiError unavailable){throw missing();}return asset;
+   }
    if("chat".equals(asset.get("source"))){
      try{chat.get(user.userId(),(String)asset.get("conversation_id"));}catch(ApiError unavailable){throw missing();}
      if(asset.get("message_id")==null){if(owner.equals(user.userId()))return asset;throw missing();}
@@ -154,14 +158,14 @@ public class MediaService {
  }
  public void delete(Principal user,String id) {
    tx.executeWithoutResult(status->{
-     lockUser(user.userId());
      var asset=asset(id);
      if(!user.userId().equals(asset.get("owner_user_id"))) throw missing();
+     postModeration.lockRelated(id);lockUser(user.userId());
      db.queryForList("SELECT user_id FROM user_profiles WHERE user_id=? FOR UPDATE",user.userId());
      db.queryForList("SELECT id FROM media_assets WHERE id=? FOR UPDATE",id);
      db.update("UPDATE media_assets SET status='deleted' WHERE id=?",id);
      db.update("DELETE FROM media_processing_jobs WHERE media_id=?",id);
-     detach(user.userId(),(String)asset.get("url"));
+     detach(user.userId(),(String)asset.get("url"));postModeration.sync(id);
    });
    cleanupDeleted();
  }
@@ -173,11 +177,13 @@ public class MediaService {
      """,url,url,url,url,user);
  }
  /** Internal application operation: deliberately not exposed to ordinary HTTP users. */
+ void lockContentReview(String id){postModeration.lockRelated(id);}
+ void syncContentReview(String id){postModeration.sync(id);}
  public void resolveReview(String id,boolean approved,String reviewer,String reason) {
    if(reviewer==null || reviewer.isBlank() || reviewer.length()>64 || reason==null || reason.length()>240)
      throw new IllegalArgumentException("Review identity and reason required");
    tx.executeWithoutResult(status->{
-     var first=asset(id);String owner=(String)first.get("owner_user_id"),url=(String)first.get("url");
+     var first=asset(id);String owner=(String)first.get("owner_user_id"),url=(String)first.get("url");postModeration.lockRelated(id);
      lockUser(owner);
      db.queryForList("SELECT user_id FROM user_profiles WHERE user_id=? FOR UPDATE",owner);
      var found=db.queryForList("SELECT * FROM media_assets WHERE id=? FOR UPDATE",id);
@@ -195,7 +201,7 @@ public class MediaService {
              AND NOT photo_urls @> jsonb_build_array(?::text) THEN photo_urls||jsonb_build_array(?::text) ELSE photo_urls END,
            pending_photo_urls=pending_photo_urls-? WHERE user_id=?
          """,url,url,url,url,url,url,url,owner);
-     } else detach(owner,url);
+     } else detach(owner,url);postModeration.sync(id);
    });
  }
  private void lockUser(String user) {
