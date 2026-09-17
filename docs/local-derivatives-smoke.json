@@ -1,0 +1,18 @@
+{
+  "checks": [
+    "png_thumbnail_and_display_sizes",
+    "gif_static_thumbnail_and_animated_display",
+    "pending_peer_denied",
+    "admin_variant_preview",
+    "signed_variant_download",
+    "range_206",
+    "personal_hide_revokes_derivatives",
+    "recall_revokes_derivatives",
+    "original_and_derivative_deletion"
+  ],
+  "result": "passed",
+  "note": "Synthetic local data only. Legacy backfill/retry and account erasure are separately integration-tested; no Flutter changes or real cloud/moderation integration.",
+  "schema": "V15",
+  "target": "http://127.0.0.1:8200",
+  "checked_at": "2026-09-17T07:14:25.8858137Z"
+}

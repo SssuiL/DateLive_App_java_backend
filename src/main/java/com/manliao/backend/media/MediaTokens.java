@@ -34,7 +34,7 @@ public class MediaTokens {
      if(!"media_access".equals(jwt.getClaimAsString("type")) || jwt.getExpiresAt()==null ||
        jwt.getSubject()==null || sid==null || id==null || !id.matches("media_[a-f0-9]{32}")) throw new IllegalArgumentException();
      String variant=java.util.Optional.ofNullable(jwt.getClaimAsString("variant")).orElse("original");
-     if(!java.util.Set.of("original","thumbnail","cover").contains(variant))throw new IllegalArgumentException();
+     if(!java.util.Set.of("original","thumbnail","cover","display").contains(variant))throw new IllegalArgumentException();
      return new Grant(new Principal(jwt.getSubject(),sid),id,variant);
    }catch(JwtException|IllegalArgumentException e){throw new ApiError(404,"MEDIA_NOT_FOUND","媒体地址无效或已过期");}
  }

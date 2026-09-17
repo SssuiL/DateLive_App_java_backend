@@ -135,7 +135,7 @@ class MediaIntegrationTests {
    int position=url.length()-10;
    String tampered=url.substring(0,position)+(url.charAt(position)=='a'?'b':'a')+url.substring(position+1);
    assertThat(download(tampered).statusCode()).isEqualTo(404);
-   assertThat(call("POST","/media/"+asset.text("id")+"/access-url?variant=thumbnail",null,owner.text("access_token")).status()).isEqualTo(400);
+   assertThat(call("POST","/media/"+asset.text("id")+"/access-url?variant=unsupported",null,owner.text("access_token")).status()).isEqualTo(400);
  }
  @Test void rejectsFakeImagesWrongTypesAndUnsupportedSources()throws Exception {
    Reply owner=user("0009");long before=files();

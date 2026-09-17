@@ -94,7 +94,7 @@ class AttachmentIntegrationTests {
 
  @Test void animatedGifKeepsFramesTimingAndLoopButStripsComments()throws Exception{
   var p=pair();var r=upload(p.a(),p.id(),gif(2,4,3,12),"image/gif","image","chat");
-  assertThat(r.status()).isEqualTo(200);assertThat(r.text("content_type")).isEqualTo("image/gif");assertThat(r.text("pipeline_version")).isEqualTo("java-gif-v1");
+  assertThat(r.status()).isEqualTo(200);assertThat(r.text("content_type")).isEqualTo("image/gif");assertThat(r.text("pipeline_version")).isEqualTo("java-gif-v2");
   byte[] result=download(r.text("preview_url")).body();
 
   assertThat(new String(result,java.nio.charset.StandardCharsets.ISO_8859_1)).doesNotContain("PRIVATE_GIF_COMMENT");

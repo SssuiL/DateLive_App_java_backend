@@ -39,7 +39,7 @@ public class AdminTokens {
      if(!type.equals(jwt.getClaimAsString("type")) || jwt.getExpiresAt()==null || jwt.getSubject()==null ||
        version==null || fingerprint==null || (type.equals("admin_preview") && media==null))throw new IllegalArgumentException();
      String variant=Optional.ofNullable(jwt.getClaimAsString("variant")).orElse("original");
-     if(!Set.of("original","thumbnail","cover").contains(variant))throw new IllegalArgumentException();
+     if(!Set.of("original","thumbnail","cover","display").contains(variant))throw new IllegalArgumentException();
      return new Grant(new AdminDtos.Principal(jwt.getSubject(),version.longValue(),fingerprint),media,variant);
    }catch(RuntimeException e){throw new ApiError(401,"AUTH_INVALID_TOKEN","管理员凭证无效或已过期");}
  }

@@ -1,8 +1,8 @@
 {
-  "updated_at": "2026-09-16",
+  "updated_at": "2026-09-17",
   "legacy_commit": "8f63d6dd46162d777867165df963d8c6efc2093b",
-  "scope": "Identity, profiles, notifications, managed media, admin, account lifecycle, social, private text/image/GIF/voice/video/file chat and static stickers; signed variants, thumbnails and single ranges; realtime delivery/ACK/replay/multi-device/presence; automatic erasure enabled; not complete migration",
-  "verified_tests": 199,
+  "scope": "Identity, profiles, notifications, managed media, admin, account lifecycle, social, private text/image/GIF/voice/video/file chat and static stickers; signed variants, image/video thumbnails, image display and legacy image backfill, single ranges; realtime delivery/ACK/replay/multi-device/presence; automatic erasure enabled; not complete migration",
+  "verified_tests": 214,
   "routes": [
     {
       "method": "POST",
@@ -153,35 +153,35 @@
       "path": "/media/upload",
       "status": "implemented_and_integration_tested",
       "production_ready": false,
-      "scope": "profile PNG/JPEG; private chat PNG/JPEG/GIF, AAC-LC voice, H.264/HEVC video and opaque files; signed cover/thumbnail and single Range; manual moderation only; no real malware scanning"
+      "scope": "profile PNG/JPEG; private chat PNG/JPEG/GIF, AAC-LC voice, H.264/HEVC video and opaque files; signed cover/thumbnail/display and single Range; manual moderation only; no real malware scanning"
     },
     {
       "method": "GET",
       "path": "/media/me",
       "status": "implemented_and_integration_tested",
       "production_ready": false,
-      "scope": "profile PNG/JPEG; private chat PNG/JPEG/GIF, AAC-LC voice, H.264/HEVC video and opaque files; signed cover/thumbnail and single Range; manual moderation only; no real malware scanning"
+      "scope": "profile PNG/JPEG; private chat PNG/JPEG/GIF, AAC-LC voice, H.264/HEVC video and opaque files; signed cover/thumbnail/display and single Range; manual moderation only; no real malware scanning"
     },
     {
       "method": "POST",
       "path": "/media/{media_id}/access-url",
       "status": "implemented_and_integration_tested",
       "production_ready": false,
-      "scope": "profile PNG/JPEG; private chat PNG/JPEG/GIF, AAC-LC voice, H.264/HEVC video and opaque files; signed cover/thumbnail and single Range; manual moderation only; no real malware scanning"
+      "scope": "profile PNG/JPEG; private chat PNG/JPEG/GIF, AAC-LC voice, H.264/HEVC video and opaque files; signed cover/thumbnail/display and single Range; manual moderation only; no real malware scanning"
     },
     {
       "method": "GET",
       "path": "/media/access/{token}",
       "status": "implemented_and_integration_tested",
       "production_ready": false,
-      "scope": "profile PNG/JPEG; private chat PNG/JPEG/GIF, AAC-LC voice, H.264/HEVC video and opaque files; signed cover/thumbnail and single Range; manual moderation only; no real malware scanning"
+      "scope": "profile PNG/JPEG; private chat PNG/JPEG/GIF, AAC-LC voice, H.264/HEVC video and opaque files; signed cover/thumbnail/display and single Range; manual moderation only; no real malware scanning"
     },
     {
       "method": "DELETE",
       "path": "/media/{media_id}",
       "status": "implemented_and_integration_tested",
       "production_ready": false,
-      "scope": "profile PNG/JPEG; private chat PNG/JPEG/GIF, AAC-LC voice, H.264/HEVC video and opaque files; signed cover/thumbnail and single Range; manual moderation only; no real malware scanning"
+      "scope": "profile PNG/JPEG; private chat PNG/JPEG/GIF, AAC-LC voice, H.264/HEVC video and opaque files; signed cover/thumbnail/display and single Range; manual moderation only; no real malware scanning"
     },
     {
       "method": "POST",
@@ -466,8 +466,8 @@
       "status": "implemented_and_integration_tested"
     }
   ],
-  "remaining": "Flutter reliable/media protocol and device playback/save integration, event/draft retention policies, old-cursor resync, capacity testing, asynchronous media workers and resource isolation; other image derivatives; group and temporary chat, explore/posts, wallet/payment/gifts/settlements, live/calls, admin UI/MFA, real malware scanning/moderation/cloud storage/SMS/push and other audio codecs pending.",
-  "schema": "V1 identity through V14 chat GIF/files; no legacy data imported",
+  "remaining": "Flutter reliable/media protocol and device playback/save integration, event/draft retention policies, old-cursor resync, capacity testing, asynchronous media workers and resource isolation; group and temporary chat, explore/posts, wallet/payment/gifts/settlements, live/calls, admin UI/MFA, real malware scanning/moderation/cloud storage/SMS/push and other audio codecs pending.",
+  "schema": "V1 identity through V15 image derivatives; no legacy data imported",
   "deployment": "localhost only; no cloud or Flutter cutover",
   "account_erasure_worker_enabled": true,
   "video_smoke": "docs/local-video-smoke.json",
@@ -480,5 +480,6 @@
   ],
   "attachments_smoke": "docs/local-attachments-smoke.json",
   "repository": "https://github.com/SssuiL/DateLive_App_java_backend.git",
-  "working_branch": "codex/java-backend-migration"
+  "working_branch": "codex/java-backend-migration",
+  "derivatives_smoke": "docs/local-derivatives-smoke.json"
 }

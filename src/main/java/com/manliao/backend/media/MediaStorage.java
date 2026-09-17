@@ -24,7 +24,7 @@ public class MediaStorage {
  }
  private Path path(String key) throws IOException {
    checkRoot();
-   if(!key.matches("media_[a-f0-9]{32}\\.(png|gif|bin|wav|mp4|thumb\\.png)")) throw new IOException("Invalid storage key");
+   if(!key.matches("media_[a-f0-9]{32}\\.(png|gif|bin|wav|mp4|thumb\\.png|display\\.png)")) throw new IOException("Invalid storage key");
    Path target=root.resolve(key).normalize();
    if(!target.getParent().equals(root) || Files.isSymbolicLink(target)) throw new IOException("Invalid storage path");
    return target;
@@ -37,7 +37,11 @@ public class MediaStorage {
  }
  public Stored save(String id,MultipartFile file) throws IOException {
    if(!decoding.tryAcquire()) throw new ApiError(429,"MEDIA_BUSY","图片处理中，请稍后再试");
-   try{return "image/gif".equals(file.getContentType())?saveGif(id,file):saveImage(id,file);}finally{decoding.release();}
+   try{
+    var stored="image/gif".equals(file.getContentType())?saveGif(id,file):saveImage(id,file);
+    try{writeImageDerivatives(stored.key());return stored;}
+    catch(IOException|RuntimeException failure){try{delete(stored.key());}catch(IOException cleanup){failure.addSuppressed(cleanup);}throw failure;}
+   }finally{decoding.release();}
  }
  private Stored saveImage(String id,MultipartFile file) throws IOException {
    if(file.isEmpty()) throw new ApiError(400,"MEDIA_TYPE_INVALID","文件不能为空");
@@ -110,6 +114,27 @@ public class MediaStorage {
   }catch(java.security.NoSuchAlgorithmException impossible){throw new IllegalStateException(impossible);}
   catch(IOException failure){if(created)Files.deleteIfExists(target);if(thumbCreated)Files.deleteIfExists(thumb);throw failure;}
  }
+ public void rebuildImageDerivatives(String key)throws IOException{
+  if(!decoding.tryAcquire())throw new ApiError(429,"MEDIA_BUSY","图片处理中，请稍后重试");
+  try{writeImageDerivatives(key);}finally{decoding.release();}
+ }
+ private void writeImageDerivatives(String key)throws IOException{
+  if(!key.matches("media_[a-f0-9]{32}\\.(png|gif)"))throw new IOException("Image original required");
+  byte[] source;try(var in=Files.newInputStream(path(key),LinkOption.NOFOLLOW_LINKS)){source=in.readNBytes(16*1024*1024+1);}
+  if(source.length>16*1024*1024)throw new IOException("Normalized image too large");
+  var images=ImageDerivatives.create(source,key.endsWith(".gif"));
+  String base=key.substring(0,key.lastIndexOf('.'));
+  writeDerivative(base+".thumb.png",images.thumbnail());
+  if(images.display()!=null)writeDerivative(base+".display.png",images.display());
+ }
+ private void writeDerivative(String key,byte[] content)throws IOException{
+  Path target=path(key),temporary=Files.createTempFile(tempDirectory(),"derivative-",".tmp");
+  try{
+   Files.write(temporary,content);
+   // Existing files only belong to a pending, locked asset retry; publication follows successful completion.
+   Files.move(temporary,target,StandardCopyOption.ATOMIC_MOVE,StandardCopyOption.REPLACE_EXISTING);
+  }finally{Files.deleteIfExists(temporary);}
+ }
  public static String signedVariant(String signed,String requested){
   if(requested!=null&&!requested.equals(signed))throw new ApiError(400,"MEDIA_TYPE_INVALID","媒体变体与签名不一致");
   return signed;
@@ -118,6 +143,11 @@ public class MediaStorage {
   String key=(String)asset.get("storage_key");
   if(variant==null||variant.equals("original"))return key;
   if(Set.of("thumbnail","cover").contains(variant)&&"video".equals(asset.get("media_type"))&&key!=null&&key.endsWith(".mp4"))return key.substring(0,key.length()-4)+".thumb.png";
+  if("image".equals(asset.get("media_type"))&&Boolean.TRUE.equals(asset.get("image_derivatives_ready"))&&key!=null){
+   String base=key.substring(0,key.lastIndexOf('.'));
+   if("thumbnail".equals(variant))return base+".thumb.png";
+   if("display".equals(variant))return key.endsWith(".gif")?key:base+".display.png";
+  }
   throw new ApiError(400,"MEDIA_TYPE_INVALID","该媒体没有请求的变体");
  }
  public record Opened(InputStream stream,long size,String contentType,String filename) {
@@ -130,6 +160,15 @@ public class MediaStorage {
    long size=Files.size(target);
    return new Opened(Files.newInputStream(target,LinkOption.NOFOLLOW_LINKS),size,key.endsWith(".wav")?"audio/wav":key.endsWith(".mp4")?"video/mp4":key.endsWith(".gif")?"image/gif":key.endsWith(".bin")?"application/octet-stream":"image/png",key.endsWith(".bin")?(filename==null||filename.isBlank()?"attachment.bin":filename):null);
  }
- public void delete(String key) throws IOException {Files.deleteIfExists(path(key));if(key.endsWith(".mp4"))Files.deleteIfExists(path(key.substring(0,key.length()-4)+".thumb.png"));}
+ public void delete(String key) throws IOException {
+  var keys=new ArrayList<String>();keys.add(key);
+  if(key.matches("media_[a-f0-9]{32}\\.(png|gif|mp4)")){
+   String base=key.substring(0,key.lastIndexOf('.'));keys.add(base+".thumb.png");
+   if(key.endsWith(".png"))keys.add(base+".display.png");
+  }
+  IOException failure=null;
+  for(String item:keys)try{Files.deleteIfExists(path(item));}catch(IOException e){if(failure==null)failure=e;else failure.addSuppressed(e);}
+  if(failure!=null)throw failure;
+ }
  private ApiError invalid(){return new ApiError(400,"MEDIA_TYPE_INVALID","仅支持有效的 PNG 或 JPEG 图片");}
 }

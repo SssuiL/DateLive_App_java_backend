@@ -13,6 +13,7 @@ import com.manliao.backend.identity.AuthDtos.Principal;
 @Service
 public class MediaService {
  private final JdbcTemplate db;private final TransactionTemplate tx;
+ @org.springframework.beans.factory.annotation.Value("${app.media.derivatives-worker-enabled:true}") private boolean derivativesWorkerEnabled;
  private final MediaStorage storage;private final MediaTokens tokens;private final DatabaseRows rows;
  private final com.manliao.backend.chat.ChatService chat;private final VoiceProcessor voice;private final VideoProcessor video;
  public MediaService(JdbcTemplate db,TransactionTemplate tx,MediaStorage storage,MediaTokens tokens,DatabaseRows rows,com.manliao.backend.chat.ChatService chat,VoiceProcessor voice,VideoProcessor video) {
@@ -31,10 +32,10 @@ public class MediaService {
        if(source.equals("chat"))chat.lockMediaUpload(user,conversation);else lockUser(user.userId());
        db.update("""
          INSERT INTO media_assets(id,owner_user_id,url,media_type,status,storage_key,original_filename,
-           content_type,file_size,sha256,width,height,moderation_reason,source,conversation_id,duration_ms)
-         VALUES(?,?,?,?,'review_pending',?,?,?,?,?,?,?,?,?,?,?)
+           content_type,file_size,sha256,width,height,moderation_reason,source,conversation_id,duration_ms,image_derivatives_ready)
+         VALUES(?,?,?,?,'review_pending',?,?,?,?,?,?,?,?,?,?,?,?)
          """,id,user.userId(),"media:"+id,type,stored.key(),safeName(file.getOriginalFilename()),stored.contentType(),
-         stored.size(),stored.sha256(),stored.width(),stored.height(),type.equals("file")?"原始文件等待人工审核，未执行病毒扫描":"媒体已重新编码，内容等待审核",source,conversation,stored.durationMs());
+         stored.size(),stored.sha256(),stored.width(),stored.height(),type.equals("file")?"原始文件等待人工审核，未执行病毒扫描":"媒体已重新编码，内容等待审核",source,conversation,stored.durationMs(),type.equals("image"));
      });
    } catch(RuntimeException failure) {
      try{storage.delete(stored.key());}catch(IOException cleanup){failure.addSuppressed(cleanup);}
@@ -53,7 +54,7 @@ public class MediaService {
  }
  public Map<String,Object> metadata(String id){return output(null,asset(id));}
  private Map<String,Object> output(Principal user,Map<String,Object> asset) {
-   var out=rows.output(asset);out.remove("storage_key");out.remove("width");out.remove("height");
+   var out=rows.output(asset);out.remove("storage_key");out.remove("width");out.remove("height");out.remove("image_derivatives_ready");out.remove("image_derivatives_retry_at");
    Object preview=null;
    if(user!=null && Set.of("approved","review_pending").contains(asset.get("status")))try{preview=access(user,(String)asset.get("id"),null).get("url");}catch(ApiError inaccessible){}
    out.put("preview_url",preview);
@@ -66,9 +67,13 @@ public class MediaService {
    if(movie)out.put("media_metadata",Map.of("width",asset.get("width"),"height",asset.get("height"),"duration_ms",asset.get("duration_ms"),"duration_seconds",Math.min(60,(((Number)asset.get("duration_ms")).intValue()+999)/1000),"codec","h264"));
    out.put("derivatives",movie?Map.of("thumbnail",Map.of("variant","thumbnail","content_type","image/png"),"cover",Map.of("variant","cover","content_type","image/png")):Map.of());
    boolean generic="file".equals(asset.get("media_type")),gif="image/gif".equals(asset.get("content_type"));
+   boolean derivativesReady=Boolean.TRUE.equals(asset.get("image_derivatives_ready"));
+   if(derivativesReady&&"image".equals(asset.get("media_type")))out.put("derivatives",Map.of(
+     "thumbnail",Map.of("variant","thumbnail","content_type","image/png","max_edge",320),
+     "display",Map.of("variant","display","content_type",gif?"image/gif":"image/png","max_edge",gif?Math.max(((Number)asset.get("width")).intValue(),((Number)asset.get("height")).intValue()):1280)));
    if(generic)out.put("media_metadata",Map.of("download_only",true));
    if(gif)out.put("media_metadata",Map.of("width",asset.get("width"),"height",asset.get("height"),"duration_ms",asset.get("duration_ms"),"format","gif"));
-   out.put("pipeline_version",generic?"java-file-v1":gif?"java-gif-v1":movie?"java-video-v1":audio?"java-voice-v1":"java-image-v1");
+   out.put("pipeline_version",generic?"java-file-v1":gif?(derivativesReady?"java-gif-v2":"java-gif-v1"):movie?"java-video-v1":audio?"java-voice-v1":derivativesReady?"java-image-v2":"java-image-v1");
    out.put("malware_status","skipped");out.put("latest_security_scan_id",null);out.put("quarantined_at",null);out.put("released_at",null);
    out.put("post_id",null);
    out.put("moderation_provider",asset.get("reviewed_by")==null?"manual_pending":"manual");out.put("moderation_labels",List.of());
@@ -183,6 +188,31 @@ public class MediaService {
  private Map<String,Object> asset(String id) {
    var list=db.queryForList("SELECT * FROM media_assets WHERE id=?",id);
    if(list.isEmpty()) throw missing();return list.getFirst();
+ }
+ @Scheduled(initialDelay=10000,fixedDelay=60000)
+ public void scheduledImageDerivatives(){if(derivativesWorkerEnabled)backfillImageDerivatives();}
+ public int backfillImageDerivatives(){
+  int completed=0;
+  for(var candidate:db.queryForList("""
+    SELECT id,owner_user_id FROM media_assets WHERE media_type='image' AND NOT image_derivatives_ready
+      AND storage_key IS NOT NULL AND status<>'deleted' AND image_derivatives_retry_at<=now()
+    ORDER BY image_derivatives_retry_at,id LIMIT 10
+    """)){
+   String id=(String)candidate.get("id");
+   try{
+    boolean done=Boolean.TRUE.equals(tx.execute(status->{
+     lockUser((String)candidate.get("owner_user_id"));
+     var found=db.queryForList("SELECT * FROM media_assets WHERE id=? FOR UPDATE",id);
+     if(found.isEmpty())return false;var asset=found.getFirst();
+     if(Boolean.TRUE.equals(asset.get("image_derivatives_ready"))||asset.get("storage_key")==null||"deleted".equals(asset.get("status")))return false;
+     try{storage.rebuildImageDerivatives((String)asset.get("storage_key"));}catch(IOException failure){throw new java.io.UncheckedIOException(failure);}
+     db.update("UPDATE media_assets SET image_derivatives_ready=true WHERE id=?",id);return true;
+    }));
+    if(done)completed++;
+   }catch(RuntimeException failure){
+    db.update("UPDATE media_assets SET image_derivatives_retry_at=now()+interval '5 minutes' WHERE id=? AND NOT image_derivatives_ready",id);
+   }
+  }return completed;
  }
  @Scheduled(initialDelay=60000,fixedDelay=60000)
  public void cleanupDeleted() {
