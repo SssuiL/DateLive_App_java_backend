@@ -7,5 +7,6 @@
   "search.exclude": {
     ".tools": true,
     "target": true
-  }
+  },
+  "jdk.maven.userSettings": "E:/Project/backend-java/.tools/vscode-maven-settings.xml"
 }
